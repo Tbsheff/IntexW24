@@ -9,16 +9,16 @@ if (typeof jQuery === 'undefined') {
 }
 
 (function ($) {
-  var version = $.fn.jquery.split(' ')[0].split('.')
+  let version = $.fn.jquery.split(' ')[0].split('.')
   if ((version[0] < 2 && version[1] < 9) || (version[0] == 1 && version[1] == 9 && version[2] < 1) || (version[0] >= 4)) {
     throw new Error('Bootstrap\'s JavaScript requires at least jQuery v1.9.1 but less than v4.0.0')
   }
 })(jQuery);
 
 (function () {
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+let _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+let _createClass = function () { function defineProperties(target, props) { for (let i = 0; i < props.length; i++) { let descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
@@ -33,7 +33,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * --------------------------------------------------------------------------
  */
 
-var Util = function ($) {
+let Util = function ($) {
 
   /**
    * ------------------------------------------------------------------------
@@ -41,11 +41,11 @@ var Util = function ($) {
    * ------------------------------------------------------------------------
    */
 
-  var transition = false;
+  let transition = false;
 
-  var MAX_UID = 1000000;
+  let MAX_UID = 1000000;
 
-  var TransitionEndEvent = {
+  let TransitionEndEvent = {
     WebkitTransition: 'webkitTransitionEnd',
     MozTransition: 'transitionend',
     OTransition: 'oTransitionEnd otransitionend',
@@ -78,9 +78,9 @@ var Util = function ($) {
       return false;
     }
 
-    var el = document.createElement('bootstrap');
+    let el = document.createElement('bootstrap');
 
-    for (var name in TransitionEndEvent) {
+    for (let name in TransitionEndEvent) {
       if (el.style[name] !== undefined) {
         return {
           end: TransitionEndEvent[name]
@@ -92,9 +92,9 @@ var Util = function ($) {
   }
 
   function transitionEndEmulator(duration) {
-    var _this = this;
+    let _this = this;
 
-    var called = false;
+    let called = false;
 
     $(this).one(Util.TRANSITION_END, function () {
       called = true;
@@ -125,7 +125,7 @@ var Util = function ($) {
    * --------------------------------------------------------------------------
    */
 
-  var Util = {
+  let Util = {
 
     TRANSITION_END: 'bsTransitionEnd',
 
@@ -137,13 +137,13 @@ var Util = function ($) {
       return prefix;
     },
     getSelectorFromElement: function getSelectorFromElement(element) {
-      var selector = element.getAttribute('data-target');
+      let selector = element.getAttribute('data-target');
       if (!selector || selector === '#') {
         selector = element.getAttribute('href') || '';
       }
 
       try {
-        var $selector = $(selector);
+        let $selector = $(selector);
         return $selector.length > 0 ? selector : null;
       } catch (error) {
         return null;
@@ -159,11 +159,11 @@ var Util = function ($) {
       return Boolean(transition);
     },
     typeCheckConfig: function typeCheckConfig(componentName, config, configTypes) {
-      for (var property in configTypes) {
+      for (let property in configTypes) {
         if (configTypes.hasOwnProperty(property)) {
-          var expectedTypes = configTypes[property];
-          var value = config[property];
-          var valueType = value && isElement(value) ? 'element' : toType(value);
+          let expectedTypes = configTypes[property];
+          let value = config[property];
+          let valueType = value && isElement(value) ? 'element' : toType(value);
 
           if (!new RegExp(expectedTypes).test(valueType)) {
             throw new Error(componentName.toUpperCase() + ': ' + ('Option "' + property + '" provided type "' + valueType + '" ') + ('but expected type "' + expectedTypes + '".'));
@@ -185,7 +185,7 @@ var Util = function ($) {
  * --------------------------------------------------------------------------
  */
 
-var Alert = function ($) {
+let Alert = function ($) {
 
   /**
    * ------------------------------------------------------------------------
@@ -193,25 +193,25 @@ var Alert = function ($) {
    * ------------------------------------------------------------------------
    */
 
-  var NAME = 'alert';
-  var VERSION = '4.0.0-beta';
-  var DATA_KEY = 'bs.alert';
-  var EVENT_KEY = '.' + DATA_KEY;
-  var DATA_API_KEY = '.data-api';
-  var JQUERY_NO_CONFLICT = $.fn[NAME];
-  var TRANSITION_DURATION = 150;
+  let NAME = 'alert';
+  let VERSION = '4.0.0-beta';
+  let DATA_KEY = 'bs.alert';
+  let EVENT_KEY = '.' + DATA_KEY;
+  let DATA_API_KEY = '.data-api';
+  let JQUERY_NO_CONFLICT = $.fn[NAME];
+  let TRANSITION_DURATION = 150;
 
-  var Selector = {
+  let Selector = {
     DISMISS: '[data-dismiss="alert"]'
   };
 
-  var Event = {
+  let Event = {
     CLOSE: 'close' + EVENT_KEY,
     CLOSED: 'closed' + EVENT_KEY,
     CLICK_DATA_API: 'click' + EVENT_KEY + DATA_API_KEY
   };
 
-  var ClassName = {
+  let ClassName = {
     ALERT: 'alert',
     FADE: 'fade',
     SHOW: 'show'
@@ -223,7 +223,7 @@ var Alert = function ($) {
      */
 
   };
-  var Alert = function () {
+  let Alert = function () {
     function Alert(element) {
       _classCallCheck(this, Alert);
 
@@ -237,8 +237,8 @@ var Alert = function ($) {
     Alert.prototype.close = function close(element) {
       element = element || this._element;
 
-      var rootElement = this._getRootElement(element);
-      var customEvent = this._triggerCloseEvent(rootElement);
+      let rootElement = this._getRootElement(element);
+      let customEvent = this._triggerCloseEvent(rootElement);
 
       if (customEvent.isDefaultPrevented()) {
         return;
@@ -255,8 +255,8 @@ var Alert = function ($) {
     // private
 
     Alert.prototype._getRootElement = function _getRootElement(element) {
-      var selector = Util.getSelectorFromElement(element);
-      var parent = false;
+      let selector = Util.getSelectorFromElement(element);
+      let parent = false;
 
       if (selector) {
         parent = $(selector)[0];
@@ -270,14 +270,14 @@ var Alert = function ($) {
     };
 
     Alert.prototype._triggerCloseEvent = function _triggerCloseEvent(element) {
-      var closeEvent = $.Event(Event.CLOSE);
+      let closeEvent = $.Event(Event.CLOSE);
 
       $(element).trigger(closeEvent);
       return closeEvent;
     };
 
     Alert.prototype._removeElement = function _removeElement(element) {
-      var _this2 = this;
+      let _this2 = this;
 
       $(element).removeClass(ClassName.SHOW);
 
@@ -299,8 +299,8 @@ var Alert = function ($) {
 
     Alert._jQueryInterface = function _jQueryInterface(config) {
       return this.each(function () {
-        var $element = $(this);
-        var data = $element.data(DATA_KEY);
+        let $element = $(this);
+        let data = $element.data(DATA_KEY);
 
         if (!data) {
           data = new Alert(this);
@@ -364,7 +364,7 @@ var Alert = function ($) {
  * --------------------------------------------------------------------------
  */
 
-var Button = function ($) {
+let Button = function ($) {
 
   /**
    * ------------------------------------------------------------------------
@@ -372,20 +372,20 @@ var Button = function ($) {
    * ------------------------------------------------------------------------
    */
 
-  var NAME = 'button';
-  var VERSION = '4.0.0-beta';
-  var DATA_KEY = 'bs.button';
-  var EVENT_KEY = '.' + DATA_KEY;
-  var DATA_API_KEY = '.data-api';
-  var JQUERY_NO_CONFLICT = $.fn[NAME];
+  let NAME = 'button';
+  let VERSION = '4.0.0-beta';
+  let DATA_KEY = 'bs.button';
+  let EVENT_KEY = '.' + DATA_KEY;
+  let DATA_API_KEY = '.data-api';
+  let JQUERY_NO_CONFLICT = $.fn[NAME];
 
-  var ClassName = {
+  let ClassName = {
     ACTIVE: 'active',
     BUTTON: 'btn',
     FOCUS: 'focus'
   };
 
-  var Selector = {
+  let Selector = {
     DATA_TOGGLE_CARROT: '[data-toggle^="button"]',
     DATA_TOGGLE: '[data-toggle="buttons"]',
     INPUT: 'input',
@@ -393,7 +393,7 @@ var Button = function ($) {
     BUTTON: '.btn'
   };
 
-  var Event = {
+  let Event = {
     CLICK_DATA_API: 'click' + EVENT_KEY + DATA_API_KEY,
     FOCUS_BLUR_DATA_API: 'focus' + EVENT_KEY + DATA_API_KEY + ' ' + ('blur' + EVENT_KEY + DATA_API_KEY)
 
@@ -404,7 +404,7 @@ var Button = function ($) {
      */
 
   };
-  var Button = function () {
+  let Button = function () {
     function Button(element) {
       _classCallCheck(this, Button);
 
@@ -416,19 +416,19 @@ var Button = function ($) {
     // public
 
     Button.prototype.toggle = function toggle() {
-      var triggerChangeEvent = true;
-      var addAriaPressed = true;
-      var rootElement = $(this._element).closest(Selector.DATA_TOGGLE)[0];
+      let triggerChangeEvent = true;
+      let addAriaPressed = true;
+      let rootElement = $(this._element).closest(Selector.DATA_TOGGLE)[0];
 
       if (rootElement) {
-        var input = $(this._element).find(Selector.INPUT)[0];
+        let input = $(this._element).find(Selector.INPUT)[0];
 
         if (input) {
           if (input.type === 'radio') {
             if (input.checked && $(this._element).hasClass(ClassName.ACTIVE)) {
               triggerChangeEvent = false;
             } else {
-              var activeElement = $(rootElement).find(Selector.ACTIVE)[0];
+              let activeElement = $(rootElement).find(Selector.ACTIVE)[0];
 
               if (activeElement) {
                 $(activeElement).removeClass(ClassName.ACTIVE);
@@ -467,7 +467,7 @@ var Button = function ($) {
 
     Button._jQueryInterface = function _jQueryInterface(config) {
       return this.each(function () {
-        var data = $(this).data(DATA_KEY);
+        let data = $(this).data(DATA_KEY);
 
         if (!data) {
           data = new Button(this);
@@ -499,7 +499,7 @@ var Button = function ($) {
   $(document).on(Event.CLICK_DATA_API, Selector.DATA_TOGGLE_CARROT, function (event) {
     event.preventDefault();
 
-    var button = event.target;
+    let button = event.target;
 
     if (!$(button).hasClass(ClassName.BUTTON)) {
       button = $(button).closest(Selector.BUTTON);
@@ -507,7 +507,7 @@ var Button = function ($) {
 
     Button._jQueryInterface.call($(button), 'toggle');
   }).on(Event.FOCUS_BLUR_DATA_API, Selector.DATA_TOGGLE_CARROT, function (event) {
-    var button = $(event.target).closest(Selector.BUTTON)[0];
+    let button = $(event.target).closest(Selector.BUTTON)[0];
     $(button).toggleClass(ClassName.FOCUS, /^focus(in)?$/.test(event.type));
   });
 
@@ -534,7 +534,7 @@ var Button = function ($) {
  * --------------------------------------------------------------------------
  */
 
-var Carousel = function ($) {
+let Carousel = function ($) {
 
   /**
    * ------------------------------------------------------------------------
@@ -542,18 +542,18 @@ var Carousel = function ($) {
    * ------------------------------------------------------------------------
    */
 
-  var NAME = 'carousel';
-  var VERSION = '4.0.0-beta';
-  var DATA_KEY = 'bs.carousel';
-  var EVENT_KEY = '.' + DATA_KEY;
-  var DATA_API_KEY = '.data-api';
-  var JQUERY_NO_CONFLICT = $.fn[NAME];
-  var TRANSITION_DURATION = 600;
-  var ARROW_LEFT_KEYCODE = 37; // KeyboardEvent.which value for left arrow key
-  var ARROW_RIGHT_KEYCODE = 39; // KeyboardEvent.which value for right arrow key
-  var TOUCHEVENT_COMPAT_WAIT = 500; // Time for mouse compat events to fire after touch
+  let NAME = 'carousel';
+  let VERSION = '4.0.0-beta';
+  let DATA_KEY = 'bs.carousel';
+  let EVENT_KEY = '.' + DATA_KEY;
+  let DATA_API_KEY = '.data-api';
+  let JQUERY_NO_CONFLICT = $.fn[NAME];
+  let TRANSITION_DURATION = 600;
+  let ARROW_LEFT_KEYCODE = 37; // KeyboardEvent.which value for left arrow key
+  let ARROW_RIGHT_KEYCODE = 39; // KeyboardEvent.which value for right arrow key
+  let TOUCHEVENT_COMPAT_WAIT = 500; // Time for mouse compat events to fire after touch
 
-  var Default = {
+  let Default = {
     interval: 5000,
     keyboard: true,
     slide: false,
@@ -561,7 +561,7 @@ var Carousel = function ($) {
     wrap: true
   };
 
-  var DefaultType = {
+  let DefaultType = {
     interval: '(number|boolean)',
     keyboard: 'boolean',
     slide: '(boolean|string)',
@@ -569,14 +569,14 @@ var Carousel = function ($) {
     wrap: 'boolean'
   };
 
-  var Direction = {
+  let Direction = {
     NEXT: 'next',
     PREV: 'prev',
     LEFT: 'left',
     RIGHT: 'right'
   };
 
-  var Event = {
+  let Event = {
     SLIDE: 'slide' + EVENT_KEY,
     SLID: 'slid' + EVENT_KEY,
     KEYDOWN: 'keydown' + EVENT_KEY,
@@ -587,7 +587,7 @@ var Carousel = function ($) {
     CLICK_DATA_API: 'click' + EVENT_KEY + DATA_API_KEY
   };
 
-  var ClassName = {
+  let ClassName = {
     CAROUSEL: 'carousel',
     ACTIVE: 'active',
     SLIDE: 'slide',
@@ -598,7 +598,7 @@ var Carousel = function ($) {
     ITEM: 'carousel-item'
   };
 
-  var Selector = {
+  let Selector = {
     ACTIVE: '.active',
     ACTIVE_ITEM: '.active.carousel-item',
     ITEM: '.carousel-item',
@@ -614,7 +614,7 @@ var Carousel = function ($) {
      */
 
   };
-  var Carousel = function () {
+  let Carousel = function () {
     function Carousel(element, config) {
       _classCallCheck(this, Carousel);
 
@@ -687,11 +687,11 @@ var Carousel = function ($) {
     };
 
     Carousel.prototype.to = function to(index) {
-      var _this3 = this;
+      let _this3 = this;
 
       this._activeElement = $(this._element).find(Selector.ACTIVE_ITEM)[0];
 
-      var activeIndex = this._getItemIndex(this._activeElement);
+      let activeIndex = this._getItemIndex(this._activeElement);
 
       if (index > this._items.length - 1 || index < 0) {
         return;
@@ -710,7 +710,7 @@ var Carousel = function ($) {
         return;
       }
 
-      var direction = index > activeIndex ? Direction.NEXT : Direction.PREV;
+      let direction = index > activeIndex ? Direction.NEXT : Direction.PREV;
 
       this._slide(direction, this._items[index]);
     };
@@ -738,7 +738,7 @@ var Carousel = function ($) {
     };
 
     Carousel.prototype._addEventListeners = function _addEventListeners() {
-      var _this4 = this;
+      let _this4 = this;
 
       if (this._config.keyboard) {
         $(this._element).on(Event.KEYDOWN, function (event) {
@@ -798,26 +798,26 @@ var Carousel = function ($) {
     };
 
     Carousel.prototype._getItemByDirection = function _getItemByDirection(direction, activeElement) {
-      var isNextDirection = direction === Direction.NEXT;
-      var isPrevDirection = direction === Direction.PREV;
-      var activeIndex = this._getItemIndex(activeElement);
-      var lastItemIndex = this._items.length - 1;
-      var isGoingToWrap = isPrevDirection && activeIndex === 0 || isNextDirection && activeIndex === lastItemIndex;
+      let isNextDirection = direction === Direction.NEXT;
+      let isPrevDirection = direction === Direction.PREV;
+      let activeIndex = this._getItemIndex(activeElement);
+      let lastItemIndex = this._items.length - 1;
+      let isGoingToWrap = isPrevDirection && activeIndex === 0 || isNextDirection && activeIndex === lastItemIndex;
 
       if (isGoingToWrap && !this._config.wrap) {
         return activeElement;
       }
 
-      var delta = direction === Direction.PREV ? -1 : 1;
-      var itemIndex = (activeIndex + delta) % this._items.length;
+      let delta = direction === Direction.PREV ? -1 : 1;
+      let itemIndex = (activeIndex + delta) % this._items.length;
 
       return itemIndex === -1 ? this._items[this._items.length - 1] : this._items[itemIndex];
     };
 
     Carousel.prototype._triggerSlideEvent = function _triggerSlideEvent(relatedTarget, eventDirectionName) {
-      var targetIndex = this._getItemIndex(relatedTarget);
-      var fromIndex = this._getItemIndex($(this._element).find(Selector.ACTIVE_ITEM)[0]);
-      var slideEvent = $.Event(Event.SLIDE, {
+      let targetIndex = this._getItemIndex(relatedTarget);
+      let fromIndex = this._getItemIndex($(this._element).find(Selector.ACTIVE_ITEM)[0]);
+      let slideEvent = $.Event(Event.SLIDE, {
         relatedTarget: relatedTarget,
         direction: eventDirectionName,
         from: fromIndex,
@@ -833,7 +833,7 @@ var Carousel = function ($) {
       if (this._indicatorsElement) {
         $(this._indicatorsElement).find(Selector.ACTIVE).removeClass(ClassName.ACTIVE);
 
-        var nextIndicator = this._indicatorsElement.children[this._getItemIndex(element)];
+        let nextIndicator = this._indicatorsElement.children[this._getItemIndex(element)];
 
         if (nextIndicator) {
           $(nextIndicator).addClass(ClassName.ACTIVE);
@@ -842,17 +842,17 @@ var Carousel = function ($) {
     };
 
     Carousel.prototype._slide = function _slide(direction, element) {
-      var _this5 = this;
+      let _this5 = this;
 
-      var activeElement = $(this._element).find(Selector.ACTIVE_ITEM)[0];
-      var activeElementIndex = this._getItemIndex(activeElement);
-      var nextElement = element || activeElement && this._getItemByDirection(direction, activeElement);
-      var nextElementIndex = this._getItemIndex(nextElement);
-      var isCycling = Boolean(this._interval);
+      let activeElement = $(this._element).find(Selector.ACTIVE_ITEM)[0];
+      let activeElementIndex = this._getItemIndex(activeElement);
+      let nextElement = element || activeElement && this._getItemByDirection(direction, activeElement);
+      let nextElementIndex = this._getItemIndex(nextElement);
+      let isCycling = Boolean(this._interval);
 
-      var directionalClassName = void 0;
-      var orderClassName = void 0;
-      var eventDirectionName = void 0;
+      let directionalClassName = void 0;
+      let orderClassName = void 0;
+      let eventDirectionName = void 0;
 
       if (direction === Direction.NEXT) {
         directionalClassName = ClassName.LEFT;
@@ -869,7 +869,7 @@ var Carousel = function ($) {
         return;
       }
 
-      var slideEvent = this._triggerSlideEvent(nextElement, eventDirectionName);
+      let slideEvent = this._triggerSlideEvent(nextElement, eventDirectionName);
       if (slideEvent.isDefaultPrevented()) {
         return;
       }
@@ -887,7 +887,7 @@ var Carousel = function ($) {
 
       this._setActiveIndicatorElement(nextElement);
 
-      var slidEvent = $.Event(Event.SLID, {
+      let slidEvent = $.Event(Event.SLID, {
         relatedTarget: nextElement,
         direction: eventDirectionName,
         from: activeElementIndex,
@@ -931,14 +931,14 @@ var Carousel = function ($) {
 
     Carousel._jQueryInterface = function _jQueryInterface(config) {
       return this.each(function () {
-        var data = $(this).data(DATA_KEY);
-        var _config = $.extend({}, Default, $(this).data());
+        let data = $(this).data(DATA_KEY);
+        let _config = $.extend({}, Default, $(this).data());
 
         if ((typeof config === 'undefined' ? 'undefined' : _typeof(config)) === 'object') {
           $.extend(_config, config);
         }
 
-        var action = typeof config === 'string' ? config : _config.slide;
+        let action = typeof config === 'string' ? config : _config.slide;
 
         if (!data) {
           data = new Carousel(this, _config);
@@ -960,20 +960,20 @@ var Carousel = function ($) {
     };
 
     Carousel._dataApiClickHandler = function _dataApiClickHandler(event) {
-      var selector = Util.getSelectorFromElement(this);
+      let selector = Util.getSelectorFromElement(this);
 
       if (!selector) {
         return;
       }
 
-      var target = $(selector)[0];
+      let target = $(selector)[0];
 
       if (!target || !$(target).hasClass(ClassName.CAROUSEL)) {
         return;
       }
 
-      var config = $.extend({}, $(target).data(), $(this).data());
-      var slideIndex = this.getAttribute('data-slide-to');
+      let config = $.extend({}, $(target).data(), $(this).data());
+      let slideIndex = this.getAttribute('data-slide-to');
 
       if (slideIndex) {
         config.interval = false;
@@ -1013,7 +1013,7 @@ var Carousel = function ($) {
 
   $(window).on(Event.LOAD_DATA_API, function () {
     $(Selector.DATA_RIDE).each(function () {
-      var $carousel = $(this);
+      let $carousel = $(this);
       Carousel._jQueryInterface.call($carousel, $carousel.data());
     });
   });
@@ -1041,7 +1041,7 @@ var Carousel = function ($) {
  * --------------------------------------------------------------------------
  */
 
-var Collapse = function ($) {
+let Collapse = function ($) {
 
   /**
    * ------------------------------------------------------------------------
@@ -1049,25 +1049,25 @@ var Collapse = function ($) {
    * ------------------------------------------------------------------------
    */
 
-  var NAME = 'collapse';
-  var VERSION = '4.0.0-beta';
-  var DATA_KEY = 'bs.collapse';
-  var EVENT_KEY = '.' + DATA_KEY;
-  var DATA_API_KEY = '.data-api';
-  var JQUERY_NO_CONFLICT = $.fn[NAME];
-  var TRANSITION_DURATION = 600;
+  let NAME = 'collapse';
+  let VERSION = '4.0.0-beta';
+  let DATA_KEY = 'bs.collapse';
+  let EVENT_KEY = '.' + DATA_KEY;
+  let DATA_API_KEY = '.data-api';
+  let JQUERY_NO_CONFLICT = $.fn[NAME];
+  let TRANSITION_DURATION = 600;
 
-  var Default = {
+  let Default = {
     toggle: true,
     parent: ''
   };
 
-  var DefaultType = {
+  let DefaultType = {
     toggle: 'boolean',
     parent: 'string'
   };
 
-  var Event = {
+  let Event = {
     SHOW: 'show' + EVENT_KEY,
     SHOWN: 'shown' + EVENT_KEY,
     HIDE: 'hide' + EVENT_KEY,
@@ -1075,19 +1075,19 @@ var Collapse = function ($) {
     CLICK_DATA_API: 'click' + EVENT_KEY + DATA_API_KEY
   };
 
-  var ClassName = {
+  let ClassName = {
     SHOW: 'show',
     COLLAPSE: 'collapse',
     COLLAPSING: 'collapsing',
     COLLAPSED: 'collapsed'
   };
 
-  var Dimension = {
+  let Dimension = {
     WIDTH: 'width',
     HEIGHT: 'height'
   };
 
-  var Selector = {
+  let Selector = {
     ACTIVES: '.show, .collapsing',
     DATA_TOGGLE: '[data-toggle="collapse"]'
 
@@ -1098,7 +1098,7 @@ var Collapse = function ($) {
      */
 
   };
-  var Collapse = function () {
+  let Collapse = function () {
     function Collapse(element, config) {
       _classCallCheck(this, Collapse);
 
@@ -1106,10 +1106,10 @@ var Collapse = function ($) {
       this._element = element;
       this._config = this._getConfig(config);
       this._triggerArray = $.makeArray($('[data-toggle="collapse"][href="#' + element.id + '"],' + ('[data-toggle="collapse"][data-target="#' + element.id + '"]')));
-      var tabToggles = $(Selector.DATA_TOGGLE);
-      for (var i = 0; i < tabToggles.length; i++) {
-        var elem = tabToggles[i];
-        var selector = Util.getSelectorFromElement(elem);
+      let tabToggles = $(Selector.DATA_TOGGLE);
+      for (let i = 0; i < tabToggles.length; i++) {
+        let elem = tabToggles[i];
+        let selector = Util.getSelectorFromElement(elem);
         if (selector !== null && $(selector).filter(element).length > 0) {
           this._triggerArray.push(elem);
         }
@@ -1139,14 +1139,14 @@ var Collapse = function ($) {
     };
 
     Collapse.prototype.show = function show() {
-      var _this6 = this;
+      let _this6 = this;
 
       if (this._isTransitioning || $(this._element).hasClass(ClassName.SHOW)) {
         return;
       }
 
-      var actives = void 0;
-      var activesData = void 0;
+      let actives = void 0;
+      let activesData = void 0;
 
       if (this._parent) {
         actives = $.makeArray($(this._parent).children().children(Selector.ACTIVES));
@@ -1162,7 +1162,7 @@ var Collapse = function ($) {
         }
       }
 
-      var startEvent = $.Event(Event.SHOW);
+      let startEvent = $.Event(Event.SHOW);
       $(this._element).trigger(startEvent);
       if (startEvent.isDefaultPrevented()) {
         return;
@@ -1175,7 +1175,7 @@ var Collapse = function ($) {
         }
       }
 
-      var dimension = this._getDimension();
+      let dimension = this._getDimension();
 
       $(this._element).removeClass(ClassName.COLLAPSE).addClass(ClassName.COLLAPSING);
 
@@ -1187,7 +1187,7 @@ var Collapse = function ($) {
 
       this.setTransitioning(true);
 
-      var complete = function complete() {
+      let complete = function complete() {
         $(_this6._element).removeClass(ClassName.COLLAPSING).addClass(ClassName.COLLAPSE).addClass(ClassName.SHOW);
 
         _this6._element.style[dimension] = '';
@@ -1202,8 +1202,8 @@ var Collapse = function ($) {
         return;
       }
 
-      var capitalizedDimension = dimension[0].toUpperCase() + dimension.slice(1);
-      var scrollSize = 'scroll' + capitalizedDimension;
+      let capitalizedDimension = dimension[0].toUpperCase() + dimension.slice(1);
+      let scrollSize = 'scroll' + capitalizedDimension;
 
       $(this._element).one(Util.TRANSITION_END, complete).emulateTransitionEnd(TRANSITION_DURATION);
 
@@ -1211,19 +1211,19 @@ var Collapse = function ($) {
     };
 
     Collapse.prototype.hide = function hide() {
-      var _this7 = this;
+      let _this7 = this;
 
       if (this._isTransitioning || !$(this._element).hasClass(ClassName.SHOW)) {
         return;
       }
 
-      var startEvent = $.Event(Event.HIDE);
+      let startEvent = $.Event(Event.HIDE);
       $(this._element).trigger(startEvent);
       if (startEvent.isDefaultPrevented()) {
         return;
       }
 
-      var dimension = this._getDimension();
+      let dimension = this._getDimension();
 
       this._element.style[dimension] = this._element.getBoundingClientRect()[dimension] + 'px';
 
@@ -1232,11 +1232,11 @@ var Collapse = function ($) {
       $(this._element).addClass(ClassName.COLLAPSING).removeClass(ClassName.COLLAPSE).removeClass(ClassName.SHOW);
 
       if (this._triggerArray.length) {
-        for (var i = 0; i < this._triggerArray.length; i++) {
-          var trigger = this._triggerArray[i];
-          var selector = Util.getSelectorFromElement(trigger);
+        for (let i = 0; i < this._triggerArray.length; i++) {
+          let trigger = this._triggerArray[i];
+          let selector = Util.getSelectorFromElement(trigger);
           if (selector !== null) {
-            var $elem = $(selector);
+            let $elem = $(selector);
             if (!$elem.hasClass(ClassName.SHOW)) {
               $(trigger).addClass(ClassName.COLLAPSED).attr('aria-expanded', false);
             }
@@ -1246,7 +1246,7 @@ var Collapse = function ($) {
 
       this.setTransitioning(true);
 
-      var complete = function complete() {
+      let complete = function complete() {
         _this7.setTransitioning(false);
         $(_this7._element).removeClass(ClassName.COLLAPSING).addClass(ClassName.COLLAPSE).trigger(Event.HIDDEN);
       };
@@ -1285,15 +1285,15 @@ var Collapse = function ($) {
     };
 
     Collapse.prototype._getDimension = function _getDimension() {
-      var hasWidth = $(this._element).hasClass(Dimension.WIDTH);
+      let hasWidth = $(this._element).hasClass(Dimension.WIDTH);
       return hasWidth ? Dimension.WIDTH : Dimension.HEIGHT;
     };
 
     Collapse.prototype._getParent = function _getParent() {
-      var _this8 = this;
+      let _this8 = this;
 
-      var parent = $(this._config.parent)[0];
-      var selector = '[data-toggle="collapse"][data-parent="' + this._config.parent + '"]';
+      let parent = $(this._config.parent)[0];
+      let selector = '[data-toggle="collapse"][data-parent="' + this._config.parent + '"]';
 
       $(parent).find(selector).each(function (i, element) {
         _this8._addAriaAndCollapsedClass(Collapse._getTargetFromElement(element), [element]);
@@ -1304,7 +1304,7 @@ var Collapse = function ($) {
 
     Collapse.prototype._addAriaAndCollapsedClass = function _addAriaAndCollapsedClass(element, triggerArray) {
       if (element) {
-        var isOpen = $(element).hasClass(ClassName.SHOW);
+        let isOpen = $(element).hasClass(ClassName.SHOW);
 
         if (triggerArray.length) {
           $(triggerArray).toggleClass(ClassName.COLLAPSED, !isOpen).attr('aria-expanded', isOpen);
@@ -1315,15 +1315,15 @@ var Collapse = function ($) {
     // static
 
     Collapse._getTargetFromElement = function _getTargetFromElement(element) {
-      var selector = Util.getSelectorFromElement(element);
+      let selector = Util.getSelectorFromElement(element);
       return selector ? $(selector)[0] : null;
     };
 
     Collapse._jQueryInterface = function _jQueryInterface(config) {
       return this.each(function () {
-        var $this = $(this);
-        var data = $this.data(DATA_KEY);
-        var _config = $.extend({}, Default, $this.data(), (typeof config === 'undefined' ? 'undefined' : _typeof(config)) === 'object' && config);
+        let $this = $(this);
+        let data = $this.data(DATA_KEY);
+        let _config = $.extend({}, Default, $this.data(), (typeof config === 'undefined' ? 'undefined' : _typeof(config)) === 'object' && config);
 
         if (!data && _config.toggle && /show|hide/.test(config)) {
           _config.toggle = false;
@@ -1369,12 +1369,12 @@ var Collapse = function ($) {
       event.preventDefault();
     }
 
-    var $trigger = $(this);
-    var selector = Util.getSelectorFromElement(this);
+    let $trigger = $(this);
+    let selector = Util.getSelectorFromElement(this);
     $(selector).each(function () {
-      var $target = $(this);
-      var data = $target.data(DATA_KEY);
-      var config = data ? 'toggle' : $trigger.data();
+      let $target = $(this);
+      let data = $target.data(DATA_KEY);
+      let config = data ? 'toggle' : $trigger.data();
       Collapse._jQueryInterface.call($target, config);
     });
   });
@@ -1404,7 +1404,7 @@ var Collapse = function ($) {
  * --------------------------------------------------------------------------
  */
 
-var Dropdown = function ($) {
+let Dropdown = function ($) {
 
   /**
    * Check for Popper dependency
@@ -1420,21 +1420,21 @@ var Dropdown = function ($) {
    * ------------------------------------------------------------------------
    */
 
-  var NAME = 'dropdown';
-  var VERSION = '4.0.0-beta';
-  var DATA_KEY = 'bs.dropdown';
-  var EVENT_KEY = '.' + DATA_KEY;
-  var DATA_API_KEY = '.data-api';
-  var JQUERY_NO_CONFLICT = $.fn[NAME];
-  var ESCAPE_KEYCODE = 27; // KeyboardEvent.which value for Escape (Esc) key
-  var SPACE_KEYCODE = 32; // KeyboardEvent.which value for space key
-  var TAB_KEYCODE = 9; // KeyboardEvent.which value for tab key
-  var ARROW_UP_KEYCODE = 38; // KeyboardEvent.which value for up arrow key
-  var ARROW_DOWN_KEYCODE = 40; // KeyboardEvent.which value for down arrow key
-  var RIGHT_MOUSE_BUTTON_WHICH = 3; // MouseEvent.which value for the right button (assuming a right-handed mouse)
-  var REGEXP_KEYDOWN = new RegExp(ARROW_UP_KEYCODE + '|' + ARROW_DOWN_KEYCODE + '|' + ESCAPE_KEYCODE);
+  let NAME = 'dropdown';
+  let VERSION = '4.0.0-beta';
+  let DATA_KEY = 'bs.dropdown';
+  let EVENT_KEY = '.' + DATA_KEY;
+  let DATA_API_KEY = '.data-api';
+  let JQUERY_NO_CONFLICT = $.fn[NAME];
+  let ESCAPE_KEYCODE = 27; // KeyboardEvent.which value for Escape (Esc) key
+  let SPACE_KEYCODE = 32; // KeyboardEvent.which value for space key
+  let TAB_KEYCODE = 9; // KeyboardEvent.which value for tab key
+  let ARROW_UP_KEYCODE = 38; // KeyboardEvent.which value for up arrow key
+  let ARROW_DOWN_KEYCODE = 40; // KeyboardEvent.which value for down arrow key
+  let RIGHT_MOUSE_BUTTON_WHICH = 3; // MouseEvent.which value for the right button (assuming a right-handed mouse)
+  let REGEXP_KEYDOWN = new RegExp(ARROW_UP_KEYCODE + '|' + ARROW_DOWN_KEYCODE + '|' + ESCAPE_KEYCODE);
 
-  var Event = {
+  let Event = {
     HIDE: 'hide' + EVENT_KEY,
     HIDDEN: 'hidden' + EVENT_KEY,
     SHOW: 'show' + EVENT_KEY,
@@ -1445,7 +1445,7 @@ var Dropdown = function ($) {
     KEYUP_DATA_API: 'keyup' + EVENT_KEY + DATA_API_KEY
   };
 
-  var ClassName = {
+  let ClassName = {
     DISABLED: 'disabled',
     SHOW: 'show',
     DROPUP: 'dropup',
@@ -1453,7 +1453,7 @@ var Dropdown = function ($) {
     MENULEFT: 'dropdown-menu-left'
   };
 
-  var Selector = {
+  let Selector = {
     DATA_TOGGLE: '[data-toggle="dropdown"]',
     FORM_CHILD: '.dropdown form',
     MENU: '.dropdown-menu',
@@ -1461,20 +1461,20 @@ var Dropdown = function ($) {
     VISIBLE_ITEMS: '.dropdown-menu .dropdown-item:not(.disabled)'
   };
 
-  var AttachmentMap = {
+  let AttachmentMap = {
     TOP: 'top-start',
     TOPEND: 'top-end',
     BOTTOM: 'bottom-start',
     BOTTOMEND: 'bottom-end'
   };
 
-  var Default = {
+  let Default = {
     placement: AttachmentMap.BOTTOM,
     offset: 0,
     flip: true
   };
 
-  var DefaultType = {
+  let DefaultType = {
     placement: 'string',
     offset: '(number|string)',
     flip: 'boolean'
@@ -1486,7 +1486,7 @@ var Dropdown = function ($) {
      */
 
   };
-  var Dropdown = function () {
+  let Dropdown = function () {
     function Dropdown(element, config) {
       _classCallCheck(this, Dropdown);
 
@@ -1508,8 +1508,8 @@ var Dropdown = function ($) {
         return;
       }
 
-      var parent = Dropdown._getParentFromElement(this._element);
-      var isActive = $(this._menu).hasClass(ClassName.SHOW);
+      let parent = Dropdown._getParentFromElement(this._element);
+      let isActive = $(this._menu).hasClass(ClassName.SHOW);
 
       Dropdown._clearMenus();
 
@@ -1517,10 +1517,10 @@ var Dropdown = function ($) {
         return;
       }
 
-      var relatedTarget = {
+      let relatedTarget = {
         relatedTarget: this._element
       };
-      var showEvent = $.Event(Event.SHOW, relatedTarget);
+      let showEvent = $.Event(Event.SHOW, relatedTarget);
 
       $(parent).trigger(showEvent);
 
@@ -1528,7 +1528,7 @@ var Dropdown = function ($) {
         return;
       }
 
-      var element = this._element;
+      let element = this._element;
       // for dropup with alignment we use the parent as popper container
       if ($(parent).hasClass(ClassName.DROPUP)) {
         if ($(this._menu).hasClass(ClassName.MENULEFT) || $(this._menu).hasClass(ClassName.MENURIGHT)) {
@@ -1573,7 +1573,7 @@ var Dropdown = function ($) {
     // private
 
     Dropdown.prototype._addEventListeners = function _addEventListeners() {
-      var _this9 = this;
+      let _this9 = this;
 
       $(this._element).on(Event.CLICK, function (event) {
         event.preventDefault();
@@ -1583,7 +1583,7 @@ var Dropdown = function ($) {
     };
 
     Dropdown.prototype._getConfig = function _getConfig(config) {
-      var elementData = $(this._element).data();
+      let elementData = $(this._element).data();
       if (elementData.placement !== undefined) {
         elementData.placement = AttachmentMap[elementData.placement.toUpperCase()];
       }
@@ -1597,15 +1597,15 @@ var Dropdown = function ($) {
 
     Dropdown.prototype._getMenuElement = function _getMenuElement() {
       if (!this._menu) {
-        var parent = Dropdown._getParentFromElement(this._element);
+        let parent = Dropdown._getParentFromElement(this._element);
         this._menu = $(parent).find(Selector.MENU)[0];
       }
       return this._menu;
     };
 
     Dropdown.prototype._getPlacement = function _getPlacement() {
-      var $parentDropdown = $(this._element).parent();
-      var placement = this._config.placement;
+      let $parentDropdown = $(this._element).parent();
+      let placement = this._config.placement;
 
       // Handle dropup
       if ($parentDropdown.hasClass(ClassName.DROPUP) || this._config.placement === AttachmentMap.TOP) {
@@ -1624,7 +1624,7 @@ var Dropdown = function ($) {
     };
 
     Dropdown.prototype._getPopperConfig = function _getPopperConfig() {
-      var popperConfig = {
+      let popperConfig = {
         placement: this._getPlacement(),
         modifiers: {
           offset: {
@@ -1648,8 +1648,8 @@ var Dropdown = function ($) {
 
     Dropdown._jQueryInterface = function _jQueryInterface(config) {
       return this.each(function () {
-        var data = $(this).data(DATA_KEY);
-        var _config = (typeof config === 'undefined' ? 'undefined' : _typeof(config)) === 'object' ? config : null;
+        let data = $(this).data(DATA_KEY);
+        let _config = (typeof config === 'undefined' ? 'undefined' : _typeof(config)) === 'object' ? config : null;
 
         if (!data) {
           data = new Dropdown(this, _config);
@@ -1670,11 +1670,11 @@ var Dropdown = function ($) {
         return;
       }
 
-      var toggles = $.makeArray($(Selector.DATA_TOGGLE));
-      for (var i = 0; i < toggles.length; i++) {
-        var parent = Dropdown._getParentFromElement(toggles[i]);
-        var context = $(toggles[i]).data(DATA_KEY);
-        var relatedTarget = {
+      let toggles = $.makeArray($(Selector.DATA_TOGGLE));
+      for (let i = 0; i < toggles.length; i++) {
+        let parent = Dropdown._getParentFromElement(toggles[i]);
+        let context = $(toggles[i]).data(DATA_KEY);
+        let relatedTarget = {
           relatedTarget: toggles[i]
         };
 
@@ -1682,7 +1682,7 @@ var Dropdown = function ($) {
           continue;
         }
 
-        var dropdownMenu = context._menu;
+        let dropdownMenu = context._menu;
         if (!$(parent).hasClass(ClassName.SHOW)) {
           continue;
         }
@@ -1691,7 +1691,7 @@ var Dropdown = function ($) {
           continue;
         }
 
-        var hideEvent = $.Event(Event.HIDE, relatedTarget);
+        let hideEvent = $.Event(Event.HIDE, relatedTarget);
         $(parent).trigger(hideEvent);
         if (hideEvent.isDefaultPrevented()) {
           continue;
@@ -1711,8 +1711,8 @@ var Dropdown = function ($) {
     };
 
     Dropdown._getParentFromElement = function _getParentFromElement(element) {
-      var parent = void 0;
-      var selector = Util.getSelectorFromElement(element);
+      let parent = void 0;
+      let selector = Util.getSelectorFromElement(element);
 
       if (selector) {
         parent = $(selector)[0];
@@ -1733,13 +1733,13 @@ var Dropdown = function ($) {
         return;
       }
 
-      var parent = Dropdown._getParentFromElement(this);
-      var isActive = $(parent).hasClass(ClassName.SHOW);
+      let parent = Dropdown._getParentFromElement(this);
+      let isActive = $(parent).hasClass(ClassName.SHOW);
 
       if (!isActive && (event.which !== ESCAPE_KEYCODE || event.which !== SPACE_KEYCODE) || isActive && (event.which === ESCAPE_KEYCODE || event.which === SPACE_KEYCODE)) {
 
         if (event.which === ESCAPE_KEYCODE) {
-          var toggle = $(parent).find(Selector.DATA_TOGGLE)[0];
+          let toggle = $(parent).find(Selector.DATA_TOGGLE)[0];
           $(toggle).trigger('focus');
         }
 
@@ -1747,13 +1747,13 @@ var Dropdown = function ($) {
         return;
       }
 
-      var items = $(parent).find(Selector.VISIBLE_ITEMS).get();
+      let items = $(parent).find(Selector.VISIBLE_ITEMS).get();
 
       if (!items.length) {
         return;
       }
 
-      var index = items.indexOf(event.target);
+      let index = items.indexOf(event.target);
 
       if (event.which === ARROW_UP_KEYCODE && index > 0) {
         // up
@@ -1829,7 +1829,7 @@ var Dropdown = function ($) {
  * --------------------------------------------------------------------------
  */
 
-var Modal = function ($) {
+let Modal = function ($) {
 
   /**
    * ------------------------------------------------------------------------
@@ -1837,31 +1837,31 @@ var Modal = function ($) {
    * ------------------------------------------------------------------------
    */
 
-  var NAME = 'modal';
-  var VERSION = '4.0.0-beta';
-  var DATA_KEY = 'bs.modal';
-  var EVENT_KEY = '.' + DATA_KEY;
-  var DATA_API_KEY = '.data-api';
-  var JQUERY_NO_CONFLICT = $.fn[NAME];
-  var TRANSITION_DURATION = 300;
-  var BACKDROP_TRANSITION_DURATION = 150;
-  var ESCAPE_KEYCODE = 27; // KeyboardEvent.which value for Escape (Esc) key
+  let NAME = 'modal';
+  let VERSION = '4.0.0-beta';
+  let DATA_KEY = 'bs.modal';
+  let EVENT_KEY = '.' + DATA_KEY;
+  let DATA_API_KEY = '.data-api';
+  let JQUERY_NO_CONFLICT = $.fn[NAME];
+  let TRANSITION_DURATION = 300;
+  let BACKDROP_TRANSITION_DURATION = 150;
+  let ESCAPE_KEYCODE = 27; // KeyboardEvent.which value for Escape (Esc) key
 
-  var Default = {
+  let Default = {
     backdrop: true,
     keyboard: true,
     focus: true,
     show: true
   };
 
-  var DefaultType = {
+  let DefaultType = {
     backdrop: '(boolean|string)',
     keyboard: 'boolean',
     focus: 'boolean',
     show: 'boolean'
   };
 
-  var Event = {
+  let Event = {
     HIDE: 'hide' + EVENT_KEY,
     HIDDEN: 'hidden' + EVENT_KEY,
     SHOW: 'show' + EVENT_KEY,
@@ -1875,7 +1875,7 @@ var Modal = function ($) {
     CLICK_DATA_API: 'click' + EVENT_KEY + DATA_API_KEY
   };
 
-  var ClassName = {
+  let ClassName = {
     SCROLLBAR_MEASURER: 'modal-scrollbar-measure',
     BACKDROP: 'modal-backdrop',
     OPEN: 'modal-open',
@@ -1883,7 +1883,7 @@ var Modal = function ($) {
     SHOW: 'show'
   };
 
-  var Selector = {
+  let Selector = {
     DIALOG: '.modal-dialog',
     DATA_TOGGLE: '[data-toggle="modal"]',
     DATA_DISMISS: '[data-dismiss="modal"]',
@@ -1897,7 +1897,7 @@ var Modal = function ($) {
      */
 
   };
-  var Modal = function () {
+  let Modal = function () {
     function Modal(element, config) {
       _classCallCheck(this, Modal);
 
@@ -1921,7 +1921,7 @@ var Modal = function ($) {
     };
 
     Modal.prototype.show = function show(relatedTarget) {
-      var _this10 = this;
+      let _this10 = this;
 
       if (this._isTransitioning) {
         return;
@@ -1931,7 +1931,7 @@ var Modal = function ($) {
         this._isTransitioning = true;
       }
 
-      var showEvent = $.Event(Event.SHOW, {
+      let showEvent = $.Event(Event.SHOW, {
         relatedTarget: relatedTarget
       });
 
@@ -1969,7 +1969,7 @@ var Modal = function ($) {
     };
 
     Modal.prototype.hide = function hide(event) {
-      var _this11 = this;
+      let _this11 = this;
 
       if (event) {
         event.preventDefault();
@@ -1979,13 +1979,13 @@ var Modal = function ($) {
         return;
       }
 
-      var transition = Util.supportsTransitionEnd() && $(this._element).hasClass(ClassName.FADE);
+      let transition = Util.supportsTransitionEnd() && $(this._element).hasClass(ClassName.FADE);
 
       if (transition) {
         this._isTransitioning = true;
       }
 
-      var hideEvent = $.Event(Event.HIDE);
+      let hideEvent = $.Event(Event.HIDE);
 
       $(this._element).trigger(hideEvent);
 
@@ -2043,9 +2043,9 @@ var Modal = function ($) {
     };
 
     Modal.prototype._showElement = function _showElement(relatedTarget) {
-      var _this12 = this;
+      let _this12 = this;
 
-      var transition = Util.supportsTransitionEnd() && $(this._element).hasClass(ClassName.FADE);
+      let transition = Util.supportsTransitionEnd() && $(this._element).hasClass(ClassName.FADE);
 
       if (!this._element.parentNode || this._element.parentNode.nodeType !== Node.ELEMENT_NODE) {
         // don't move modals dom position
@@ -2066,11 +2066,11 @@ var Modal = function ($) {
         this._enforceFocus();
       }
 
-      var shownEvent = $.Event(Event.SHOWN, {
+      let shownEvent = $.Event(Event.SHOWN, {
         relatedTarget: relatedTarget
       });
 
-      var transitionComplete = function transitionComplete() {
+      let transitionComplete = function transitionComplete() {
         if (_this12._config.focus) {
           _this12._element.focus();
         }
@@ -2086,7 +2086,7 @@ var Modal = function ($) {
     };
 
     Modal.prototype._enforceFocus = function _enforceFocus() {
-      var _this13 = this;
+      let _this13 = this;
 
       $(document).off(Event.FOCUSIN) // guard against infinite focus loop
       .on(Event.FOCUSIN, function (event) {
@@ -2097,7 +2097,7 @@ var Modal = function ($) {
     };
 
     Modal.prototype._setEscapeEvent = function _setEscapeEvent() {
-      var _this14 = this;
+      let _this14 = this;
 
       if (this._isShown && this._config.keyboard) {
         $(this._element).on(Event.KEYDOWN_DISMISS, function (event) {
@@ -2112,7 +2112,7 @@ var Modal = function ($) {
     };
 
     Modal.prototype._setResizeEvent = function _setResizeEvent() {
-      var _this15 = this;
+      let _this15 = this;
 
       if (this._isShown) {
         $(window).on(Event.RESIZE, function (event) {
@@ -2124,7 +2124,7 @@ var Modal = function ($) {
     };
 
     Modal.prototype._hideModal = function _hideModal() {
-      var _this16 = this;
+      let _this16 = this;
 
       this._element.style.display = 'none';
       this._element.setAttribute('aria-hidden', true);
@@ -2145,12 +2145,12 @@ var Modal = function ($) {
     };
 
     Modal.prototype._showBackdrop = function _showBackdrop(callback) {
-      var _this17 = this;
+      let _this17 = this;
 
-      var animate = $(this._element).hasClass(ClassName.FADE) ? ClassName.FADE : '';
+      let animate = $(this._element).hasClass(ClassName.FADE) ? ClassName.FADE : '';
 
       if (this._isShown && this._config.backdrop) {
-        var doAnimate = Util.supportsTransitionEnd() && animate;
+        let doAnimate = Util.supportsTransitionEnd() && animate;
 
         this._backdrop = document.createElement('div');
         this._backdrop.className = ClassName.BACKDROP;
@@ -2195,7 +2195,7 @@ var Modal = function ($) {
       } else if (!this._isShown && this._backdrop) {
         $(this._backdrop).removeClass(ClassName.SHOW);
 
-        var callbackRemove = function callbackRemove() {
+        let callbackRemove = function callbackRemove() {
           _this17._removeBackdrop();
           if (callback) {
             callback();
@@ -2218,7 +2218,7 @@ var Modal = function ($) {
     // ----------------------------------------------------------------------
 
     Modal.prototype._adjustDialog = function _adjustDialog() {
-      var isModalOverflowing = this._element.scrollHeight > document.documentElement.clientHeight;
+      let isModalOverflowing = this._element.scrollHeight > document.documentElement.clientHeight;
 
       if (!this._isBodyOverflowing && isModalOverflowing) {
         this._element.style.paddingLeft = this._scrollbarWidth + 'px';
@@ -2240,7 +2240,7 @@ var Modal = function ($) {
     };
 
     Modal.prototype._setScrollbar = function _setScrollbar() {
-      var _this18 = this;
+      let _this18 = this;
 
       if (this._isBodyOverflowing) {
         // Note: DOMNode.style.paddingRight returns the actual value or '' if not set
@@ -2248,21 +2248,21 @@ var Modal = function ($) {
 
         // Adjust fixed content padding
         $(Selector.FIXED_CONTENT).each(function (index, element) {
-          var actualPadding = $(element)[0].style.paddingRight;
-          var calculatedPadding = $(element).css('padding-right');
+          let actualPadding = $(element)[0].style.paddingRight;
+          let calculatedPadding = $(element).css('padding-right');
           $(element).data('padding-right', actualPadding).css('padding-right', parseFloat(calculatedPadding) + _this18._scrollbarWidth + 'px');
         });
 
         // Adjust navbar-toggler margin
         $(Selector.NAVBAR_TOGGLER).each(function (index, element) {
-          var actualMargin = $(element)[0].style.marginRight;
-          var calculatedMargin = $(element).css('margin-right');
+          let actualMargin = $(element)[0].style.marginRight;
+          let calculatedMargin = $(element).css('margin-right');
           $(element).data('margin-right', actualMargin).css('margin-right', parseFloat(calculatedMargin) + _this18._scrollbarWidth + 'px');
         });
 
         // Adjust body padding
-        var actualPadding = document.body.style.paddingRight;
-        var calculatedPadding = $('body').css('padding-right');
+        let actualPadding = document.body.style.paddingRight;
+        let calculatedPadding = $('body').css('padding-right');
         $('body').data('padding-right', actualPadding).css('padding-right', parseFloat(calculatedPadding) + this._scrollbarWidth + 'px');
       }
     };
@@ -2270,7 +2270,7 @@ var Modal = function ($) {
     Modal.prototype._resetScrollbar = function _resetScrollbar() {
       // Restore fixed content padding
       $(Selector.FIXED_CONTENT).each(function (index, element) {
-        var padding = $(element).data('padding-right');
+        let padding = $(element).data('padding-right');
         if (typeof padding !== 'undefined') {
           $(element).css('padding-right', padding).removeData('padding-right');
         }
@@ -2278,14 +2278,14 @@ var Modal = function ($) {
 
       // Restore navbar-toggler margin
       $(Selector.NAVBAR_TOGGLER).each(function (index, element) {
-        var margin = $(element).data('margin-right');
+        let margin = $(element).data('margin-right');
         if (typeof margin !== 'undefined') {
           $(element).css('margin-right', margin).removeData('margin-right');
         }
       });
 
       // Restore body padding
-      var padding = $('body').data('padding-right');
+      let padding = $('body').data('padding-right');
       if (typeof padding !== 'undefined') {
         $('body').css('padding-right', padding).removeData('padding-right');
       }
@@ -2293,10 +2293,10 @@ var Modal = function ($) {
 
     Modal.prototype._getScrollbarWidth = function _getScrollbarWidth() {
       // thx d.walsh
-      var scrollDiv = document.createElement('div');
+      let scrollDiv = document.createElement('div');
       scrollDiv.className = ClassName.SCROLLBAR_MEASURER;
       document.body.appendChild(scrollDiv);
-      var scrollbarWidth = scrollDiv.getBoundingClientRect().width - scrollDiv.clientWidth;
+      let scrollbarWidth = scrollDiv.getBoundingClientRect().width - scrollDiv.clientWidth;
       document.body.removeChild(scrollDiv);
       return scrollbarWidth;
     };
@@ -2305,8 +2305,8 @@ var Modal = function ($) {
 
     Modal._jQueryInterface = function _jQueryInterface(config, relatedTarget) {
       return this.each(function () {
-        var data = $(this).data(DATA_KEY);
-        var _config = $.extend({}, Modal.Default, $(this).data(), (typeof config === 'undefined' ? 'undefined' : _typeof(config)) === 'object' && config);
+        let data = $(this).data(DATA_KEY);
+        let _config = $.extend({}, Modal.Default, $(this).data(), (typeof config === 'undefined' ? 'undefined' : _typeof(config)) === 'object' && config);
 
         if (!data) {
           data = new Modal(this, _config);
@@ -2346,22 +2346,22 @@ var Modal = function ($) {
    */
 
   $(document).on(Event.CLICK_DATA_API, Selector.DATA_TOGGLE, function (event) {
-    var _this19 = this;
+    let _this19 = this;
 
-    var target = void 0;
-    var selector = Util.getSelectorFromElement(this);
+    let target = void 0;
+    let selector = Util.getSelectorFromElement(this);
 
     if (selector) {
       target = $(selector)[0];
     }
 
-    var config = $(target).data(DATA_KEY) ? 'toggle' : $.extend({}, $(target).data(), $(this).data());
+    let config = $(target).data(DATA_KEY) ? 'toggle' : $.extend({}, $(target).data(), $(this).data());
 
     if (this.tagName === 'A' || this.tagName === 'AREA') {
       event.preventDefault();
     }
 
-    var $target = $(target).one(Event.SHOW, function (showEvent) {
+    let $target = $(target).one(Event.SHOW, function (showEvent) {
       if (showEvent.isDefaultPrevented()) {
         // only register focus restorer if modal will actually get shown
         return;
@@ -2400,7 +2400,7 @@ var Modal = function ($) {
  * --------------------------------------------------------------------------
  */
 
-var ScrollSpy = function ($) {
+let ScrollSpy = function ($) {
 
   /**
    * ------------------------------------------------------------------------
@@ -2408,38 +2408,38 @@ var ScrollSpy = function ($) {
    * ------------------------------------------------------------------------
    */
 
-  var NAME = 'scrollspy';
-  var VERSION = '4.0.0-beta';
-  var DATA_KEY = 'bs.scrollspy';
-  var EVENT_KEY = '.' + DATA_KEY;
-  var DATA_API_KEY = '.data-api';
-  var JQUERY_NO_CONFLICT = $.fn[NAME];
+  let NAME = 'scrollspy';
+  let VERSION = '4.0.0-beta';
+  let DATA_KEY = 'bs.scrollspy';
+  let EVENT_KEY = '.' + DATA_KEY;
+  let DATA_API_KEY = '.data-api';
+  let JQUERY_NO_CONFLICT = $.fn[NAME];
 
-  var Default = {
+  let Default = {
     offset: 10,
     method: 'auto',
     target: ''
   };
 
-  var DefaultType = {
+  let DefaultType = {
     offset: 'number',
     method: 'string',
     target: '(string|element)'
   };
 
-  var Event = {
+  let Event = {
     ACTIVATE: 'activate' + EVENT_KEY,
     SCROLL: 'scroll' + EVENT_KEY,
     LOAD_DATA_API: 'load' + EVENT_KEY + DATA_API_KEY
   };
 
-  var ClassName = {
+  let ClassName = {
     DROPDOWN_ITEM: 'dropdown-item',
     DROPDOWN_MENU: 'dropdown-menu',
     ACTIVE: 'active'
   };
 
-  var Selector = {
+  let Selector = {
     DATA_SPY: '[data-spy="scroll"]',
     ACTIVE: '.active',
     NAV_LIST_GROUP: '.nav, .list-group',
@@ -2450,7 +2450,7 @@ var ScrollSpy = function ($) {
     DROPDOWN_TOGGLE: '.dropdown-toggle'
   };
 
-  var OffsetMethod = {
+  let OffsetMethod = {
     OFFSET: 'offset',
     POSITION: 'position'
 
@@ -2461,9 +2461,9 @@ var ScrollSpy = function ($) {
      */
 
   };
-  var ScrollSpy = function () {
+  let ScrollSpy = function () {
     function ScrollSpy(element, config) {
-      var _this20 = this;
+      let _this20 = this;
 
       _classCallCheck(this, ScrollSpy);
 
@@ -2489,31 +2489,31 @@ var ScrollSpy = function ($) {
     // public
 
     ScrollSpy.prototype.refresh = function refresh() {
-      var _this21 = this;
+      let _this21 = this;
 
-      var autoMethod = this._scrollElement !== this._scrollElement.window ? OffsetMethod.POSITION : OffsetMethod.OFFSET;
+      let autoMethod = this._scrollElement !== this._scrollElement.window ? OffsetMethod.POSITION : OffsetMethod.OFFSET;
 
-      var offsetMethod = this._config.method === 'auto' ? autoMethod : this._config.method;
+      let offsetMethod = this._config.method === 'auto' ? autoMethod : this._config.method;
 
-      var offsetBase = offsetMethod === OffsetMethod.POSITION ? this._getScrollTop() : 0;
+      let offsetBase = offsetMethod === OffsetMethod.POSITION ? this._getScrollTop() : 0;
 
       this._offsets = [];
       this._targets = [];
 
       this._scrollHeight = this._getScrollHeight();
 
-      var targets = $.makeArray($(this._selector));
+      let targets = $.makeArray($(this._selector));
 
       targets.map(function (element) {
-        var target = void 0;
-        var targetSelector = Util.getSelectorFromElement(element);
+        let target = void 0;
+        let targetSelector = Util.getSelectorFromElement(element);
 
         if (targetSelector) {
           target = $(targetSelector)[0];
         }
 
         if (target) {
-          var targetBCR = target.getBoundingClientRect();
+          let targetBCR = target.getBoundingClientRect();
           if (targetBCR.width || targetBCR.height) {
             // todo (fat): remove sketch reliance on jQuery position/offset
             return [$(target)[offsetMethod]().top + offsetBase, targetSelector];
@@ -2550,7 +2550,7 @@ var ScrollSpy = function ($) {
       config = $.extend({}, Default, config);
 
       if (typeof config.target !== 'string') {
-        var id = $(config.target).attr('id');
+        let id = $(config.target).attr('id');
         if (!id) {
           id = Util.getUID(NAME);
           $(config.target).attr('id', id);
@@ -2576,16 +2576,16 @@ var ScrollSpy = function ($) {
     };
 
     ScrollSpy.prototype._process = function _process() {
-      var scrollTop = this._getScrollTop() + this._config.offset;
-      var scrollHeight = this._getScrollHeight();
-      var maxScroll = this._config.offset + scrollHeight - this._getOffsetHeight();
+      let scrollTop = this._getScrollTop() + this._config.offset;
+      let scrollHeight = this._getScrollHeight();
+      let maxScroll = this._config.offset + scrollHeight - this._getOffsetHeight();
 
       if (this._scrollHeight !== scrollHeight) {
         this.refresh();
       }
 
       if (scrollTop >= maxScroll) {
-        var target = this._targets[this._targets.length - 1];
+        let target = this._targets[this._targets.length - 1];
 
         if (this._activeTarget !== target) {
           this._activate(target);
@@ -2599,8 +2599,8 @@ var ScrollSpy = function ($) {
         return;
       }
 
-      for (var i = this._offsets.length; i--;) {
-        var isActiveTarget = this._activeTarget !== this._targets[i] && scrollTop >= this._offsets[i] && (this._offsets[i + 1] === undefined || scrollTop < this._offsets[i + 1]);
+      for (let i = this._offsets.length; i--;) {
+        let isActiveTarget = this._activeTarget !== this._targets[i] && scrollTop >= this._offsets[i] && (this._offsets[i + 1] === undefined || scrollTop < this._offsets[i + 1]);
 
         if (isActiveTarget) {
           this._activate(this._targets[i]);
@@ -2613,12 +2613,12 @@ var ScrollSpy = function ($) {
 
       this._clear();
 
-      var queries = this._selector.split(',');
+      let queries = this._selector.split(',');
       queries = queries.map(function (selector) {
         return selector + '[data-target="' + target + '"],' + (selector + '[href="' + target + '"]');
       });
 
-      var $link = $(queries.join(','));
+      let $link = $(queries.join(','));
 
       if ($link.hasClass(ClassName.DROPDOWN_ITEM)) {
         $link.closest(Selector.DROPDOWN).find(Selector.DROPDOWN_TOGGLE).addClass(ClassName.ACTIVE);
@@ -2644,8 +2644,8 @@ var ScrollSpy = function ($) {
 
     ScrollSpy._jQueryInterface = function _jQueryInterface(config) {
       return this.each(function () {
-        var data = $(this).data(DATA_KEY);
-        var _config = (typeof config === 'undefined' ? 'undefined' : _typeof(config)) === 'object' && config;
+        let data = $(this).data(DATA_KEY);
+        let _config = (typeof config === 'undefined' ? 'undefined' : _typeof(config)) === 'object' && config;
 
         if (!data) {
           data = new ScrollSpy(this, _config);
@@ -2683,10 +2683,10 @@ var ScrollSpy = function ($) {
    */
 
   $(window).on(Event.LOAD_DATA_API, function () {
-    var scrollSpys = $.makeArray($(Selector.DATA_SPY));
+    let scrollSpys = $.makeArray($(Selector.DATA_SPY));
 
-    for (var i = scrollSpys.length; i--;) {
-      var $spy = $(scrollSpys[i]);
+    for (let i = scrollSpys.length; i--;) {
+      let $spy = $(scrollSpys[i]);
       ScrollSpy._jQueryInterface.call($spy, $spy.data());
     }
   });
@@ -2714,7 +2714,7 @@ var ScrollSpy = function ($) {
  * --------------------------------------------------------------------------
  */
 
-var Tab = function ($) {
+let Tab = function ($) {
 
   /**
    * ------------------------------------------------------------------------
@@ -2722,15 +2722,15 @@ var Tab = function ($) {
    * ------------------------------------------------------------------------
    */
 
-  var NAME = 'tab';
-  var VERSION = '4.0.0-beta';
-  var DATA_KEY = 'bs.tab';
-  var EVENT_KEY = '.' + DATA_KEY;
-  var DATA_API_KEY = '.data-api';
-  var JQUERY_NO_CONFLICT = $.fn[NAME];
-  var TRANSITION_DURATION = 150;
+  let NAME = 'tab';
+  let VERSION = '4.0.0-beta';
+  let DATA_KEY = 'bs.tab';
+  let EVENT_KEY = '.' + DATA_KEY;
+  let DATA_API_KEY = '.data-api';
+  let JQUERY_NO_CONFLICT = $.fn[NAME];
+  let TRANSITION_DURATION = 150;
 
-  var Event = {
+  let Event = {
     HIDE: 'hide' + EVENT_KEY,
     HIDDEN: 'hidden' + EVENT_KEY,
     SHOW: 'show' + EVENT_KEY,
@@ -2738,7 +2738,7 @@ var Tab = function ($) {
     CLICK_DATA_API: 'click' + EVENT_KEY + DATA_API_KEY
   };
 
-  var ClassName = {
+  let ClassName = {
     DROPDOWN_MENU: 'dropdown-menu',
     ACTIVE: 'active',
     DISABLED: 'disabled',
@@ -2746,7 +2746,7 @@ var Tab = function ($) {
     SHOW: 'show'
   };
 
-  var Selector = {
+  let Selector = {
     DROPDOWN: '.dropdown',
     NAV_LIST_GROUP: '.nav, .list-group',
     ACTIVE: '.active',
@@ -2761,7 +2761,7 @@ var Tab = function ($) {
      */
 
   };
-  var Tab = function () {
+  let Tab = function () {
     function Tab(element) {
       _classCallCheck(this, Tab);
 
@@ -2773,27 +2773,27 @@ var Tab = function ($) {
     // public
 
     Tab.prototype.show = function show() {
-      var _this22 = this;
+      let _this22 = this;
 
       if (this._element.parentNode && this._element.parentNode.nodeType === Node.ELEMENT_NODE && $(this._element).hasClass(ClassName.ACTIVE) || $(this._element).hasClass(ClassName.DISABLED)) {
         return;
       }
 
-      var target = void 0;
-      var previous = void 0;
-      var listElement = $(this._element).closest(Selector.NAV_LIST_GROUP)[0];
-      var selector = Util.getSelectorFromElement(this._element);
+      let target = void 0;
+      let previous = void 0;
+      let listElement = $(this._element).closest(Selector.NAV_LIST_GROUP)[0];
+      let selector = Util.getSelectorFromElement(this._element);
 
       if (listElement) {
         previous = $.makeArray($(listElement).find(Selector.ACTIVE));
         previous = previous[previous.length - 1];
       }
 
-      var hideEvent = $.Event(Event.HIDE, {
+      let hideEvent = $.Event(Event.HIDE, {
         relatedTarget: this._element
       });
 
-      var showEvent = $.Event(Event.SHOW, {
+      let showEvent = $.Event(Event.SHOW, {
         relatedTarget: previous
       });
 
@@ -2813,12 +2813,12 @@ var Tab = function ($) {
 
       this._activate(this._element, listElement);
 
-      var complete = function complete() {
-        var hiddenEvent = $.Event(Event.HIDDEN, {
+      let complete = function complete() {
+        let hiddenEvent = $.Event(Event.HIDDEN, {
           relatedTarget: _this22._element
         });
 
-        var shownEvent = $.Event(Event.SHOWN, {
+        let shownEvent = $.Event(Event.SHOWN, {
           relatedTarget: previous
         });
 
@@ -2841,12 +2841,12 @@ var Tab = function ($) {
     // private
 
     Tab.prototype._activate = function _activate(element, container, callback) {
-      var _this23 = this;
+      let _this23 = this;
 
-      var active = $(container).find(Selector.ACTIVE)[0];
-      var isTransitioning = callback && Util.supportsTransitionEnd() && active && $(active).hasClass(ClassName.FADE);
+      let active = $(container).find(Selector.ACTIVE)[0];
+      let isTransitioning = callback && Util.supportsTransitionEnd() && active && $(active).hasClass(ClassName.FADE);
 
-      var complete = function complete() {
+      let complete = function complete() {
         return _this23._transitionComplete(element, active, isTransitioning, callback);
       };
 
@@ -2865,7 +2865,7 @@ var Tab = function ($) {
       if (active) {
         $(active).removeClass(ClassName.ACTIVE);
 
-        var dropdownChild = $(active.parentNode).find(Selector.DROPDOWN_ACTIVE_CHILD)[0];
+        let dropdownChild = $(active.parentNode).find(Selector.DROPDOWN_ACTIVE_CHILD)[0];
 
         if (dropdownChild) {
           $(dropdownChild).removeClass(ClassName.ACTIVE);
@@ -2886,7 +2886,7 @@ var Tab = function ($) {
 
       if (element.parentNode && $(element.parentNode).hasClass(ClassName.DROPDOWN_MENU)) {
 
-        var dropdownElement = $(element).closest(Selector.DROPDOWN)[0];
+        let dropdownElement = $(element).closest(Selector.DROPDOWN)[0];
         if (dropdownElement) {
           $(dropdownElement).find(Selector.DROPDOWN_TOGGLE).addClass(ClassName.ACTIVE);
         }
@@ -2903,8 +2903,8 @@ var Tab = function ($) {
 
     Tab._jQueryInterface = function _jQueryInterface(config) {
       return this.each(function () {
-        var $this = $(this);
-        var data = $this.data(DATA_KEY);
+        let $this = $(this);
+        let data = $this.data(DATA_KEY);
 
         if (!data) {
           data = new Tab(this);
@@ -2966,7 +2966,7 @@ var Tab = function ($) {
  * --------------------------------------------------------------------------
  */
 
-var Tooltip = function ($) {
+let Tooltip = function ($) {
 
   /**
    * Check for Popper dependency
@@ -2982,16 +2982,16 @@ var Tooltip = function ($) {
    * ------------------------------------------------------------------------
    */
 
-  var NAME = 'tooltip';
-  var VERSION = '4.0.0-beta';
-  var DATA_KEY = 'bs.tooltip';
-  var EVENT_KEY = '.' + DATA_KEY;
-  var JQUERY_NO_CONFLICT = $.fn[NAME];
-  var TRANSITION_DURATION = 150;
-  var CLASS_PREFIX = 'bs-tooltip';
-  var BSCLS_PREFIX_REGEX = new RegExp('(^|\\s)' + CLASS_PREFIX + '\\S+', 'g');
+  let NAME = 'tooltip';
+  let VERSION = '4.0.0-beta';
+  let DATA_KEY = 'bs.tooltip';
+  let EVENT_KEY = '.' + DATA_KEY;
+  let JQUERY_NO_CONFLICT = $.fn[NAME];
+  let TRANSITION_DURATION = 150;
+  let CLASS_PREFIX = 'bs-tooltip';
+  let BSCLS_PREFIX_REGEX = new RegExp('(^|\\s)' + CLASS_PREFIX + '\\S+', 'g');
 
-  var DefaultType = {
+  let DefaultType = {
     animation: 'boolean',
     template: 'string',
     title: '(string|element|function)',
@@ -3005,7 +3005,7 @@ var Tooltip = function ($) {
     fallbackPlacement: '(string|array)'
   };
 
-  var AttachmentMap = {
+  let AttachmentMap = {
     AUTO: 'auto',
     TOP: 'top',
     RIGHT: 'right',
@@ -3013,7 +3013,7 @@ var Tooltip = function ($) {
     LEFT: 'left'
   };
 
-  var Default = {
+  let Default = {
     animation: true,
     template: '<div class="tooltip" role="tooltip">' + '<div class="arrow"></div>' + '<div class="tooltip-inner"></div></div>',
     trigger: 'hover focus',
@@ -3027,12 +3027,12 @@ var Tooltip = function ($) {
     fallbackPlacement: 'flip'
   };
 
-  var HoverState = {
+  let HoverState = {
     SHOW: 'show',
     OUT: 'out'
   };
 
-  var Event = {
+  let Event = {
     HIDE: 'hide' + EVENT_KEY,
     HIDDEN: 'hidden' + EVENT_KEY,
     SHOW: 'show' + EVENT_KEY,
@@ -3045,18 +3045,18 @@ var Tooltip = function ($) {
     MOUSELEAVE: 'mouseleave' + EVENT_KEY
   };
 
-  var ClassName = {
+  let ClassName = {
     FADE: 'fade',
     SHOW: 'show'
   };
 
-  var Selector = {
+  let Selector = {
     TOOLTIP: '.tooltip',
     TOOLTIP_INNER: '.tooltip-inner',
     ARROW: '.arrow'
   };
 
-  var Trigger = {
+  let Trigger = {
     HOVER: 'hover',
     FOCUS: 'focus',
     CLICK: 'click',
@@ -3069,7 +3069,7 @@ var Tooltip = function ($) {
      */
 
   };
-  var Tooltip = function () {
+  let Tooltip = function () {
     function Tooltip(element, config) {
       _classCallCheck(this, Tooltip);
 
@@ -3106,8 +3106,8 @@ var Tooltip = function ($) {
 
     Tooltip.prototype.toggle = function toggle(event) {
       if (event) {
-        var dataKey = this.constructor.DATA_KEY;
-        var context = $(event.currentTarget).data(dataKey);
+        let dataKey = this.constructor.DATA_KEY;
+        let context = $(event.currentTarget).data(dataKey);
 
         if (!context) {
           context = new this.constructor(event.currentTarget, this._getDelegateConfig());
@@ -3159,24 +3159,24 @@ var Tooltip = function ($) {
     };
 
     Tooltip.prototype.show = function show() {
-      var _this24 = this;
+      let _this24 = this;
 
       if ($(this.element).css('display') === 'none') {
         throw new Error('Please use show on visible elements');
       }
 
-      var showEvent = $.Event(this.constructor.Event.SHOW);
+      let showEvent = $.Event(this.constructor.Event.SHOW);
       if (this.isWithContent() && this._isEnabled) {
         $(this.element).trigger(showEvent);
 
-        var isInTheDom = $.contains(this.element.ownerDocument.documentElement, this.element);
+        let isInTheDom = $.contains(this.element.ownerDocument.documentElement, this.element);
 
         if (showEvent.isDefaultPrevented() || !isInTheDom) {
           return;
         }
 
-        var tip = this.getTipElement();
-        var tipId = Util.getUID(this.constructor.NAME);
+        let tip = this.getTipElement();
+        let tipId = Util.getUID(this.constructor.NAME);
 
         tip.setAttribute('id', tipId);
         this.element.setAttribute('aria-describedby', tipId);
@@ -3187,12 +3187,12 @@ var Tooltip = function ($) {
           $(tip).addClass(ClassName.FADE);
         }
 
-        var placement = typeof this.config.placement === 'function' ? this.config.placement.call(this, tip, this.element) : this.config.placement;
+        let placement = typeof this.config.placement === 'function' ? this.config.placement.call(this, tip, this.element) : this.config.placement;
 
-        var attachment = this._getAttachment(placement);
+        let attachment = this._getAttachment(placement);
         this.addAttachmentClass(attachment);
 
-        var container = this.config.container === false ? document.body : $(this.config.container);
+        let container = this.config.container === false ? document.body : $(this.config.container);
 
         $(tip).data(this.constructor.DATA_KEY, this);
 
@@ -3235,11 +3235,11 @@ var Tooltip = function ($) {
           $('body').children().on('mouseover', null, $.noop);
         }
 
-        var complete = function complete() {
+        let complete = function complete() {
           if (_this24.config.animation) {
             _this24._fixTransition();
           }
-          var prevHoverState = _this24._hoverState;
+          let prevHoverState = _this24._hoverState;
           _this24._hoverState = null;
 
           $(_this24.element).trigger(_this24.constructor.Event.SHOWN);
@@ -3258,11 +3258,11 @@ var Tooltip = function ($) {
     };
 
     Tooltip.prototype.hide = function hide(callback) {
-      var _this25 = this;
+      let _this25 = this;
 
-      var tip = this.getTipElement();
-      var hideEvent = $.Event(this.constructor.Event.HIDE);
-      var complete = function complete() {
+      let tip = this.getTipElement();
+      let hideEvent = $.Event(this.constructor.Event.HIDE);
+      let complete = function complete() {
         if (_this25._hoverState !== HoverState.SHOW && tip.parentNode) {
           tip.parentNode.removeChild(tip);
         }
@@ -3328,13 +3328,13 @@ var Tooltip = function ($) {
     };
 
     Tooltip.prototype.setContent = function setContent() {
-      var $tip = $(this.getTipElement());
+      let $tip = $(this.getTipElement());
       this.setElementContent($tip.find(Selector.TOOLTIP_INNER), this.getTitle());
       $tip.removeClass(ClassName.FADE + ' ' + ClassName.SHOW);
     };
 
     Tooltip.prototype.setElementContent = function setElementContent($element, content) {
-      var html = this.config.html;
+      let html = this.config.html;
       if ((typeof content === 'undefined' ? 'undefined' : _typeof(content)) === 'object' && (content.nodeType || content.jquery)) {
         // content is a DOM node or a jQuery
         if (html) {
@@ -3350,7 +3350,7 @@ var Tooltip = function ($) {
     };
 
     Tooltip.prototype.getTitle = function getTitle() {
-      var title = this.element.getAttribute('data-original-title');
+      let title = this.element.getAttribute('data-original-title');
 
       if (!title) {
         title = typeof this.config.title === 'function' ? this.config.title.call(this.element) : this.config.title;
@@ -3366,9 +3366,9 @@ var Tooltip = function ($) {
     };
 
     Tooltip.prototype._setListeners = function _setListeners() {
-      var _this26 = this;
+      let _this26 = this;
 
-      var triggers = this.config.trigger.split(' ');
+      let triggers = this.config.trigger.split(' ');
 
       triggers.forEach(function (trigger) {
         if (trigger === 'click') {
@@ -3376,8 +3376,8 @@ var Tooltip = function ($) {
             return _this26.toggle(event);
           });
         } else if (trigger !== Trigger.MANUAL) {
-          var eventIn = trigger === Trigger.HOVER ? _this26.constructor.Event.MOUSEENTER : _this26.constructor.Event.FOCUSIN;
-          var eventOut = trigger === Trigger.HOVER ? _this26.constructor.Event.MOUSELEAVE : _this26.constructor.Event.FOCUSOUT;
+          let eventIn = trigger === Trigger.HOVER ? _this26.constructor.Event.MOUSEENTER : _this26.constructor.Event.FOCUSIN;
+          let eventOut = trigger === Trigger.HOVER ? _this26.constructor.Event.MOUSELEAVE : _this26.constructor.Event.FOCUSOUT;
 
           $(_this26.element).on(eventIn, _this26.config.selector, function (event) {
             return _this26._enter(event);
@@ -3402,7 +3402,7 @@ var Tooltip = function ($) {
     };
 
     Tooltip.prototype._fixTitle = function _fixTitle() {
-      var titleType = _typeof(this.element.getAttribute('data-original-title'));
+      let titleType = _typeof(this.element.getAttribute('data-original-title'));
       if (this.element.getAttribute('title') || titleType !== 'string') {
         this.element.setAttribute('data-original-title', this.element.getAttribute('title') || '');
         this.element.setAttribute('title', '');
@@ -3410,7 +3410,7 @@ var Tooltip = function ($) {
     };
 
     Tooltip.prototype._enter = function _enter(event, context) {
-      var dataKey = this.constructor.DATA_KEY;
+      let dataKey = this.constructor.DATA_KEY;
 
       context = context || $(event.currentTarget).data(dataKey);
 
@@ -3445,7 +3445,7 @@ var Tooltip = function ($) {
     };
 
     Tooltip.prototype._leave = function _leave(event, context) {
-      var dataKey = this.constructor.DATA_KEY;
+      let dataKey = this.constructor.DATA_KEY;
 
       context = context || $(event.currentTarget).data(dataKey);
 
@@ -3479,7 +3479,7 @@ var Tooltip = function ($) {
     };
 
     Tooltip.prototype._isWithActiveTrigger = function _isWithActiveTrigger() {
-      for (var trigger in this._activeTrigger) {
+      for (let trigger in this._activeTrigger) {
         if (this._activeTrigger[trigger]) {
           return true;
         }
@@ -3512,10 +3512,10 @@ var Tooltip = function ($) {
     };
 
     Tooltip.prototype._getDelegateConfig = function _getDelegateConfig() {
-      var config = {};
+      let config = {};
 
       if (this.config) {
-        for (var key in this.config) {
+        for (let key in this.config) {
           if (this.constructor.Default[key] !== this.config[key]) {
             config[key] = this.config[key];
           }
@@ -3526,8 +3526,8 @@ var Tooltip = function ($) {
     };
 
     Tooltip.prototype._cleanTipClass = function _cleanTipClass() {
-      var $tip = $(this.getTipElement());
-      var tabClass = $tip.attr('class').match(BSCLS_PREFIX_REGEX);
+      let $tip = $(this.getTipElement());
+      let tabClass = $tip.attr('class').match(BSCLS_PREFIX_REGEX);
       if (tabClass !== null && tabClass.length > 0) {
         $tip.removeClass(tabClass.join(''));
       }
@@ -3539,8 +3539,8 @@ var Tooltip = function ($) {
     };
 
     Tooltip.prototype._fixTransition = function _fixTransition() {
-      var tip = this.getTipElement();
-      var initConfigAnimation = this.config.animation;
+      let tip = this.getTipElement();
+      let initConfigAnimation = this.config.animation;
       if (tip.getAttribute('x-placement') !== null) {
         return;
       }
@@ -3555,8 +3555,8 @@ var Tooltip = function ($) {
 
     Tooltip._jQueryInterface = function _jQueryInterface(config) {
       return this.each(function () {
-        var data = $(this).data(DATA_KEY);
-        var _config = (typeof config === 'undefined' ? 'undefined' : _typeof(config)) === 'object' && config;
+        let data = $(this).data(DATA_KEY);
+        let _config = (typeof config === 'undefined' ? 'undefined' : _typeof(config)) === 'object' && config;
 
         if (!data && /dispose|hide/.test(config)) {
           return;
@@ -3639,7 +3639,7 @@ var Tooltip = function ($) {
  * --------------------------------------------------------------------------
  */
 
-var Popover = function ($) {
+let Popover = function ($) {
 
   /**
    * ------------------------------------------------------------------------
@@ -3647,36 +3647,36 @@ var Popover = function ($) {
    * ------------------------------------------------------------------------
    */
 
-  var NAME = 'popover';
-  var VERSION = '4.0.0-beta';
-  var DATA_KEY = 'bs.popover';
-  var EVENT_KEY = '.' + DATA_KEY;
-  var JQUERY_NO_CONFLICT = $.fn[NAME];
-  var CLASS_PREFIX = 'bs-popover';
-  var BSCLS_PREFIX_REGEX = new RegExp('(^|\\s)' + CLASS_PREFIX + '\\S+', 'g');
+  let NAME = 'popover';
+  let VERSION = '4.0.0-beta';
+  let DATA_KEY = 'bs.popover';
+  let EVENT_KEY = '.' + DATA_KEY;
+  let JQUERY_NO_CONFLICT = $.fn[NAME];
+  let CLASS_PREFIX = 'bs-popover';
+  let BSCLS_PREFIX_REGEX = new RegExp('(^|\\s)' + CLASS_PREFIX + '\\S+', 'g');
 
-  var Default = $.extend({}, Tooltip.Default, {
+  let Default = $.extend({}, Tooltip.Default, {
     placement: 'right',
     trigger: 'click',
     content: '',
     template: '<div class="popover" role="tooltip">' + '<div class="arrow"></div>' + '<h3 class="popover-header"></h3>' + '<div class="popover-body"></div></div>'
   });
 
-  var DefaultType = $.extend({}, Tooltip.DefaultType, {
+  let DefaultType = $.extend({}, Tooltip.DefaultType, {
     content: '(string|element|function)'
   });
 
-  var ClassName = {
+  let ClassName = {
     FADE: 'fade',
     SHOW: 'show'
   };
 
-  var Selector = {
+  let Selector = {
     TITLE: '.popover-header',
     CONTENT: '.popover-body'
   };
 
-  var Event = {
+  let Event = {
     HIDE: 'hide' + EVENT_KEY,
     HIDDEN: 'hidden' + EVENT_KEY,
     SHOW: 'show' + EVENT_KEY,
@@ -3695,7 +3695,7 @@ var Popover = function ($) {
      */
 
   };
-  var Popover = function (_Tooltip) {
+  let Popover = function (_Tooltip) {
     _inherits(Popover, _Tooltip);
 
     function Popover() {
@@ -3719,7 +3719,7 @@ var Popover = function ($) {
     };
 
     Popover.prototype.setContent = function setContent() {
-      var $tip = $(this.getTipElement());
+      let $tip = $(this.getTipElement());
 
       // we use append for html objects to maintain js events
       this.setElementContent($tip.find(Selector.TITLE), this.getTitle());
@@ -3735,8 +3735,8 @@ var Popover = function ($) {
     };
 
     Popover.prototype._cleanTipClass = function _cleanTipClass() {
-      var $tip = $(this.getTipElement());
-      var tabClass = $tip.attr('class').match(BSCLS_PREFIX_REGEX);
+      let $tip = $(this.getTipElement());
+      let tabClass = $tip.attr('class').match(BSCLS_PREFIX_REGEX);
       if (tabClass !== null && tabClass.length > 0) {
         $tip.removeClass(tabClass.join(''));
       }
@@ -3746,8 +3746,8 @@ var Popover = function ($) {
 
     Popover._jQueryInterface = function _jQueryInterface(config) {
       return this.each(function () {
-        var data = $(this).data(DATA_KEY);
-        var _config = (typeof config === 'undefined' ? 'undefined' : _typeof(config)) === 'object' ? config : null;
+        let data = $(this).data(DATA_KEY);
+        let _config = (typeof config === 'undefined' ? 'undefined' : _typeof(config)) === 'object' ? config : null;
 
         if (!data && /destroy|hide/.test(config)) {
           return;
