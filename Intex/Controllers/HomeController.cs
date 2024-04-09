@@ -15,7 +15,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View();
+        return View("IndexTest");
     }
 
     public IActionResult Privacy()
@@ -33,4 +33,10 @@ public class HomeController : Controller
     {
         return View();
     }
+    
+    public IActionResult Login()
+    {
+        return View();
+    }
+    
 }
