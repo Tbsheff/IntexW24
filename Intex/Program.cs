@@ -20,6 +20,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddScoped<ILegoRepository, EFLegoRepository>();
 
 // Enable runtime compilation for Razor pages
 builder.Services.AddRazorPages()
