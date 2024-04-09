@@ -1,17 +1,22 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Intex.Models;
+using Intex.Components;
 
 namespace Intex.Controllers;
 
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly ILegoRepository _repo;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, ILegoRepository repo)
     {
         _logger = logger;
+        _repo = repo;
     }
+
+
 
     public IActionResult Index()
     {
@@ -38,5 +43,11 @@ public class HomeController : Controller
     {
         return View();
     }
-    
+
+    public IActionResult Product()
+    {
+        var products = _repo.Products.ToList();
+        return View(products);
+    }
+
 }
