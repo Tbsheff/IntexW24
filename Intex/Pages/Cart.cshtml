@@ -1,0 +1,49 @@
+﻿@page
+@model Intex.Pages.CartModel
+@{
+}
+<h1>View Cart</h1>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Quality</th>
+            <th class="text-right">Amount</th>
+            <th class="text-right">Subtotal</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var l in Model.Cart?.Lines ?? Enumerable.Empty<Cart.CartLine>())
+        {
+            <tr>
+                <td class="text-left">@l.name.name</td>
+                <td class="text-center">@l.Quantity</td>
+                <td class="text-right">@l.name.price</td>
+                <td class="text-right">@(l.Quantity * l.name.price).ToString("c")</td>
+            </tr>
+        }
+    </tbody>
+
+    <tfoot>
+        <tr>
+            <td colspan="3" class="text-right">Total:</td>
+            <td class="text-right">@Model.Cart?.CalculateTotal().ToString("C")</td>
+        </tr>
+    </tfoot>
+
+
+
+</table>
+
+
+<!-- This is the button to the cart page-->
+<form id=@Model.product_id method="post" asp-page="/Cart">
+    <input type="hidden" asp-for="@Model.product_id"/>
+    <button type="submit" class="btn-outline-success btn-sm">Add Cart</button>
+</form> 
+
+<div class="text-center">
+    <a class="btn btn-primary" href="/">Go Back</a>
+</div>
