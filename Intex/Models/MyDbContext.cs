@@ -9,12 +9,15 @@ public partial class MyDbContext : DbContext
     public MyDbContext()
     {
     }
+    private readonly IConfiguration _configuration;
 
-    public MyDbContext(DbContextOptions<MyDbContext> options)
+    public MyDbContext(DbContextOptions<MyDbContext> options, IConfiguration configuration)
         : base(options)
     {
+        _configuration = configuration;
     }
 
+    
     public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
 
     public virtual DbSet<AspNetRoleClaim> AspNetRoleClaims { get; set; }
@@ -53,8 +56,16 @@ public partial class MyDbContext : DbContext
 
     public virtual DbSet<User> users { get; set; }
 
+    
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("DefaultConnection");
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            var connectionString = _configuration.GetConnectionString("DefaultConnection");
+            optionsBuilder.UseSqlServer(connectionString);
+        }
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -157,18 +168,6 @@ public partial class MyDbContext : DbContext
             entity.Property(e => e.description).HasMaxLength(50);
         });
 
-        modelBuilder.Entity<Customer>(entity =>
-        {
-            entity.HasKey(e => e.customer_ID);
-
-            entity.ToTable("customer");
-
-            entity.Property(e => e.customer_ID).ValueGeneratedNever();
-            entity.Property(e => e.country_of_residence).HasMaxLength(50);
-            entity.Property(e => e.first_name).HasMaxLength(50);
-            entity.Property(e => e.gender).HasMaxLength(50);
-            entity.Property(e => e.last_name).HasMaxLength(50);
-        });
 
         modelBuilder.Entity<Customer_Recommendation>(entity =>
         {
@@ -248,11 +247,22 @@ public partial class MyDbContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.username);
-
+            entity.HasKey(e => e.user_id);
             entity.ToTable("user");
+        });
 
-            entity.Property(e => e.user_id);
+        modelBuilder.Entity<Customer>(entity =>
+        {
+            entity.HasKey(e => e.customer_ID);
+            entity.ToTable("customer");
+            entity.HasOne(e => e.User)
+                .WithOne(u => u.Customer)
+                .HasForeignKey<Customer>(c => c.customer_ID);
+            entity.Property(e => e.customer_ID).ValueGeneratedNever();
+            entity.Property(e => e.country_of_residence).HasMaxLength(50);
+            entity.Property(e => e.first_name).HasMaxLength(50);
+            entity.Property(e => e.gender).HasMaxLength(50);
+            entity.Property(e => e.last_name).HasMaxLength(50);
         });
     }
 
