@@ -2,9 +2,46 @@
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
+    Layout = null;
 }
 
+<link rel="stylesheet" type="text/css" href="~/css/Register-Styles.css"/>
+
 <h1>@ViewData["Title"]</h1>
+
+
+
+<div class="account-container">
+    <div class="register-container-1">
+        
+        <div class="logo"><img src="~/assets/images/icons/logo-01.png" alt="AuroraBricks Logo"/></div>
+        <h1>Create an Account</h1> 
+        <p>Enter your name</p>
+        <div class="divider">
+            <span>OR</span></div>
+        <div class="social-login">
+            <button class="google">G</button>
+                                          <button class="facebook">f</button>
+                                          <button class="github">C</button>
+                                          </div>
+    </div>
+    
+    <div class="register-container-2">
+        
+        <div class="form-section">
+
+            <input type="text" placeholder="First name" required>
+            <input type="text" placeholder="Last name (optional)">
+
+        </div>
+    </div>
+    <div class="register-next">
+        <button type="submit">Next</button>
+    </div>
+    
+    
+</div>
+
 
 <div class="row">
     <div class="col-md-4">
@@ -62,6 +99,6 @@
     </div>
 </div>
 
-@section Scripts {
+@*@section Scripts {
     <partial name="_ValidationScriptsPartial" />
-}
+}*@

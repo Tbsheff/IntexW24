@@ -16,26 +16,29 @@
         
         <div class="login-form">
             <h2>Sign in</h2>
-            <form>
+            <form id="account" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                 <div class="input-group">
-                    <input type="text" placeholder="Username" required>
+                    <input type="text" placeholder="Username" autocomplete="username" aria-required="true" required asp-for="Input.Email">
                 </div>
                 <div class="input-group">
-                    <input type="password" placeholder="Password" required>
+                    <input type="password" placeholder="Password" required asp-for="Input.Password" autocomplete="current-password">
                 </div>
                 <div class="remember-me">
                     <div>
-                        <input type="checkbox" id="remember-me">
-                        <label for="remember-me">Remember me</label>
+                        <label asp-for="Input.RememberMe" class="form-label">
+                                                <input class="form-check-input" asp-for="Input.RememberMe" />
+                                                @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                            </label>
                     </div>
                     <div>
-                        <a href="#" class="forgot-password">Forgot password?</a>
+                        <a class="forgot-password" id="forgot-password" asp-page="./ForgotPassword">Forgot password?</a>
                     </div>
                 </div>
 
                 <button type="submit">Sign in</button>
                 <div class="sign-up">
-                    Don’t have an account? <a href="#" class="sign-up-link">Sign Up Here</a>
+                    Don’t have an account? <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="sign-up-link">Sign Up Here</a>
                 </div>
                 <p>
                     Or
@@ -137,6 +140,6 @@
 </div>
 *@
 
-@section Scripts {
+@*@section Scripts {
     <partial name="_ValidationScriptsPartial" />
-}
+}*@
