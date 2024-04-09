@@ -1,5 +1,6 @@
 ﻿@using Microsoft.EntityFrameworkCore.Metadata.Internal
-@model dynamic
+@model Product
+
 
 @{
     ViewBag.Title = "title";
@@ -133,11 +134,20 @@
                       </div>
                     </div>
 
-                    <button
+@*                     <button
                       class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail"
                     >
                       Add to cart
-                    </button>
+                    </button> *@
+
+                    <form id=@Model.product_id method="post" asp-page="/Cart">
+                        <input type="hidden" asp-for="product_id" />
+                        <button type="submit" class="btn-outline-success btn-sm">Add Cart</button>
+                    </form>
+
+                    <div class="text-center">
+                        <a class="btn btn-primary" href="/">Go Back</a>
+                    </div>
                   </div>
                 </div>
               </div>

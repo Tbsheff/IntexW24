@@ -26,6 +26,7 @@ builder.Services.AddScoped<ILegoRepository, EFLegoRepository>();
 builder.Services.AddRazorPages()
     .AddRazorRuntimeCompilation();
 
+
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 
