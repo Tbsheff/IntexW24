@@ -51,9 +51,48 @@ public class HomeController : Controller
     
     public IActionResult Product(int pageNum = 1, string category = "All")
     {
-       
-
+       ViewBag.PageNum = pageNum;
+       ViewBag.Category = category;
+       ViewBag.PageSize = 10;
         return View();
     }
 
+    public IActionResult ProductDetails(int id = 1)
+    {
+        ViewBag.Product = _repo.Products.FirstOrDefault(p => p.product_id == id);
+        
+        var recommendedProducts = new List<Product>();
+
+        var recommendations = _repo.Product_Recommendations.FirstOrDefault(p => p.product_ID == id);
+
+        if (recommendations != null)
+        {
+            var recommendationIds = new List<byte>
+            {
+                recommendations.recommendation_1,
+                recommendations.recommendation_2,
+                recommendations.recommendation_3,
+                recommendations.recommendation_4,
+                recommendations.recommendation_5,
+                recommendations.recommendation_6,
+                recommendations.recommendation_7,
+                recommendations.recommendation_8,
+                recommendations.recommendation_9,
+                recommendations.recommendation_10
+            };
+
+            foreach (var recommendationId in recommendationIds)
+            {
+                var recommendedProduct = _repo.Products.FirstOrDefault(p => p.product_id == recommendationId);
+                if (recommendedProduct != null)
+                {
+                    recommendedProducts.Add(recommendedProduct);
+                }
+            }
+        }
+
+        ViewBag.RecommendedProducts = recommendedProducts;
+        
+        return View();
+    }
 }
