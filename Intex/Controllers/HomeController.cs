@@ -48,11 +48,12 @@ public class HomeController : Controller
     {
         return View();
     }
-
-    public IActionResult Product()
+    
+    public IActionResult Product(int pageNum = 1, string category = "All")
     {
-        var products = _repo.Products.ToList();
-        return View(products);
+       
+
+        return View();
     }
 
 }

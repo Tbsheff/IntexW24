@@ -3,4 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<vc:products-grid :products="Model"></vc:products-grid>
+
+@await Component.InvokeAsync("ProductsGrid", new { pageNum = 1, pageSize = 10, category = "All" })
+
+
