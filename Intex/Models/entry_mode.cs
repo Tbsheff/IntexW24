@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Intex.Models;
 
-public partial class entry_mode
+public partial class Entry_Mode
 {
     public byte entry_mode_id { get; set; }
 

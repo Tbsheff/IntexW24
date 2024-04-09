@@ -27,33 +27,34 @@ public partial class MyDbContext : DbContext
 
     public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; }
 
-    public virtual DbSet<bank> banks { get; set; }
+    public virtual DbSet<Bank> banks { get; set; }
 
-    public virtual DbSet<card_type> card_types { get; set; }
+    public virtual DbSet<Card_Type> card_types { get; set; }
 
-    public virtual DbSet<category> categories { get; set; }
+    public virtual DbSet<Category> categories { get; set; }
 
-    public virtual DbSet<customer> customers { get; set; }
+    public virtual DbSet<Customer> customers { get; set; }
 
-    public virtual DbSet<customer_recommendation> customer_recommendations { get; set; }
+    public virtual DbSet<Customer_Recommendation> customer_recommendations { get; set; }
 
-    public virtual DbSet<entry_mode> entry_modes { get; set; }
+    public virtual DbSet<Entry_Mode> entry_modes { get; set; }
 
-    public virtual DbSet<line_item> line_items { get; set; }
+    public virtual DbSet<Line_Item> line_items { get; set; }
 
-    public virtual DbSet<order> orders { get; set; }
+    public virtual DbSet<Order> orders { get; set; }
 
-    public virtual DbSet<product> products { get; set; }
+    public virtual DbSet<Product> products { get; set; }
 
-    public virtual DbSet<product_recommendation> product_recommendations { get; set; }
+    public virtual DbSet<Product_Recommendation> product_recommendations { get; set; }
 
-    public virtual DbSet<rating> ratings { get; set; }
+    public virtual DbSet<Rating> ratings { get; set; }
 
-    public virtual DbSet<transaction_type> transaction_types { get; set; }
+    public virtual DbSet<Transaction_Type> transaction_types { get; set; }
+
+    public virtual DbSet<User> users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=tcp:tbsheffdb.database.windows.net,1433;Initial Catalog=TylerTestDB;Persist Security Info=False;User ID=tbsheff;Password=prVZQcqP8zBiCkC;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+        => optionsBuilder.UseSqlServer("DefaultConnection");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -129,7 +130,7 @@ public partial class MyDbContext : DbContext
             entity.HasOne(d => d.User).WithMany(p => p.AspNetUserTokens).HasForeignKey(d => d.UserId);
         });
 
-        modelBuilder.Entity<bank>(entity =>
+        modelBuilder.Entity<Bank>(entity =>
         {
             entity.HasKey(e => e.bank_id);
 
@@ -138,7 +139,7 @@ public partial class MyDbContext : DbContext
             entity.Property(e => e.name).HasMaxLength(50);
         });
 
-        modelBuilder.Entity<card_type>(entity =>
+        modelBuilder.Entity<Card_Type>(entity =>
         {
             entity.HasKey(e => e.card_type_id);
 
@@ -147,7 +148,7 @@ public partial class MyDbContext : DbContext
             entity.Property(e => e.description).HasMaxLength(50);
         });
 
-        modelBuilder.Entity<category>(entity =>
+        modelBuilder.Entity<Category>(entity =>
         {
             entity.HasKey(e => e.category_id);
 
@@ -156,7 +157,7 @@ public partial class MyDbContext : DbContext
             entity.Property(e => e.description).HasMaxLength(50);
         });
 
-        modelBuilder.Entity<customer>(entity =>
+        modelBuilder.Entity<Customer>(entity =>
         {
             entity.HasKey(e => e.customer_ID);
 
@@ -169,7 +170,7 @@ public partial class MyDbContext : DbContext
             entity.Property(e => e.last_name).HasMaxLength(50);
         });
 
-        modelBuilder.Entity<customer_recommendation>(entity =>
+        modelBuilder.Entity<Customer_Recommendation>(entity =>
         {
             entity.HasKey(e => e.customer_id);
 
@@ -178,7 +179,7 @@ public partial class MyDbContext : DbContext
             entity.Property(e => e.customer_id).ValueGeneratedNever();
         });
 
-        modelBuilder.Entity<entry_mode>(entity =>
+        modelBuilder.Entity<Entry_Mode>(entity =>
         {
             entity.HasKey(e => e.entry_mode_id);
 
@@ -187,14 +188,14 @@ public partial class MyDbContext : DbContext
             entity.Property(e => e.description).HasMaxLength(50);
         });
 
-        modelBuilder.Entity<line_item>(entity =>
+        modelBuilder.Entity<Line_Item>(entity =>
         {
             entity
                 .HasNoKey()
                 .ToTable("line_item");
         });
 
-        modelBuilder.Entity<order>(entity =>
+        modelBuilder.Entity<Order>(entity =>
         {
             entity
                 .HasNoKey()
@@ -205,7 +206,7 @@ public partial class MyDbContext : DbContext
             entity.Property(e => e.shipping_address).HasMaxLength(50);
         });
 
-        modelBuilder.Entity<product>(entity =>
+        modelBuilder.Entity<Product>(entity =>
         {
             entity
                 .HasNoKey()
@@ -218,14 +219,14 @@ public partial class MyDbContext : DbContext
             entity.Property(e => e.secondary_color).HasMaxLength(50);
         });
 
-        modelBuilder.Entity<product_recommendation>(entity =>
+        modelBuilder.Entity<Product_Recommendation>(entity =>
         {
             entity
                 .HasNoKey()
                 .ToTable("product_recommendation");
         });
 
-        modelBuilder.Entity<rating>(entity =>
+        modelBuilder.Entity<Rating>(entity =>
         {
             entity.HasKey(e => e.product_ID);
 
@@ -234,7 +235,7 @@ public partial class MyDbContext : DbContext
             entity.Property(e => e.rating1).HasColumnName("rating");
         });
 
-        modelBuilder.Entity<transaction_type>(entity =>
+        modelBuilder.Entity<Transaction_Type>(entity =>
         {
             entity.HasKey(e => e.transaction_type_id);
 
@@ -244,6 +245,15 @@ public partial class MyDbContext : DbContext
         });
 
         OnModelCreatingPartial(modelBuilder);
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasKey(e => e.username);
+
+            entity.ToTable("user");
+
+            entity.Property(e => e.user_id);
+        });
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

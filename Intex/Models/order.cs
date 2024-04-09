@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Intex.Models;
 
-public partial class order
+public partial class Order
 {
     public int transaction_ID { get; set; }
 

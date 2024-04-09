@@ -8,17 +8,18 @@
         IEnumerable<AspNetUserClaim> AspNetUserClaims { get; }
         IEnumerable<AspNetUserLogin> AspNetUserLogins { get; }
         IEnumerable<AspNetUserToken> AspNetUserTokens { get; }
-        IEnumerable<bank> banks { get; }
-        IEnumerable<card_type> card_types { get; }
-        IEnumerable<category> categories { get; }
-        IEnumerable<customer> customers { get; }
-        IEnumerable<customer_recommendation> customer_recommendations { get;}
-        IEnumerable<entry_mode> entry_modes { get; }
-        IEnumerable<line_item> line_items { get; }
-        IEnumerable<order> orders { get; }
-        IEnumerable<product> products { get; }
-        IEnumerable<product_recommendation> product_recommendations { get; }
-        IEnumerable<rating> ratings { get; }
-        IEnumerable<transaction_type> transaction_types { get; }
+        IEnumerable<Bank> Banks { get; }
+        IEnumerable<Card_Type> Card_Types { get; }
+        IEnumerable<Category> Categories { get; }
+        IEnumerable<Customer> Customers { get; }
+        IEnumerable<Customer_Recommendation> Customer_Recommendations { get;}
+        IEnumerable<Entry_Mode> Entry_Modes { get; }
+        IEnumerable<Line_Item> Line_Items { get; }
+        IEnumerable<Order> Orders { get; }
+        IEnumerable<Product> Products { get; }
+        IEnumerable<Product_Recommendation> Product_Recommendations { get; }
+        IEnumerable<Rating> Ratings { get; }
+        IEnumerable<Transaction_Type> Transaction_Types { get; }
+        IEnumerable<User> Users { get; }
     }
 }

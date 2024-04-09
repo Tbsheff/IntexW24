@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Intex.Models;
 
-public partial class product_recommendation
+public partial class Product_Recommendation
 {
     public byte product_ID { get; set; }
 

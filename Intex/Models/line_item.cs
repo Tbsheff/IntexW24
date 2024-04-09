@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Intex.Models;
 
-public partial class line_item
+public partial class Line_Item
 {
     public int index { get; set; }
 

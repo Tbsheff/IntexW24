@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Intex.Models;
 
-public partial class customer
+public partial class Customer
 {
     public short customer_ID { get; set; }
 
