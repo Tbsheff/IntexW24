@@ -10,6 +10,9 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using Intex.Context;
+using Intex.Data;
+using Intex.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -29,13 +32,16 @@ namespace Intex.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private MyDbContext _context;
+        
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            MyDbContext context)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -43,6 +49,7 @@ namespace Intex.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         /// <summary>
@@ -74,6 +81,35 @@ namespace Intex.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
+            ///
+            ///
+            
+            [Required]
+            [StringLength(50)]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+            
+            [Required]
+            [StringLength(50)]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+            
+            [Required]
+            
+            [Display(Name = "DOB")]
+            public DateTime Dob { get; set; }
+            
+            [Required]
+            [StringLength(50)]
+            [Display(Name = "Country of Residence")]
+            public string Country { get; set; }
+            
+            [Required]
+            [StringLength(1)]
+            [Display(Name = "Gender")]
+            public string Gender { get; set; }
+            
+            
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -121,6 +157,18 @@ namespace Intex.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+                    
+                    var customer = new customer
+                    {
+                        first_name = Input.FirstName,
+                        last_name = Input.LastName,
+                        birth_date = DateOnly.FromDateTime(Input.Dob),
+                        country_of_residence = Input.Country,
+                        gender = Input.Gender,
+                        age = CalculateAge(Input.Dob) // Assuming you have a method to calculate age
+                    };
+                    _context.customers.Add(customer);
+                    await _context.SaveChangesAsync();
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -149,11 +197,19 @@ namespace Intex.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
+            
+            
 
             // If we got this far, something failed, redisplay form
             return Page();
         }
 
+        private byte CalculateAge(DateTime dob)
+        {
+            var age = DateTime.Today.Year - dob.Year;
+            if (dob.Date > DateTime.Today.AddYears(-age)) age--;
+            return (byte)age;
+        }
         private IdentityUser CreateUser()
         {
             try
