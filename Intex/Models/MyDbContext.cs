@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Intex.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Intex.Context;
+namespace Intex.Models;
 
 public partial class MyDbContext : DbContext
 {
