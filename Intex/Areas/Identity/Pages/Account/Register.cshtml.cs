@@ -10,7 +10,6 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
-using Intex.Context;
 using Intex.Data;
 using Intex.Models;
 using Microsoft.AspNetCore.Authentication;
@@ -158,7 +157,7 @@ namespace Intex.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
                     
-                    var customer = new customer
+                    var customer = new Customer
                     {
                         first_name = Input.FirstName,
                         last_name = Input.LastName,
