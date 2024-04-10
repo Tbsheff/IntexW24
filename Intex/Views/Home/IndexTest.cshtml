@@ -5,7 +5,10 @@
 
 @await Component.InvokeAsync("Slider")
 
-<vc:banner></vc:banner>
+<!-- Related Products -->
+    
+@await Component.InvokeAsync("RecommendedProducts", new { recommendedProducts = ViewBag.RecommendedProducts })
+
 
 
 
