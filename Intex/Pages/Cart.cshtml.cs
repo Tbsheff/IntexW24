@@ -33,49 +33,6 @@ namespace Intex.Pages
                 HttpContext.Session.SetJson("cart", Cart);
             }
 
-        }
-
-
-        public IActionResult OnPostRemoveItem(int product_id)
-        {
-            //System.Diagnostics.Debug.WriteLine($"Product ID to remove: {product_id}");
-
-            Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
-
-            Product pro = _repo.Products
-                .FirstOrDefault(x => x.product_id == product_id);
-
-
-            if (pro != null)
-            {
-                Cart.RemoveLine(pro);
-                HttpContext.Session.SetJson("cart", Cart);
-            }
-
-            return RedirectToPage(new { returnUrl = HttpContext.Request.Path + HttpContext.Request.QueryString });
-        }
-
-
-
-
-        public IActionResult OnPostUpdateCart(List<CartLine> updatedCart)
-        {
-            Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
-
-            foreach (var item in updatedCart)
-            {
-                // Assuming CartLine has a Product object called 'name' that contains the product_id
-                if (item.name != null && item.Quantity > 0)
-                {
-                    Cart.UpdateItem(item.name.product_id, item.Quantity);
-                }
-            }
-
-            HttpContext.Session.SetJson("cart", Cart);
-
-            return new JsonResult(new { success = true });
-        }
-
 
         public IActionResult OnPostCheckout()
         {
@@ -96,10 +53,6 @@ namespace Intex.Pages
 
             return RedirectToPage("/Delivery");
         }
-
-
-
-
     }
 
 

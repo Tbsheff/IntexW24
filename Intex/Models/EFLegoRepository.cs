@@ -25,5 +25,12 @@
         public IEnumerable<Rating> Ratings => _context.ratings;
         public IEnumerable<Transaction_Type> Transaction_Types => _context.transaction_types;
         public IEnumerable<User> Users => _context.users;
+        public void UpdateUser(User user)
+        {
+            // Update the entity state (Entity Framework approach)
+            _context.Update(user);
+
+           
+        }
     }
 }

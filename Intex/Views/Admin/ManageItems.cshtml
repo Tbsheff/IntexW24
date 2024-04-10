@@ -1,0 +1,56 @@
+﻿@model List<ItemViewModel>
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="filler" style="height: 84px;"></div>
+<main class="container dis-flex gap-md-5" style="gap: 2.5rem">
+    <div >
+        <h2>Dashboard</h2>
+        <ul>
+            <li class="active"><i class="fas fa-file-alt"></i><a asp-controller="Admin" asp-action="">Review Orders</a></li>
+            <li><i class="fas fa-user"></i><a asp-controller="Admin" asp-action="Index">Manage Users</a></li>
+            <li><i class="fas fa-box"></i><a asp-controller="Admin" asp-action="ManageItems">Manage Products</a></li>
+        </ul>
+    </div>
+    
+    <div>
+    <div class="admin-heading">
+        <h2>Manage Products</h2>
+        <a href="@Url.Action("AddProduct", "Admin")" class="btn btn-success">Add Product</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Year</th>
+                <th>Number of Parts</th>
+                <th>Price</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@item.Year</td>
+                    <td>@item.NumberOfParts</td>
+                    <td>@item.Price.ToString("C")</td>
+                    <td>
+                        <a href="@Url.Action("EditProduct", "Admin", new { id = item.ProductId })" class="btn btn-primary">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+    </div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"></script>

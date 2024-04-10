@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Intex.Data;
 using Intex.Areas.Identity.Data;
 using Intex.Models;
+using Intex.Middleware;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
                        throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var clientId = builder.Configuration["Authentication:Google:ClientId"];
+var clientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
@@ -27,8 +31,8 @@ builder.Services.AddScoped<ILegoRepository, EFLegoRepository>();
 
 builder.Services.AddAuthentication().AddGoogle(googleOptions =>
 {
-    googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-    googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+    googleOptions.ClientId = clientId;
+    googleOptions.ClientSecret = clientSecret;
 });
 
 // Enable runtime compilation for Razor pages
@@ -57,6 +61,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseSession();
+app.UseCartItemCount();
 
 app.UseRouting();
 
@@ -67,7 +72,7 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Home}/{action=Index}/{pageNum?}/{category?}");
+        pattern: "{controller=Home}/{action=Index}/{pageNum?}/{category?}/{primaryColor?}/{secondaryColor?}");
 
     endpoints.MapRazorPages(); // Include this line to enable Razor Pages
 
