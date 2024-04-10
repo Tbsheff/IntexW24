@@ -70,9 +70,15 @@ app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
+    
     endpoints.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{pageNum?}/{category?}/{primaryColor?}/{secondaryColor?}");
+    
+    endpoints.MapControllerRoute(
+        name: "editUser",
+        pattern: "Admin/EditUser/{id?}",
+        defaults: new { controller = "Admin", action = "EditUser" });
 
     endpoints.MapRazorPages(); // Include this line to enable Razor Pages
 

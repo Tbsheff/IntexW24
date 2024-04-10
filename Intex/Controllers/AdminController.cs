@@ -45,7 +45,8 @@ public class AdminController : Controller
         return View(usersWithCustomersAndRoles);
     }
     
-    public async Task<IActionResult> EditUser(short id = 30001)
+    [Route("Admin/EditUser/{id?}")]
+    public async Task<IActionResult> EditUser(short id)
     {
         var userViewModel =  _repo.Users
             .Join(
@@ -70,16 +71,12 @@ public class AdminController : Controller
         return View(userViewModel);
     }
 
-    [HttpPost]
-    
+    [HttpPost("Admin/EditUser/{id?}")]
     public async Task<IActionResult> EditUser(short id, UsersViewModel viewModel)
-    {
-        if (id != viewModel.User.user_id)
-        {
-            return NotFound();
-        }
+    { 
+        id = viewModel.User.user_id;
 
-        if (ModelState.IsValid)
+        if (id > 0)
         {
             try
             {
