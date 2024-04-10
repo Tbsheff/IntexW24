@@ -16,6 +16,8 @@ public class ProductsGridViewComponent: ViewComponent
         {
             ProductsListViewModel viewModel;
             
+            ViewBag.Categories = _repo.Categories.ToList();
+            
             if (category == "All")
             {
                 viewModel = new ProductsListViewModel

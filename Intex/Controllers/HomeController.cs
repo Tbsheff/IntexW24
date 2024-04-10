@@ -54,7 +54,7 @@ public class HomeController : Controller
         return View();
     }
     
-    public IActionResult Product(int pageNum = 1, string category = "All")
+    public IActionResult Product(int pageNum = 1, string category = "All", int pageSize = 10)
     {
        ViewBag.PageNum = pageNum;
        ViewBag.Category = category;
