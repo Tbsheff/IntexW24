@@ -268,6 +268,19 @@
     [ Show modal1 ]*/
     $('.js-show-modal1').on('click',function(e){
         e.preventDefault();
+        var productId = $(this).data('product-id');
+        var productName = $(this).data('product-name');
+        var productPrice = $(this).data('product-price');
+        var productImage = $(this).data('product-image');
+        var productDescription = $(this).data('product-description');
+        
+        console.log("This working")
+
+        $('#modalProductName').text(productName);
+        $('#modalProductPrice').text('$' + productPrice.toFixed(2));
+        $('#modalProductImage').attr('src', productImage);
+        $('#modalProductDescription').text(productDescription);
+        
         $('.js-modal1').addClass('show-modal1');
     });
 
