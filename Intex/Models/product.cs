@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Intex.Models;
 
 public partial class Product
 {
+    [Key]
     public byte product_id { get; set; }
 
     public string name { get; set; } = null!;

@@ -207,9 +207,9 @@ public partial class MyDbContext : DbContext
 
         modelBuilder.Entity<Product>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("product");
+
+            entity.HasKey(e => e.product_id);
+            entity.ToTable("product");
 
             entity.Property(e => e.description).HasMaxLength(2750);
             entity.Property(e => e.img_link).HasMaxLength(150);
