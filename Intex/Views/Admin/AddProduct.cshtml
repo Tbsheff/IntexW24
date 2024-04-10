@@ -1,0 +1,56 @@
+﻿@model AddProductViewModel
+@{
+    ViewBag.Title = "Add Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Add Product</h2>
+
+<form asp-action="AddProduct" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="Name">Product Name</label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Year">Year</label>
+        <input asp-for="Year" type="number" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NumParts">Number of Parts</label>
+        <input asp-for="NumParts" type="number" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Price">Price</label>
+        <input asp-for="Price" type="number" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="ImgLink">Image Link</label>
+        <input asp-for="ImgLink" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PrimaryColor">Primary Color</label>
+        <input asp-for="PrimaryColor" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="SecondaryColor">Secondary Color</label>
+        <input asp-for="SecondaryColor" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Description">Description</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+        <label asp-for="CategoryId">Category ID</label>
+        <input asp-for="CategoryId" class="form-control" />
+    </div>
+
+@*     <div class="form-group">
+        <label asp-for="DescriptionShort">Short Description</label>
+        <input asp-for="DescriptionShort" class="form-control" />
+    </div> *@
+    <button type="submit" class="btn btn-primary">Add Product</button>
+</form>
