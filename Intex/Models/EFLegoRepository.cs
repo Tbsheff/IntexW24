@@ -9,6 +9,8 @@
         public IEnumerable<AspNetRole> AspNetRoles => _context.AspNetRoles;
         public IEnumerable<AspNetRoleClaim> AspNetRoleClaims => _context.AspNetRoleClaims;
         public IEnumerable<AspNetUser> AspNetUsers => _context.AspNetUsers;
+        
+        public IEnumerable<AspNetUserRole> AspNetUserRoles => _context.AspNetUserRoles;
         public IEnumerable<AspNetUserClaim> AspNetUserClaims => _context.AspNetUserClaims;
         public IEnumerable<AspNetUserLogin> AspNetUserLogins => _context.AspNetUserLogins;
         public IEnumerable<AspNetUserToken> AspNetUserTokens => _context.AspNetUserTokens;

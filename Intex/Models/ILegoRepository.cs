@@ -5,6 +5,7 @@
         IEnumerable<AspNetRole> AspNetRoles { get; }
         IEnumerable<AspNetRoleClaim> AspNetRoleClaims { get; }
         IEnumerable<AspNetUser> AspNetUsers { get; }
+        IEnumerable<AspNetUserRole> AspNetUserRoles { get; }
         IEnumerable<AspNetUserClaim> AspNetUserClaims { get; }
         IEnumerable<AspNetUserLogin> AspNetUserLogins { get; }
         IEnumerable<AspNetUserToken> AspNetUserTokens { get; }

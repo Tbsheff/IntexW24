@@ -22,6 +22,8 @@ public partial class MyDbContext : DbContext
 
     public virtual DbSet<AspNetRoleClaim> AspNetRoleClaims { get; set; }
 
+    public DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
+    
     public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
 
     public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
@@ -78,6 +80,19 @@ public partial class MyDbContext : DbContext
             entity.Property(e => e.Name).HasMaxLength(256);
             entity.Property(e => e.NormalizedName).HasMaxLength(256);
         });
+        
+        modelBuilder.Entity<AspNetUserRole>()
+            .HasKey(ur => new { ur.UserId, ur.RoleId });
+
+        modelBuilder.Entity<AspNetUserRole>()
+            .HasOne(ur => ur.User)
+            .WithOne(u => u.UserRole)
+            .HasForeignKey<AspNetUserRole>(ur => ur.UserId);
+
+        modelBuilder.Entity<AspNetUserRole>()
+            .HasOne(ur => ur.Role)
+            .WithOne(r => r.UserRole)
+            .HasForeignKey<AspNetUserRole>(ur => ur.RoleId);
 
         modelBuilder.Entity<AspNetRoleClaim>(entity =>
         {
@@ -118,6 +133,9 @@ public partial class MyDbContext : DbContext
 
             entity.HasOne(d => d.User).WithMany(p => p.AspNetUserClaims).HasForeignKey(d => d.UserId);
         });
+        
+        
+
 
         modelBuilder.Entity<AspNetUserLogin>(entity =>
         {

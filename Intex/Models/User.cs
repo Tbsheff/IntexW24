@@ -11,6 +11,9 @@ namespace Intex.Models
         public required string username { get; set; }
         
         public Customer Customer { get; set; }
+        
+      
 
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }
