@@ -3,54 +3,68 @@
     ViewBag.Title = "title";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="filler" style="height: 84px;"></div>
-<main>
-    <div>
+
+<style>
+main{
+gap: 2.5rem;
+}
         
+
+    </style>
+<div class="filler" style="height: 84px;"></div>
+<main class="container dis-flex gap-md-5">
+    <div >
+        <h2>Dashboard</h2>
+        <ul>
+            <li class="active"><i class="fas fa-file-alt"></i><a>Review Orders</a></li>
+            <li><i class="fas fa-user"></i><a asp-controller="Admin" asp-action="Index">Manage Users</a></li>
+            <li><i class="fas fa-box"></i><a>Manage Products</a></li>
+        </ul>
     </div>
-    <div class="table-responsive">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>First & last name</th>
-                <th>Username</th>
-                <th>Role</th>
-                <th>Birthdate</th>
-                <th>Gender</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var item in Model)
-            {
+
+    <div class="dis-flex flex-column">
+        <div class="d-flex justify-content-between mb-3">
+            <h2>Manage Users</h2>
+            <a href="add_user_url" class="btn btn-success">Add User</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="thead-light">
                 <tr>
-                    <td>@item.Customer.first_name</td>
-                    <td>@item.Customer.last_name</td>
-                    <td>@item.User.username</td>
-                    <td>
-                        @*@Html.DropDownListFor(m => user.Role, new SelectList(user.Roles, "Value", "Text"))*@
-                    </td>
-                    @*<td>@item.Customer.birth_date.ToString("MM/dd/yyyy")</td>*@
-                    <td>
-                        @item.Customer.gender
-                        @*<select id="Gender" asp-for="Input.Gender" asp-items="Model.Genders">
-                                <option>Select your Gender</option>
-                            </select>"Text"))*@
-                    </td>
-                    <td>
-                        <a href="" class="btn btn-primary">
-                            <i class="fa fa-edit"></i>
-                        </a>
-                    </td>
-                    <td>
-                        <a href="" class="btn btn-danger">
-                            <i class="fa fa-trash"></i>
-                        </a>
-                    </td>
+                    <th scope="col">First & Last Name</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Birthdate</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
                 </tr>
-            }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Customer.first_name @item.Customer.last_name</td>
+                        <td>@item.User.username</td>
+                        <td>ROLE</td>
+                        <td>@item.Customer.birth_date.ToString("MM/dd/yyyy")</td>
+                        <td>@item.Customer.gender</td>
+                        <td>
+                            <a href="edit_user_url" class="btn btn-primary">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="delete_user_url" class="btn btn-danger">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
     </div>
 </main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"></script>

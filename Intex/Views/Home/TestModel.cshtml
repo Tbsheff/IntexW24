@@ -1,0 +1,103 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    ViewBag.Title = "Index";
+}
+
+
+<style>
+    .form-box {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    .form-group {
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+        .form-group label {
+            text-align: right;
+        }
+
+        .form-group input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-group input[type="submit"] {
+            grid-column: 2 / 3;
+            width: auto;
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            .form-group input[type="submit"]:hover {
+                background-color: #0056b3;
+            }
+</style>
+
+<div class="text-center">
+    <h2>Decision Tree Fraud Prediction</h2>
+
+    <div class="form-box">
+        <form action="/Home/Predict#predictionResult" method="post">
+            <div class="form-group"><label>Customer ID:</label><input type="text" name="customer_ID" /></div>
+            <div class="form-group"><label>Time:</label><input type="text" name="time" /></div>
+            <div class="form-group"><label>Amount:</label><input type="number" name="amount" step="0.01" /></div>
+            <div class="form-group"><label>Age:</label><input type="number" name="age" /></div>
+            <div class="form-group"><label>Day of Week (Mon):</label><input type="checkbox" name="day_of_week_Mon" value="1" /></div>
+            <div class="form-group"><label>Day of Week (Sat):</label><input type="checkbox" name="day_of_week_Sat" value="1" /></div>
+            <div class="form-group"><label>Day of Week (Sun):</label><input type="checkbox" name="day_of_week_Sun" value="1" /></div>
+            <div class="form-group"><label>Day of Week (Thu):</label><input type="checkbox" name="day_of_week_Thu" value="1" /></div>
+            <div class="form-group"><label>Day of Week (Tue):</label><input type="checkbox" name="day_of_week_Tue" value="1" /></div>
+            <div class="form-group"><label>Day of Week (Wed):</label><input type="checkbox" name="day_of_week_Wed" value="1" /></div>
+            <div class="form-group"><label>Entry Mode (PIN):</label><input type="checkbox" name="entry_mode_PIN" value="1" /></div>
+            <div class="form-group"><label>Entry Mode (Tap):</label><input type="checkbox" name="entry_mode_Tap" value="1" /></div>
+            <div class="form-group"><label>Type of Transaction (Online):</label><input type="checkbox" name="type_of_transaction_Online" value="1" /></div>
+            <div class="form-group"><label>Type of Transaction (POS):</label><input type="checkbox" name="type_of_transaction_POS" value="1" /></div>
+            <div class="form-group"><label>Country of Transaction (India):</label><input type="checkbox" name="country_of_transaction_India" value="1" /></div>
+            <div class="form-group"><label>Country of Transaction (Russia):</label><input type="checkbox" name="country_of_transaction_Russia" value="1" /></div>
+            <div class="form-group"><label>Country of Transaction (USA):</label><input type="checkbox" name="country_of_transaction_USA" value="1" /></div>
+            <div class="form-group"><label>Country of Transaction (United Kingdom):</label><input type="checkbox" name="country_of_transaction_United_Kingdom" value="1" /></div>
+            <div class="form-group"><label>Shipping Address (India):</label><input type="checkbox" name="shipping_address_India" value="1" /></div>
+            <div class="form-group"><label>Shipping Address (Russia):</label><input type="checkbox" name="shipping_address_Russia" value="1" /></div>
+            <div class="form-group"><label>Shipping Address (USA):</label><input type="checkbox" name="shipping_address_USA" value="1" /></div>
+            <div class="form-group"><label>Shipping Address (United Kingdom):</label><input type="checkbox" name="shipping_address_United_Kingdom" value="1" /></div>
+            <div class="form-group"><label>Bank (HSBC):</label><input type="checkbox" name="bank_HSBC" value="1" /></div>
+            <div class="form-group"><label>Bank (Halifax):</label><input type="checkbox" name="bank_Halifax" value="1" /></div>
+            <div class="form-group"><label>Bank (Lloyds):</label><input type="checkbox" name="bank_Lloyds" value="1" /></div>
+            <div class="form-group"><label>Bank (Metro):</label><input type="checkbox" name="bank_Metro" value="1" /></div>
+            <div class="form-group"><label>Bank (Monzo):</label><input type="checkbox" name="bank_Monzo" value="1" /></div>
+            <div class="form-group"><label>Bank (RBS):</label><input type="checkbox" name="bank_RBS" value="1" /></div>
+            <div class="form-group"><label>Type of Card (Visa):</label><input type="checkbox" name="type_of_card_Visa" value="1" /></div>
+            <div class="form-group"><label>Gender (M):</label><input type="checkbox" name="gender_M" value="1" /></div>
+            <div class="form-group"><label>Country of Residence (India):</label><input type="checkbox" name="country_of_residence_India" value="1" /></div>
+            <div class="form-group"><label>Country of Residence (Russia):</label><input type="checkbox" name="country_of_residence_Russia" value="1" /></div>
+            <div class="form-group"><label>Country of Residence (USA):</label><input type="checkbox" name="country_of_residence_USA" value="1" /></div>
+            <div class="form-group"><label>Country of Residence (United Kingdom):</label><input type="checkbox" name="country_of_residence_United_Kingdom" value="1" /></div>
+            <div class="form-group"><input type="submit" value="Predict" /></div>
+        </form>
+    </div>
+
+    <div class="text-center" id="predictionResult">
+        @if (ViewBag.Prediction != null)
+        {
+            <h2>Prediction: @(ViewBag.Prediction == 1 ? "Fraudulent" : "Not Fraudulent")</h2>
+        }
+    </div>
+
+</div>
