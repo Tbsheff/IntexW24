@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Intex.Data;
 using Intex.Areas.Identity.Data;
 using Intex.Models;
+using Intex.Middleware;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -60,6 +61,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseSession();
+app.UseCartItemCount();
 
 app.UseRouting();
 

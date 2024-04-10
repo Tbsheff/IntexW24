@@ -19,7 +19,7 @@ namespace Intex.Pages
    
         }
 
-        public void OnPost(int product_id)
+        public void OnPost(int product_id) 
         {
             Product pro = _repo.Products
                 .FirstOrDefault(x => x.product_id == product_id);
@@ -29,8 +29,15 @@ namespace Intex.Pages
                 Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
                 Cart.AddItem(pro, 1);
                 HttpContext.Session.SetJson("cart", Cart);
+                UpdateCartItemCount();
             }
 
+        }
+
+        private void UpdateCartItemCount()
+        {
+            var itemCount = Cart.Lines.Sum(x => x.Quantity);
+            HttpContext.Session.SetInt32("CartItemCount", itemCount);
         }
     }
 }
