@@ -78,4 +78,20 @@ public class AdminController : Controller
         ViewBag.Genders = Genders;
         return View(usersWithCustomersAndRoles);
     }
+
+    public IActionResult ManageItems()
+    {
+        var products = _repo.Products
+            .Select(p => new ItemViewModel
+            {
+                ProductId = p.product_id,
+                ProductName = p.name,
+                Year = p.year,
+                NumberOfParts = p.num_parts,
+                Price = p.price
+            })
+            .ToList();
+
+        return View(products);
+    }
 }
