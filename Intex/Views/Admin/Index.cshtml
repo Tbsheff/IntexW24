@@ -8,6 +8,44 @@
 main{
 gap: 2.5rem;
 }
+
+.hidden{
+display: none;
+}
+
+.modal {
+    display: none; /* Initially hidden */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4); /* Transparent background */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%; /* Set a width */
+}
+
+.close-popup {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-popup:hover,
+.close-popup:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
         
 
     </style>
@@ -16,9 +54,9 @@ gap: 2.5rem;
     <div >
         <h2>Dashboard</h2>
         <ul>
-            <li class="active"><i class="fas fa-file-alt"></i><a>Review Orders</a></li>
+            <li class="active"><i class="fas fa-file-alt"></i><a asp-controller="Admin" asp-action="">Review Orders</a></li>
             <li><i class="fas fa-user"></i><a asp-controller="Admin" asp-action="Index">Manage Users</a></li>
-            <li><i class="fas fa-box"></i><a>Manage Products</a></li>
+            <li><i class="fas fa-box"></i><a asp-controller="Admin" asp-action="ManageItems">Manage Products</a></li>
         </ul>
     </div>
 
@@ -43,28 +81,111 @@ gap: 2.5rem;
                 <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>@item.Customer.first_name @item.Customer.last_name</td>
+                    <tr id="@item.User.user_id">  <td>@item.Customer.first_name @item.Customer.last_name</td>
                         <td>@item.User.username</td>
                         <td>ROLE</td>
                         <td>@item.Customer.birth_date.ToString("MM/dd/yyyy")</td>
                         <td>@item.Customer.gender</td>
+            
                         <td>
-                            <a href="edit_user_url" class="btn btn-primary">
-                                <i class="fa fa-edit"></i>
-                            </a>
+                            <button type="button" class="btn btn-primary edit-btn" id="edit-btn" data-user-id="@item.User.user_id">
+                                <i class="fa fa-edit"></i> Edit
+                            </button>
                         </td>
+            
                         <td>
                             <a href="delete_user_url" class="btn btn-danger">
-                                <i class="fa fa-trash"></i>
+                                <i class="fa fa-trash"></i> Delete
                             </a>
+                        </td>
+                    </tr>
+                    
+                    <tr class="edit-form hidden" data-user-id="@item.User.user_id">
+                        <td colspan="100%">
+                        <form id="edit-form-@item.User.user_id"  method="POST" asp-action="EditUser">
+                           
+                            <input type="hidden" asp-for="@item.User.user_id" value="@item.User.user_id">
+                            <div class="form-group">
+                                <label asp-for="@item.Customer.first_name">First Name:</label>
+                                <input type="text" class="form-control" id="firstName-@item.User.user_id" asp-for="@item.Customer.first_name" value="@item.Customer.first_name">
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName-@item.User.user_id">Last Name:</label>
+                                <input type="text" class="form-control" id="lastName-@item.User.user_id" asp-for="@item.Customer.last_name" value="@item.Customer.last_name">
+                            </div>
+                            
+                            @*<div class="form-group">
+                                <label for="username-@item.User.user_id">Username:</label>
+                                <input type="text" class="form-control" id="username-@item.User.user_id" name="username" value="@item.User.username">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="dob-@item.User.user_id">DOB:</label>
+                                <input type="date" class="form-control" id="dob-@item.User.user_id" name="dob" value="@item.Customer.birth_date.ToString("yyyy-MM-dd")">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="gender-@item.User.user_id">Gender:</label>
+                                <select for="gender-@item.User.user_id" class="form-control" name="gender" id="gender-@item.User.user_id">
+                                    <option value="">Select Gender</option>
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
+                                </select>
+                                
+                            </div>*@
+                            
+                            
+                            <button type="submit" class="btn btn-success">Save</button>
+                            <button type="button" class="btn btn-secondary cancel-edit">Cancel</button>
+                        </form>
                         </td>
                     </tr>
                 }
                 </tbody>
             </table>
+            
         </div>
     </div>
 </main>
+
+<script>
+$(document).ready(function() {
+  $(".edit-btn").click(function() {
+    var userId = $(this).data("userId");
+    var editForm = $(".edit-form[data-user-id='" + userId + "']");
+
+    // Toggle visibility of edit form
+    editForm.toggleClass("hidden");
+
+    editForm.submit(function(event) {
+      event.preventDefault(); // Prevent default form submission
+
+      var formData = $(this).serialize(); // Serialize form data
+
+      /*$.ajax({
+        
+        url: "/Admin/EditUser/", // Replace with your server-side script URL
+        type: "POST",
+        data: formData,
+        success: function(response) {
+          // Handle successful update response
+          console.log("User updated successfully:", response);
+          // Optionally update user data in the table row
+          editForm.toggleClass("hidden"); // Hide form after success
+        },
+        error: function(error) {
+          console.error("Error updating user:", error);
+          // Handle error scenario (e.g., display error message to user)
+        }
+      });*/
+    });
+
+    // Optional: Clear form data on cancel
+    $(".cancel-edit").click(function() {
+      editForm.find("input").val("");
+    });
+  });
+});
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"></script>

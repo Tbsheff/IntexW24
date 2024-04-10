@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Intex.Infrastructure;
 using Intex.Models;
+using static Intex.Models.Cart;
+using System.Linq;
 
 namespace Intex.Pages
 {
@@ -29,15 +31,29 @@ namespace Intex.Pages
                 Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
                 Cart.AddItem(pro, 1);
                 HttpContext.Session.SetJson("cart", Cart);
-                UpdateCartItemCount();
             }
 
-        }
 
-        private void UpdateCartItemCount()
+        public IActionResult OnPostCheckout()
         {
-            var itemCount = Cart.Lines.Sum(x => x.Quantity);
-            HttpContext.Session.SetInt32("CartItemCount", itemCount);
+            Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
+
+            // Calculate subtotal, tax, shippingCost, and total here
+            decimal subtotal = Cart.Lines.Sum(cl => cl.name.price * cl.Quantity);
+            decimal taxRate = 0.08m; // Example tax rate of 8%
+            decimal shippingCost = 15.00m; // Example flat shipping cost
+            decimal tax = subtotal * taxRate;
+            decimal total = subtotal + tax + shippingCost;
+
+            // Now assign these values to TempData
+            TempData["Subtotal"] = subtotal.ToString("N2");
+            TempData["Tax"] = tax.ToString("N2");
+            TempData["ShippingCost"] = shippingCost.ToString("N2");
+            TempData["Total"] = total.ToString("N2");
+
+            return RedirectToPage("/Delivery");
         }
     }
+
+
 }
