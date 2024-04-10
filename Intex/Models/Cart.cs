@@ -4,6 +4,7 @@ namespace Intex.Models;
 
 public class Cart
 {
+
     public List<CartLine> Lines { get; set; } = new List<CartLine>();
 
     public void AddItem(Product pro, int quantity)
@@ -24,10 +25,21 @@ public class Cart
 
     public void RemoveLine(Product pro) => Lines.RemoveAll(x => x.name.product_id == pro.product_id);
 
+
+
     public void Clear() => Lines.Clear();
 
     public decimal CalculateTotal() => Lines.Sum(x => x.name.price * x.Quantity);
 
+
+    public void UpdateItem(int productId, int quantity)
+    {
+        var line = Lines.FirstOrDefault(l => l.name.product_id == productId);
+        if (line != null)
+        {
+            line.Quantity = quantity;
+        }
+    }
 
     public class CartLine
     {
