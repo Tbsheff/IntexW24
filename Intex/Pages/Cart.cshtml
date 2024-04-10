@@ -16,6 +16,22 @@
     var total = subtotal + tax + shippingCost;
 }
 
+<style>
+    .column-remove {
+        width: 20px; /* Adjust this width as needed */
+        text-align: right; /* Center the button in the column */
+    }
+
+    .btn-remove {
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 0; /* Remove padding to reduce space */
+        margin: 0; /* Remove margin to reduce space */
+        /* Additional styling as needed */
+    }
+
+</style>
 <!-- Shopping Cart -->
 <form class="bg0 p-t-75 p-b-85">
     <div class="container">
@@ -25,17 +41,35 @@
                 <div class="wrap-table-shopping-cart">
                     <table class="table-shopping-cart">
                         <tr class="table_head">
+                            <th class="column-remove"> </th>
                             <th class="column-1">Product</th>
                             <th class="column-3">Price</th>
                             <th class="column-4">Quantity</th>
                             <th class="column-5">Total</th>
+
                         </tr>
 
                         @foreach (var line in Model.Cart.Lines)
                         {
                             <tr class="table_row">
+                                <td class="column-remove">
+
+                                    <form method="post" asp-page-handler="RemoveItem">
+                                        <input type="hidden" name="product_id" value="@line.name.product_id" />
+                                        <button type="submit" class="btn-remove">
+                                            <i class="fs-16 zmdi zmdi-close"></i>
+                                        </button>
+                                    </form>
+
+
+
+
+
+
+                                </td>
                                 <td class="column-1">
                                     <div class="how-itemcart1">
+
                                         <img src="@Url.Content(line.name.img_link)" alt="@line.name.name">
                                     </div>
                                     @line.name.name
@@ -46,15 +80,15 @@
                                         <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
                                             <i class="fs-16 zmdi zmdi-minus"></i>
                                         </div>
-                                
+
                                         <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product1" value="@line.Quantity">
-                                
+
                                         <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
                                             <i class="fs-16 zmdi zmdi-plus"></i>
                                         </div>
                                     </div>
                                 </td>
-                                
+
                                 <td class="column-5">@((line.Quantity * line.name.price).ToString("C"))</td>
                             </tr>
                         }
@@ -62,17 +96,17 @@
                     <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
                         <div class="flex-w flex-m m-r-20 m-tb-5">
                             <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Coupon Code">
-                    									
+
                             <div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
                                 Apply coupon
                             </div>
                         </div>
-                    
+
                         <div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
                             Update Cart
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
 
@@ -123,11 +157,56 @@
                         </div>
                     </div>
 
-                    <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
-                        Proceed to Checkout
-                    </button>
+                    <form asp-page-handler="Checkout" method="post">
+                        <button type="submit" class="btn btn-primary">Proceed to Checkout</button>
+                    </form>
+                    @*                     <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+                    Proceed to Checkout
+                    </button> *@
                 </div>
             </div>
         </div>
     </div>
 </form>
+
+<script>
+    $(document).ready(function () {
+        $('.flex-c-m.stext-101.cl2.size-119.bg8.bor13.hov-btn3.p-lr-15.trans-04.pointer.m-tb-10').on('click', function (e) {
+            e.preventDefault();
+
+            // Iterate over each product row
+            $('.table-shopping-cart .table_row').each(function () {
+                var $row = $(this); // Current row
+                var price = parseFloat($row.find('.column-3').text().replace(/[^0-9.-]+/g, "")); // Extract price, remove currency symbols
+                var quantity = parseInt($row.find('.num-product').val()); // Get the quantity
+                var total = price * quantity; // Calculate total for the line
+
+                // Update the line total
+                $row.find('.column-5').text(total.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+            });
+
+            // Recalculate and update the subtotal, tax, and total
+            updateCartTotal();
+        });
+
+        function updateCartTotal() {
+            var subtotal = 0;
+            $('.table-shopping-cart .table_row').each(function () {
+                var lineTotal = parseFloat($(this).find('.column-5').text().replace(/[^0-9.-]+/g, ""));
+                subtotal += lineTotal;
+            });
+
+            var taxRate = 0.08; // 8% tax
+            var shippingCost = 15.00; // flat $15 shipping cost
+            var tax = subtotal * taxRate;
+            var total = subtotal + tax + shippingCost;
+
+            // Update the Subtotal, Tax, and Total on the page
+            $('.size-209.p-r-18.p-r-0-sm.w-full-ssm').eq(0).text('$' + subtotal.toFixed(2));
+            $('.size-209.p-r-18.p-r-0-sm.w-full-ssm').eq(1).text('$' + tax.toFixed(2));
+            $('.size-209.p-r-18.p-r-0-sm.w-full-ssm').eq(2).text('$' + shippingCost.toFixed(2));
+            $('.size-209.p-t-1').text('$' + total.toFixed(2));
+        }
+    });
+
+</script>
