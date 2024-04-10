@@ -45,7 +45,8 @@ public class AdminController : Controller
         return View(usersWithCustomersAndRoles);
     }
     
-    public async Task<IActionResult> EditUser(short id = 30001)
+    [Route("Admin/EditUser/{id?}")]
+    public async Task<IActionResult> EditUser(short id)
     {
         var userViewModel =  _repo.Users
             .Join(
@@ -70,16 +71,12 @@ public class AdminController : Controller
         return View(userViewModel);
     }
 
-    [HttpPost]
-    
-    public async Task<IActionResult> Edit(short id, UsersViewModel viewModel)
-    {
-        if (id != viewModel.User.user_id)
-        {
-            return NotFound();
-        }
+    [HttpPost("Admin/EditUser/{id?}")]
+    public async Task<IActionResult> EditUser(short id, UsersViewModel viewModel)
+    { 
+        id = viewModel.User.user_id;
 
-        if (ModelState.IsValid)
+        if (id > 0)
         {
             try
             {
@@ -96,14 +93,19 @@ public class AdminController : Controller
                 var customer = await _repo.GetByIdAsync(id);
                 if (customer != null)
                 {
+                    // update properties of customer object
                     customer.first_name = viewModel.Customer.first_name;
                     customer.last_name = viewModel.Customer.last_name;
-                    // Update other customer properties as needed
+                    customer.gender = viewModel.Customer.gender;
+                    customer.birth_date = viewModel.Customer.birth_date;
+                    customer.country_of_residence = viewModel.Customer.country_of_residence;
+                    // push changes to database
                     await _repo.UpdateCustomerAsync(customer);
                 }
-
-                await _repo.SaveChangesAsync();
+                // save changes to database
+                await _repo.SaveAsync();
             }
+            // catch errors
             catch (DbUpdateConcurrencyException)
             {
                 if (!await UserExists(id))
@@ -197,8 +199,8 @@ public class AdminController : Controller
             };
 
             // Add and save in the database
-            //_repo.AddProduct(product); // Ensure your repository's AddProduct method is expecting a Product entity
-            //_repo.SaveChanges(); // Save the changes
+            _repo.AddProduct(product); // Ensure your repository's AddProduct method is expecting a Product entity
+            _repo.SaveAsync(); // Save the changes
 
             // Redirect to the ManageItems view to see the list of products
             return RedirectToAction("ManageItems");
@@ -211,9 +213,9 @@ public class AdminController : Controller
     }
 
     [HttpGet]
-    public IActionResult EditProduct(int productId)
+    public IActionResult EditProduct(int id)
     {
-        var product = _repo.Products.FirstOrDefault(p => p.product_id == productId);
+        var product = _repo.Products.FirstOrDefault(p => p.product_id == id);
         if (product == null)
         {
             return NotFound();
@@ -233,11 +235,11 @@ public class AdminController : Controller
             CategoryId = product.category_id
         };
 
-        return View(model);
+        return View("Edit", model);
     }
 
     [HttpPost]
-    public IActionResult EditProduct(EditProductViewModel model)
+    public async Task<IActionResult> EditProduct(EditProductViewModel model)
     {
         if (ModelState.IsValid)
         {
@@ -257,12 +259,20 @@ public class AdminController : Controller
             product.description = model.Description;
             product.category_id = model.CategoryId;
 
-            //_repo.SaveChanges();
+            try
+            {
+                _repo.UpdateProduct(product);
+                await _repo.SaveAsync();
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it accordingly
+                return StatusCode(500, "An error occurred while saving the product. Please try again.");
+            }
 
             return RedirectToAction("ManageItems");
         }
-        return View(model);
+        return View("Edit", model);
     }
-
-
 }
+

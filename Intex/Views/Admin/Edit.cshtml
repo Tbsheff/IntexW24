@@ -1,12 +1,13 @@
-﻿@model Intex.Models.ViewModels.EditProductViewModel
+﻿@model EditProductViewModel
 
 @{
     ViewData["Title"] = "Edit Product";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="filler" style="height: 84px;"></div>
 <h2>Edit Product</h2>
 
-<form asp-action="EditProduct" method="post">
+<form asp-action="EditProduct" method="post" style="max-width: 75%; margin: auto">
 
     <input type="hidden" asp-for="ProductId" />
 
