@@ -1,0 +1,56 @@
+﻿@model List<UsersViewModel>
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="filler" style="height: 84px;"></div>
+<main>
+    <div>
+        
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>First & last name</th>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Birthdate</th>
+                <th>Gender</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Customer.first_name</td>
+                    <td>@item.Customer.last_name</td>
+                    <td>@item.User.username</td>
+                    <td>
+                        @*@Html.DropDownListFor(m => user.Role, new SelectList(user.Roles, "Value", "Text"))*@
+                    </td>
+                    @*<td>@item.Customer.birth_date.ToString("MM/dd/yyyy")</td>*@
+                    <td>
+                        @item.Customer.gender
+                        @*<select id="Gender" asp-for="Input.Gender" asp-items="Model.Genders">
+                                <option>Select your Gender</option>
+                            </select>"Text"))*@
+                    </td>
+                    <td>
+                        <a href="" class="btn btn-primary">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="" class="btn btn-danger">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</main>
