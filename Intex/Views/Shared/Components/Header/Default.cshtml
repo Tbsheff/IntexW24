@@ -1,4 +1,5 @@
-﻿@using Microsoft.AspNetCore.Identity
+﻿@using Intex.Infrastructure
+@using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model dynamic
 @inject SignInManager<IdentityUser> SignInManager
@@ -18,35 +19,26 @@
 					</a>
 
 					<!-- Menu desktop -->
-					<div class="menu-desktop">
-						<ul class="main-menu">
-							<li class="active-menu">
-								<a asp-controller="Home" asp-action="Index">Home</a>
-								
-							</li>
+				<div class="menu-desktop">
+					<ul class="main-menu">
+						<li class="@Html.IsActive("Index", "Home")">
+							<a asp-controller="Home" asp-action="Index">Home</a>
+						</li>
 
-							<li>
-								<a asp-controller="Home" asp-action="Product">Shop</a>
-							</li>
+						<li class="@Html.IsActive("Product", "Home")">
+							<a asp-controller="Home" asp-action="Product">Shop</a>
+						</li>
 
-							<li class="label1" data-label1="hot">
-								<a href="shoping-cart.html">Features</a>
-							</li>
+						<li class="@Html.IsActive("About", "Home")">
+							<a asp-controller="Home" asp-action="About">About</a>
+						</li>
 
-							<li>
-								<a href="blog.html">Blog</a>
-							</li>
+						<li class="@Html.IsActive("Privacy", "Home")">
+							<a asp-controller="Home" asp-action="Privacy">Privacy</a>
+						</li>
+					</ul>
+				</div>
 
-							<li>
-								<a href="about.html">About</a>
-							</li>
-
-							<li>
-								<a href="contact.html">Contact</a>
-							</li>
-						</ul>
-						    
-					</div>	
 
 					<!-- Icon header -->
 					<div class="wrap-icon-header flex-w flex-r-m">
