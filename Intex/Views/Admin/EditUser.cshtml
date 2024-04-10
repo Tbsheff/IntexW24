@@ -1,0 +1,55 @@
+﻿@model Intex.Models.ViewModels.UsersViewModel
+
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+<div class="filler" style="height: 84px;"></div>
+
+<h1>Edit User</h1>
+
+<form asp-action="EditUser" method="post">
+    <input type="hidden" asp-for="User.user_id" />
+    <div class="form-group">
+        <label asp-for="User.username" class="control-label"></label>
+        <input asp-for="User.username" class="form-control" />
+        <span asp-validation-for="User.username" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Customer.first_name" class="control-label"></label>
+        <input asp-for="Customer.first_name" class="form-control" />
+        <span asp-validation-for="Customer.first_name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Customer.last_name" class="control-label"></label>
+        <input asp-for="Customer.last_name" class="form-control" />
+        <span asp-validation-for="Customer.last_name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Customer.birth_date" class="control-label"></label>
+        <input asp-for="Customer.birth_date" class="form-control" />
+        <span asp-validation-for="Customer.birth_date" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Customer.country_of_residence" class="control-label"></label>
+        <input asp-for="Customer.country_of_residence" class="form-control" />
+        <span asp-validation-for="Customer.country_of_residence" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Customer.gender" class="control-label"></label>
+        <input asp-for="Customer.gender" class="form-control" />
+        <span asp-validation-for="Customer.gender" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Customer.age" class="control-label"></label>
+        <input asp-for="Customer.age" class="form-control" />
+        <span asp-validation-for="Customer.age" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

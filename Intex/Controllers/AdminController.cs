@@ -6,6 +6,7 @@ using Intex.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
+
 public class AdminController : Controller
 {
     
@@ -43,35 +44,88 @@ public class AdminController : Controller
         ViewBag.Genders = Genders;
         return View(usersWithCustomersAndRoles);
     }
-
-    [HttpPost]
-    public IActionResult EditUser(UsersViewModel viewModel)
+    
+    public async Task<IActionResult> EditUser(short id = 30001)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState); // Return bad request with validation errors
-        }
+        var userViewModel =  _repo.Users
+            .Join(
+                _repo.Customers,
+                user => user.user_id,
+                customer => customer.customer_ID,
+                (user, customer) => new UsersViewModel
+                {
+                    User = user,
+                    Customer = customer
+                }
+            )
+            .Where(u => u.User.user_id == id)
+            .ToList()
+            .FirstOrDefault();
 
-        var existingUser = _repo.Users.FirstOrDefault(x => x.user_id == userId);
-
-        if (existingUser == null)
+        if (userViewModel == null)
         {
             return NotFound();
         }
 
-        // Update user properties (e.g., Username)
-        existingUser.username = username; // Assuming Username is editable
-
-        _repo.UpdateUser(existingUser);
-
-        // Update customer data (if applicable)
-        // ... (retrieve customer, update properties based on user object) ...
-
-        _repo.UpdateUser(existingUser); // Save user changes
-        // _repo.UpdateCustomer(customer); // If customer data was updated
-
-        return Ok();
+        return View(userViewModel);
     }
+
+    [HttpPost]
+    
+    public async Task<IActionResult> Edit(short id, UsersViewModel viewModel)
+    {
+        if (id != viewModel.User.user_id)
+        {
+            return NotFound();
+        }
+
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                var user = await _repo.GetUserByIdAsync(id);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                user.username = viewModel.User.username;
+                // Update other user properties as needed
+                _repo.UpdateUser(user);
+
+                var customer = await _repo.GetByIdAsync(id);
+                if (customer != null)
+                {
+                    customer.first_name = viewModel.Customer.first_name;
+                    customer.last_name = viewModel.Customer.last_name;
+                    // Update other customer properties as needed
+                    await _repo.UpdateCustomerAsync(customer);
+                }
+
+                await _repo.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!await UserExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index)); // Redirect to the index action or wherever you want
+        }
+        return View(viewModel);
+    }
+
+    private async Task<bool> UserExists(short id)
+    {
+        return await _repo.GetUserByIdAsync(id) != null;
+    }
+
+    
 
     public IActionResult ManageItems()
     {

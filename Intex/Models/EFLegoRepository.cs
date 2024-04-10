@@ -25,12 +25,28 @@
         public IEnumerable<Rating> Ratings => _context.ratings;
         public IEnumerable<Transaction_Type> Transaction_Types => _context.transaction_types;
         public IEnumerable<User> Users => _context.users;
+        public async Task<User> GetUserByIdAsync(short id)
+        {
+            return await _context.users.FindAsync(id);
+        }
+
         public void UpdateUser(User user)
         {
-            // Update the entity state (Entity Framework approach)
-            _context.Update(user);
-
-           
+            _context.users.Update(user);
         }
+
+        public async Task<Customer> GetByIdAsync(short id)
+        {
+            return await _context.customers.FindAsync(id);
+        }
+
+        public async Task UpdateCustomerAsync(Customer customer)
+        {
+            _context.customers.Update(customer);
+        }
+        public async Task SaveAsync()
+        {
+            await _context.SaveChangesAsync();
+        }s
     }
 }
