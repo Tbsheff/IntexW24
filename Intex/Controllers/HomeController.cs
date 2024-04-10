@@ -20,6 +20,18 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        var recommendationIds = _repo.Ratings.OrderBy(x => x.rating1).Take(10).ToList();
+        var recommendedProducts = new List<Product>();
+        
+        foreach (var recommendationId in recommendationIds)
+        {
+            var recommendedProduct = _repo.Products.FirstOrDefault(p => p.product_id == recommendationId.product_ID);
+            if (recommendedProduct != null)
+            {
+                recommendedProducts.Add(recommendedProduct);
+            }
+        }
+        ViewBag.RecommendedProducts = recommendedProducts;
         return View("IndexTest");
     }
 
@@ -95,4 +107,6 @@ public class HomeController : Controller
         
         return View();
     }
+
+
 }

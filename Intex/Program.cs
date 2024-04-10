@@ -32,6 +32,10 @@ builder.Services.AddAuthentication().AddGoogle(googleOptions =>
 builder.Services.AddRazorPages()
     .AddRazorRuntimeCompilation();
 
+
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -48,6 +52,8 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseSession();
 
 app.UseRouting();
 

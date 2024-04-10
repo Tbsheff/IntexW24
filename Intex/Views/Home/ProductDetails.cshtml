@@ -1,5 +1,6 @@
 ﻿@using Microsoft.EntityFrameworkCore.Metadata.Internal
-@model dynamic
+@model Product
+
 
 @{
     ViewBag.Title = "title";
@@ -119,12 +120,14 @@
                 <i class="fs-16 zmdi zmdi-minus"></i>
               </div>
 
-              <input
+               <input
                 class="mtext-104 cl3 txt-center num-product"
                 type="number"
                 name="num-product"
                 value="1"
-              />
+                name="quantity"
+                />
+              
 
               <div
                 class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m"
@@ -133,14 +136,30 @@
               </div>
             </div>
 
-            <button
-              class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail"
-            >
-              Add to cart
-            </button>
-          </div>
-        </div>
-      </div>
+@*                     <button
+                      class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail"
+                    >
+                      Add to cart
+                    </button> *@
+
+            <form method="post" asp-page="/Cart">
+                <input type="hidden" name="product_id" value="@ViewBag.Product.product_id" />
+                @* <input class="mtext-104 cl3 txt-center num-product"
+                        type="number"
+                        name="quantity"  <!-- This name must match the parameter in your OnPost method -->
+                value="1"
+                min="1"         <!-- You can set a minimum value here -->
+                /> *@
+                <button type="submit" class="btn-outline-success btn-sm">Add to Cart</button>
+            </form>
+
+
+                    <div class="text-center">
+                        <a class="btn btn-primary" href="/">Go Back</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
       <div class="flex-w flex-m p-l-100 p-t-40 respon7">
         <div class="flex-m bor9 p-r-10 m-r-11">
