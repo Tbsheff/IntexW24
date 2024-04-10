@@ -72,7 +72,7 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Home}/{action=Index}/{pageNum?}/{category?}");
+        pattern: "{controller=Home}/{action=Index}/{pageNum?}/{category?}/{primaryColor?}/{secondaryColor?}");
 
     endpoints.MapRazorPages(); // Include this line to enable Razor Pages
 

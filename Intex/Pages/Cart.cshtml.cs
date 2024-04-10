@@ -19,7 +19,7 @@ namespace Intex.Pages
    
         }
 
-        public void OnPost(int product_id)
+        public void OnPost(int product_id) 
         {
             Product pro = _repo.Products
                 .FirstOrDefault(x => x.product_id == product_id);
