@@ -72,7 +72,7 @@ public class AdminController : Controller
 
     [HttpPost]
     
-    public async Task<IActionResult> Edit(short id, UsersViewModel viewModel)
+    public async Task<IActionResult> EditUser(short id, UsersViewModel viewModel)
     {
         if (id != viewModel.User.user_id)
         {
@@ -102,7 +102,7 @@ public class AdminController : Controller
                     await _repo.UpdateCustomerAsync(customer);
                 }
 
-                await _repo.SaveChangesAsync();
+                await _repo.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -233,7 +233,7 @@ public class AdminController : Controller
             CategoryId = product.category_id
         };
 
-        return View(model);
+        return View("Edit", model);
     }
 
     [HttpPost]
@@ -261,7 +261,7 @@ public class AdminController : Controller
 
             return RedirectToAction("ManageItems");
         }
-        return View(model);
+        return View("Edit", model);
     }
 
 
