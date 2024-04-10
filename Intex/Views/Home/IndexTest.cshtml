@@ -2,7 +2,8 @@
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<vc:slider></vc:slider>
+
+@await Component.InvokeAsync("Slider")
 
 <vc:banner></vc:banner>
 
