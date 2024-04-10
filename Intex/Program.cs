@@ -10,6 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
                        throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+string ClientId = Environment.GetEnvironmentVariable("Authentication:Google:ClientId");
+string ClientSecret = Environment.GetEnvironmentVariable("Authentication:Google:ClientSecret");
+
+
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
@@ -27,8 +31,8 @@ builder.Services.AddScoped<ILegoRepository, EFLegoRepository>();
 
 builder.Services.AddAuthentication().AddGoogle(googleOptions =>
 {
-    googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-    googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+    googleOptions.ClientId = ClientId;
+    googleOptions.ClientSecret = ClientSecret;
 });
 
 // Enable runtime compilation for Razor pages
