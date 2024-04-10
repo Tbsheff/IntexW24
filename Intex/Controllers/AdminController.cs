@@ -162,6 +162,59 @@ public class AdminController : Controller
         return View(model);
     }
 
+    [HttpGet]
+    public IActionResult EditProduct(int productId)
+    {
+        var product = _repo.Products.FirstOrDefault(p => p.product_id == productId);
+        if (product == null)
+        {
+            return NotFound();
+        }
+
+        var model = new EditProductViewModel
+        {
+            ProductId = product.product_id,
+            Name = product.name,
+            Year = product.year,
+            NumParts = product.num_parts,
+            Price = product.price,
+            ImgLink = product.img_link,
+            PrimaryColor = product.primary_color,
+            SecondaryColor = product.secondary_color,
+            Description = product.description,
+            CategoryId = product.category_id
+        };
+
+        return View(model);
+    }
+
+    [HttpPost]
+    public IActionResult EditProduct(EditProductViewModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            var product = _repo.Products.FirstOrDefault(p => p.product_id == model.ProductId);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            product.name = model.Name;
+            product.year = model.Year;
+            product.num_parts = model.NumParts;
+            product.price = model.Price;
+            product.img_link = model.ImgLink;
+            product.primary_color = model.PrimaryColor;
+            product.secondary_color = model.SecondaryColor;
+            product.description = model.Description;
+            product.category_id = model.CategoryId;
+
+            //_repo.SaveChanges();
+
+            return RedirectToAction("ManageItems");
+        }
+        return View(model);
+    }
 
 
 }

@@ -8,10 +8,14 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="Models\ViewModels\AddProductViewModel - Copy.cs" />
+      <Compile Remove="Models\ViewModels\EditProductViewModel.cshtml.cs" />
       <Compile Remove="Views\Admin\ManageProducts.cshtml.cs" />
     </ItemGroup>
 
     <ItemGroup>
+      <Content Remove="Models\ViewModels\EditProductViewModel.cshtml" />
+      <Content Remove="Models\ViewModels\Index.cshtml" />
       <Content Remove="Views\Admin\ManageProducts.cshtml" />
     </ItemGroup>
 
