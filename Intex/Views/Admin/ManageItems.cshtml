@@ -31,7 +31,7 @@
                         <td>@item.NumberOfParts</td>
                         <td>@item.Price.ToString("C")</td>
                         <td>
-                            <a href="@Url.Action("EditProduct", "Admin", new { id = item.ProductId })" class="btn btn-primary">
+                            <a href="@Url.Action("Edit", "Admin", new { id = item.ProductId })" class="btn btn-primary">
                                 <i class="fa fa-edit"></i>
                             </a>
                         </td>
