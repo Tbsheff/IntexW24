@@ -65,10 +65,21 @@
 												<i class="fs-16 zmdi zmdi-plus"></i>
 											</div>
 										</div>
+										
+										 <form method="post" asp-page="/Cart">
+                                                      <input type="hidden" name="product_id" id="modelProductId" value="" />
+                                                      @* <input class="mtext-104 cl3 txt-center num-product"
+                                                                                            type="number"
+                                                                                            name="quantity"  <!-- This name must match the parameter in your OnPost method -->
+                                                                                    value="1"
+                                                                                    min="1"         <!-- You can set a minimum value here -->
+                                                                                    /> *@
+                                                      <button type="submit" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">Add to Cart</button>
+                                                    </form>
 
-										<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+										@*<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
 											Add to cart
-										</button>
+										</button>*@
 									</div>
 								</div>	
 							</div>
