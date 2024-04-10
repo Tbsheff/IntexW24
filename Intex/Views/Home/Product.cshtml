@@ -5,7 +5,7 @@
 
 
 
-@await Component.InvokeAsync("ProductsGrid", new { pageNum = @ViewBag.PageNum ?? 1, pageSize = @ViewBag.PageSize ?? 10, category = @ViewBag.Category ?? "All"})
+@await Component.InvokeAsync("ProductsGrid", new { pageNum = @ViewBag.PageNum ?? 1, pageSize = @ViewBag.PageSize ?? 10, category = @ViewBag.Category ?? "All", primaryColor = @ViewBag.PrimaryColor, secondaryColor = @ViewBag.SecondaryColor})
 @await Component.InvokeAsync("ProductModal")
 
 

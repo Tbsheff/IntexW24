@@ -54,11 +54,13 @@ public class HomeController : Controller
         return View();
     }
     
-    public IActionResult Product(int pageNum = 1, string category = "All", int pageSize = 10)
+    public IActionResult Product(int pageNum = 1, string category = "All", int pageSize = 10, string primaryColor = "All", string secondaryColor = "All")
     {
        ViewBag.PageNum = pageNum;
        ViewBag.Category = category;
        ViewBag.PageSize = 10;
+       ViewBag.PrimaryColor = primaryColor;
+       ViewBag.SecondaryColor = secondaryColor;
         return View();
     }
 
