@@ -10,7 +10,7 @@ namespace Intex.Pages
     public class CartModel : PageModel
     {
         private ILegoRepository _repo;
-        public CartModel(ILegoRepository temp) 
+        public CartModel(ILegoRepository temp)
         {
             _repo = temp;
         }
@@ -18,20 +18,63 @@ namespace Intex.Pages
         public void OnGet()
         {
             Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
-   
+
         }
 
-        public void OnPost(int product_id) 
+        public void OnPost(int product_id)
         {
             Product pro = _repo.Products
                 .FirstOrDefault(x => x.product_id == product_id);
 
-            if(pro != null)
+            if (pro != null)
             {
                 Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
                 Cart.AddItem(pro, 1);
                 HttpContext.Session.SetJson("cart", Cart);
             }
+
+        }
+
+
+        public IActionResult OnPostRemoveItem(int product_id)
+        {
+            //System.Diagnostics.Debug.WriteLine($"Product ID to remove: {product_id}");
+
+            Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
+
+            Product pro = _repo.Products
+                .FirstOrDefault(x => x.product_id == product_id);
+
+
+            if (pro != null)
+            {
+                Cart.RemoveLine(pro);
+                HttpContext.Session.SetJson("cart", Cart);
+            }
+
+            return RedirectToPage(new { returnUrl = HttpContext.Request.Path + HttpContext.Request.QueryString });
+        }
+
+
+
+
+        public IActionResult OnPostUpdateCart(List<CartLine> updatedCart)
+        {
+            Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
+
+            foreach (var item in updatedCart)
+            {
+                // Assuming CartLine has a Product object called 'name' that contains the product_id
+                if (item.name != null && item.Quantity > 0)
+                {
+                    Cart.UpdateItem(item.name.product_id, item.Quantity);
+                }
+            }
+
+            HttpContext.Session.SetJson("cart", Cart);
+
+            return new JsonResult(new { success = true });
+        }
 
 
         public IActionResult OnPostCheckout()
@@ -53,6 +96,10 @@ namespace Intex.Pages
 
             return RedirectToPage("/Delivery");
         }
+
+
+
+
     }
 
 
