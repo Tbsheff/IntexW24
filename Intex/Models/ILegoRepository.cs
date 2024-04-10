@@ -21,5 +21,6 @@
         IEnumerable<Rating> Ratings { get; }
         IEnumerable<Transaction_Type> Transaction_Types { get; }
         IEnumerable<User> Users { get; }
+        void UpdateUser(User user);
     }
 }
