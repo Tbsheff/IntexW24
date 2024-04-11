@@ -45,6 +45,11 @@
             _context.products.Add(product);
         }
 
+        public void ApproveOrder(Order order)
+        {
+            _context.orders.Update(order);
+        }
+
         public async Task<Customer> GetByIdAsync(short id)
         {
             return await _context.customers.FindAsync(id);

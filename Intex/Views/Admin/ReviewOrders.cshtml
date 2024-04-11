@@ -1,0 +1,125 @@
+﻿@model Intex.Models.ViewModels.OrdersViewModel
+@{
+    ViewBag.Title = "Review Orders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    main {
+        gap: 2.5rem;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .modal {
+        display: none; /* Initially hidden */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgba(0, 0, 0, 0.4); /* Transparent background */
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 50%; /* Set a width */
+    }
+
+    .close-popup {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close-popup:hover,
+        .close-popup:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+</style>
+<div class="filler" style="height: 84px;"></div>
+<main class="container dis-flex gap-md-5">
+    <div>
+        <h2>Dashboard</h2>
+        <ul>
+            <li class="active"><i class="fas fa-file-alt"></i><a asp-controller="Admin" asp-action="">Review Orders</a></li>
+            <li><i class="fas fa-user"></i><a asp-controller="Admin" asp-action="Index">Manage Users</a></li>
+            <li><i class="fas fa-box"></i><a asp-controller="Admin" asp-action="ManageItems">Manage Products</a></li>
+        </ul>
+    </div>
+
+<table class="table table-striped">
+    <thead class="thead-light">
+        <tr>
+            <th>Transaction ID</th>
+            <th>Customer Name</th>
+            <th>Date</th>
+            <th>Day of Week</th>
+            <th>Hour</th>
+            <th>Entry Mode</th>
+            <th>Amount</th>
+            <th>Transaction Type</th>
+            <th>Country of Transaction</th>
+            <th>Shipping Address</th>
+            <th>Bank</th>
+            <th>Card Type</th>
+            <th>Approve</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.Orders)
+        {
+            <tr>
+                <td>@order.TransactionId</td>
+                <td>@order.CustomerName</td>
+                <td>@order.Date.ToString("MM/dd/yyyy")</td>
+                <td>@order.DayOfWeek</td>
+                <td>@order.Hour</td>
+                <td>@order.EntryModeDescription</td>
+                <td>@order.Amount</td>
+                <td>@order.TransactionTypeDescription</td>
+                <td>@order.CountryOfTransaction</td>
+                <td>@order.ShippingAddress</td>
+                <td>@order.BankName</td>
+                <td>@order.CardTypeDescription</td>
+                <td><button class="approve-btn" data-transaction-id="@order.TransactionId">Approve</button></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Scripts and remaining HTML -->
+    <script>
+        // Handle click event on Approve button
+        $('.approve-btn').click(function () {
+            var transactionId = $(this).data('transaction-id');
+            console.log("message sent")
+            $.ajax({
+                url: '@Url.Action("ApproveOrder", "AdminController")',
+                type: 'POST',
+                data: { transactionId: transactionId },
+                success: function (result) {
+                    if (result.success) {
+                        // Optionally hide the row from the table
+                        $(this).closest('tr').remove();
+                    } else {
+                        alert('Failed to approve order.');
+                    }
+                },
+                error: function () {
+                    alert('Error approving order.');
+                }
+            });
+        });
+    </script>
+
