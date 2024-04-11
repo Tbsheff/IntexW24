@@ -29,18 +29,26 @@ namespace Intex.Pages
 
         public void OnGet()
         {
-            Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
+            if (User.Identity.IsAuthenticated)
+            {
+                Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
+                
+                            ShippingCost = 15.00m; // Example shipping cost
+                            Tax = Cart.CalculateTotal() * 0.08m; // Example tax rate
+                
+                            Subtotal = Cart.CalculateTotal();
+                            Total = Subtotal + ShippingCost + Tax;
+                
+                            ViewData["Subtotal"] = Cart.CalculateTotal();
+                            ViewData["EstimatedShipping"] = ShippingCost;
+                            ViewData["EstimatedTax"] = Tax;
+                            ViewData["Total"] = Cart.CalculateTotal() + ShippingCost + Tax;
+            }
+            else
+            {
+                RedirectToPage("~/Identity/Account/Login", new { area = "Identity" });
+            }
 
-            ShippingCost = 15.00m; // Example shipping cost
-            Tax = Cart.CalculateTotal() * 0.08m; // Example tax rate
-
-            Subtotal = Cart.CalculateTotal();
-            Total = Subtotal + ShippingCost + Tax;
-
-            ViewData["Subtotal"] = Cart.CalculateTotal();
-            ViewData["EstimatedShipping"] = ShippingCost;
-            ViewData["EstimatedTax"] = Tax;
-            ViewData["Total"] = Cart.CalculateTotal() + ShippingCost + Tax;
         }
         
         public void OnPost()

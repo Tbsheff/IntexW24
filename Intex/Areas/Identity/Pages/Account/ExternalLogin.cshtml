@@ -3,28 +3,69 @@
 @{
     ViewData["Title"] = "Register";
 }
+<link rel="stylesheet" type="text/css" href="~/css/Register-Styles.css"/>
 
-<h1>@ViewData["Title"]</h1>
-<h2 id="external-login-title">Associate your @Model.ProviderDisplayName account.</h2>
+<style>
+    body{
+    background: #fff;
+    }
+</style>
+
+<div class="filler" style="height: 84px;"></div>
+<h1 class="text-center">@ViewData["Title"]</h1>
+<h2 id="external-login-title" class="text-center">Associate your @Model.ProviderDisplayName account.</h2>
 <hr />
 
-<p id="external-login-description" class="text-info">
-    You've successfully authenticated with <strong>@Model.ProviderDisplayName</strong>.
-    Please enter an email address for this site below and click the Register button to finish
-    logging in.
-</p>
+<div class="container pb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <p id="external-login-description" class="text-info text-center">
+                You've successfully authenticated with <strong>@Model.ProviderDisplayName</strong>.
+                Please enter some additional information below and click the Register button to finish
+                logging in.
+            </p>
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-page-handler="Confirmation" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" autocomplete="email" placeholder="Please enter your email."/>
-                <label asp-for="Input.Email" class="form-label"></label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <button type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
-        </form>
+            <form asp-page-handler="Confirmation" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="mb-3">
+                    
+                    <input asp-for="Input.Email" class="form-control" autocomplete="email" placeholder="Please enter your email." required/>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    
+                    <input asp-for="Input.FirstName" class="form-control" placeholder="Enter your first name" required/>
+                </div>
+
+                <div class="mb-3">
+                    
+                    <input asp-for="Input.LastName" class="form-control" placeholder="Enter your last name" required/>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Input.Dob" class="form-label">Birthdate</label>
+                    <input asp-for="Input.Dob" class="form-control" type="date" value="2024-04-11" required/>
+                </div>
+
+                <div class="mb-3">
+                    
+                    <select asp-for="Input.Gender" asp-items="Model.Genders" class="form-select dropdown" required>
+                        <option class="dropdown-item">Select your gender</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    
+                    <select asp-for="Input.Country" asp-items="Model.Countries" class="form-select" required>
+                        <option >Select your country of residence</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Register</button>
+            </form>
+        </div>
     </div>
 </div>
 

@@ -109,5 +109,20 @@ namespace Intex.Models
              _context.Remove(product);
              
         }
+        
+        public void AddUser(User newUser)
+        {
+            _context.users.Add(newUser);
+        }
+        
+        public void Save()
+        {
+            _context.SaveChanges();
+        }
+
+        public void AddCustomer(Customer customer)
+        {
+            _context.customers.Add(customer);
+        }
     }
 }
