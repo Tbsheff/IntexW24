@@ -20,18 +20,53 @@ namespace Intex.Pages
             Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
 
         }
+        
+        /*public void OnPost()
+        {
+            // Retrieve the cart from the session
+            Cart cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
+
+            // Check if the cart is empty
+            if (cart.Lines.Count == 0)
+            {
+                // Optionally, add a TempData message to inform the user
+                TempData["Message"] = "Your cart is empty. Please add items to your cart before proceeding.";
+
+                // Redirect back to the Cart page
+                Response.Redirect(Url.Page("Cart"));
+                return; // Exit the method to prevent further processing
+            }
+
+            // If the cart is not empty, proceed with serialization and redirection
+            var cartLineItemsJson = System.Text.Json.JsonSerializer.Serialize(cart.Lines);
+            HttpContext.Session.SetString("CartLineItems", cartLineItemsJson);
+            Response.Redirect(Url.Page("Delivery"));
+        }*/
+
+
+
 
         public void OnPost(int product_id)
         {
-            Product pro = _repo.Products
-                .FirstOrDefault(x => x.product_id == product_id);
-
-            if (pro != null)
+            if (product_id != null)
             {
-                Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
-                Cart.AddItem(pro, 1);
-                HttpContext.Session.SetJson("cart", Cart);
+                Product pro = _repo.Products
+                                .FirstOrDefault(x => x.product_id == product_id);
+                if (pro != null)
+                {
+                    Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
+                    Cart.AddItem(pro, 1);
+                    HttpContext.Session.SetJson("cart", Cart);
+                }
             }
+            else
+            {
+                throw new Exception("Product id is null");
+                RedirectToPage("Cart");
+            }
+            
+
+            
 
         }
 
