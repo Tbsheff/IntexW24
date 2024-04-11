@@ -47,7 +47,8 @@ public class AdminController : Controller
         return View(usersWithCustomersAndRoles);
     }
     
-    public async Task<IActionResult> EditUser(short id = 30001)
+    [HttpGet("Admin/EditUser/{id?}")]
+    public async Task<IActionResult> EditUser(short id )
     {
         var userViewModel =  _repo.Users
             .Join(
