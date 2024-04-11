@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Intex.Data;
 
@@ -64,6 +64,16 @@ app.UseStaticFiles();
 
 app.UseSession();
 app.UseCartItemCount();
+
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Add("Content-Security-Policy", "default-src 'self'; " +
+      "style-src 'self' fonts.cdnfonts.com fonts.googleapis.com 'unsafe-inline';" +
+      "font-src 'self' fonts.cdnfonts.com fonts.googleapis.com fonts.gstatic.com; " +
+      "script-src 'self' ajax.googleapis.com 'unsafe-inline';" +
+      "img-src 'self' m.media-amazon.com https://www.lego.com brickset.com https://www.brickeconomy.com images.brickset.com ");
+    await next.Invoke();
+});
 
 app.UseRouting();
 
