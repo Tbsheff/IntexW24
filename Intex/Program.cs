@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Intex.Data;
-using Intex.Areas.Identity.Data;
+
 using Intex.Models;
 using Intex.Middleware;
 
