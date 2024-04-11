@@ -212,15 +212,24 @@
 
     /*==================================================================
     [ +/- num product ]*/
-    $('.btn-num-product-down').on('click', function(){
-        var numProduct = Number($(this).next().val());
-        if(numProduct > 0) $(this).next().val(numProduct - 1);
+    $(document).ready(function () {
+        $('.btn-num-product-down').on('click', function(){
+            var input = $('#num-product');
+            var numProduct = Number(input.val());
+            if(numProduct > 0) {
+                input.val(numProduct - 1);
+                input.attr('value', numProduct - 1); // Update the value attribute
+            }
+        });
+
+        $('.btn-num-product-up').on('click', function(){
+            var input = $('#num-product');
+            var numProduct = Number(input.val());
+            input.val(numProduct + 1);
+            input.attr('value', numProduct + 1); // Update the value attribute
+        });
     });
 
-    $('.btn-num-product-up').on('click', function(){
-        var numProduct = Number($(this).prev().val());
-        $(this).prev().val(numProduct + 1);
-    });
 
     /*==================================================================
     [ Rating ]*/
