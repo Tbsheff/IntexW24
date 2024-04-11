@@ -63,7 +63,11 @@ display: none;
     <div class="dis-flex flex-column">
         <div class="d-flex justify-content-between mb-3">
             <h2>Manage Users</h2>
-            <a href="add_user_url" class="btn btn-success">Add User</a>
+            @* <a href="add_user_url" class="btn btn-success">Add User</a> *@
+            <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-success">Add User</a>
+
+
+
         </div>
         <div class="table-responsive">
             <table class="table table-striped">
