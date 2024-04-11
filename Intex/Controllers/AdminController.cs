@@ -6,6 +6,7 @@ using Intex.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.ML;
+using Microsoft.AspNetCore.Authorization;
 
 
 public class AdminController : Controller
@@ -20,7 +21,7 @@ public class AdminController : Controller
         _logger = logger;
         _repo = repo;
     }
-    
+    [Authorize(Roles = "Admin")]
     public IActionResult Index()
     {
         Genders = new List<SelectListItem>
@@ -70,6 +71,7 @@ public class AdminController : Controller
 
         return View(userViewModel);
     }
+    [Authorize(Roles = "Admin")]
 
     [HttpPost("Admin/EditUser/{id?}")]
     public async Task<IActionResult> EditUser(short id, UsersViewModel viewModel)
@@ -127,8 +129,8 @@ public class AdminController : Controller
         return await _repo.GetUserByIdAsync(id) != null;
     }
 
-    
 
+    [Authorize(Roles = "Admin")]
     public IActionResult ManageItems()
     {
         var products = _repo.Products
@@ -145,7 +147,7 @@ public class AdminController : Controller
         return View(products);
     }
 
-
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     public IActionResult AddProduct()
     {
@@ -175,7 +177,7 @@ public class AdminController : Controller
         return View(model);
     }
 
-
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public IActionResult AddProduct(AddProductViewModel model)
     {
@@ -211,7 +213,7 @@ public class AdminController : Controller
         ViewBag.Categories = new SelectList(_repo.Categories, "CategoryId", "CategoryName");
         return View(model);
     }
-
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     public IActionResult EditProduct(int id)
     {
@@ -237,7 +239,7 @@ public class AdminController : Controller
 
         return View("Edit", model);
     }
-
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> EditProduct(EditProductViewModel model)
     {
