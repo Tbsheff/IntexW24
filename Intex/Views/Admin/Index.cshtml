@@ -52,14 +52,26 @@ display: none;
 
 <div class="filler" style="height: 84px;"></div>
 <main class="container dis-flex gap-md-5">
-    <div >
+    <div>
         <h2>Dashboard</h2>
         <ul>
-            <li class="active"><i class="fa fa-file"></i>.<a asp-controller="Admin" asp-action="ReviewOrders">Review Orders</a></li>
+            <li class="active"><i class="fa fa-file"></i><a asp-controller="Admin" asp-action="ReviewOrders">Review Orders</a></li>
             <li><i class="fa fa-user"></i><a asp-controller="Admin" asp-action="Index">Manage Users</a></li>
             <li><i class="fa fa-cube"></i><a asp-controller="Admin" asp-action="ManageItems">Manage Products</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-users"></i> Manage User Roles
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" asp-controller="Role" asp-action="Index">Assign Roles</a>
+                    <a class="dropdown-item" asp-controller="Role" asp-action="Create">Create Role</a>
+                    
+                    <!-- Add more role actions as needed -->
+                </div>
+            </li>
         </ul>
     </div>
+
 
     <div class="dis-flex flex-column">
         <div class="d-flex justify-content-between mb-3">
