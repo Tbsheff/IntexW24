@@ -22,9 +22,29 @@ builder.Services.AddDbContext<MyDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+{
+    // Existing configuration: require confirmed account
+    options.SignIn.RequireConfirmedAccount = true;
+
+    // Additional configuration: stronger password policy
+    options.Password.RequireDigit = true; // Require at least one digit
+    options.Password.RequireLowercase = true; // Require at least one lowercase letter
+    options.Password.RequireUppercase = true; // Require at least one uppercase letter
+    options.Password.RequireNonAlphanumeric = true; // Require at least one non-alphanumeric character
+    options.Password.RequiredLength = 12; // Require at least 12 characters
+    options.Password.RequiredUniqueChars = 6; // Require at least 6 unique characters
+})
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+
+
+//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+//    .AddRoles<IdentityRole>()
+//    .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<ILegoRepository, EFLegoRepository>();
@@ -43,6 +63,9 @@ builder.Services.AddRazorPages()
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
+
+
+
 
 
 
