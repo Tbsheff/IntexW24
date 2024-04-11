@@ -35,5 +35,8 @@
         Task RemoveAspUser(AspNetUser user);
         Task RemoveProduct(short id);
         Task AddOrder(Order order);
+        void AddUser(User newUser);
+        void Save();
+        void AddCustomer(Customer customer);
     }
 }
