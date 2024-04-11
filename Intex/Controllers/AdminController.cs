@@ -274,5 +274,63 @@ public class AdminController : Controller
         }
         return View("Edit", model);
     }
+
+    public IActionResult ReviewOrders()
+    {
+        var orders = _repo.Orders.Where(o => o.fraud == true); // Gets all orders
+        var customers = _repo.Customers; // Gets all customers
+        var entryModes = _repo.Entry_Modes; // Gets all entry modes
+        var transactionTypes = _repo.Transaction_Types; // Gets all transaction types
+        var banks = _repo.Banks; // Gets all banks
+        var cardTypes = _repo.Card_Types; // Gets all card types
+
+        var orderDetails = from o in orders
+                           join c in customers on o.customer_ID equals c.customer_ID
+                           join em in entryModes on o.entry_mode_id equals em.entry_mode_id
+                           join tt in transactionTypes on o.transaction_type_id equals tt.transaction_type_id
+                           join b in banks on o.bank_id equals b.bank_id
+                           join ct in cardTypes on o.card_type_id equals ct.card_type_id
+                           select new OrderDetailViewModel
+                           {
+                               TransactionId = o.transaction_ID,
+                               CustomerName = c.first_name + " " + c.last_name,
+                               Date = o.date,
+                               DayOfWeek = o.day_of_week,
+                               Hour = o.hour,
+                               EntryModeDescription = em.description,
+                               Amount = o.amount,
+                               TransactionTypeDescription = tt.description,
+                               CountryOfTransaction = o.country_of_transaction,
+                               ShippingAddress = o.shipping_address,
+                               BankName = b.name,
+                               CardTypeDescription = ct.description,
+                               Fraud = o.fraud
+                           };
+
+        var model = new OrdersViewModel { Orders = orderDetails.ToList() };
+        return View(model);
+    }
+
+    [HttpPost]
+    public IActionResult ApproveOrder(int id)
+    {
+        _logger.LogInformation("Received request to approve order with transaction ID: {TransactionId}", id);
+
+        var order = _repo.Orders.FirstOrDefault(o => o.transaction_ID == id);
+        if (order != null)
+        {
+            _logger.LogInformation("Think this works");
+            order.fraud = false;
+            _repo.ApproveOrder(order);
+            _repo.SaveAsync(); // Ensure to await if it's asynchronous
+            return RedirectToAction("ReviewOrders"); // Redirect to the ReviewOrders action or any other appropriate action
+        }
+        else
+        {
+            _logger.LogInformation("dang");
+            // If order is not found, return a view or an error message
+            return NotFound(); // Or return a View with a specific error message
+        }
+    }
 }
 

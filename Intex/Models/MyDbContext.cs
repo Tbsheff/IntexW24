@@ -196,9 +196,8 @@ public partial class MyDbContext : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("order");
+            entity.HasKey(e => e.transaction_ID);
+            entity.ToTable("order");
 
             entity.Property(e => e.country_of_transaction).HasMaxLength(50);
             entity.Property(e => e.day_of_week).HasMaxLength(50);

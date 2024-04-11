@@ -77,49 +77,32 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var order in Model.Orders)
-        {
-            <tr>
-                <td>@order.TransactionId</td>
-                <td>@order.CustomerName</td>
-                <td>@order.Date.ToString("MM/dd/yyyy")</td>
-                <td>@order.DayOfWeek</td>
-                <td>@order.Hour</td>
-                <td>@order.EntryModeDescription</td>
-                <td>@order.Amount</td>
-                <td>@order.TransactionTypeDescription</td>
-                <td>@order.CountryOfTransaction</td>
-                <td>@order.ShippingAddress</td>
-                <td>@order.BankName</td>
-                <td>@order.CardTypeDescription</td>
-                <td><button class="approve-btn" data-transaction-id="@order.TransactionId">Approve</button></td>
-            </tr>
-        }
+            @foreach (var order in Model.Orders)
+            {
+                <tr>
+                    <td>@order.TransactionId</td>
+                    <td>@order.CustomerName</td>
+                    <td>@order.Date.ToString("MM/dd/yyyy")</td>
+                    <td>@order.DayOfWeek</td>
+                    <td>@order.Hour</td>
+                    <td>@order.EntryModeDescription</td>
+                    <td>@order.Amount</td>
+                    <td>@order.TransactionTypeDescription</td>
+                    <td>@order.CountryOfTransaction</td>
+                    <td>@order.ShippingAddress</td>
+                    <td>@order.BankName</td>
+                    <td>@order.CardTypeDescription</td>
+                    <td>
+                        <form asp-action="ApproveOrder" asp-controller="Admin" asp-route-id="@order.TransactionId">
+                        <input type="hidden" name="id" value="@order.TransactionId" />
+                        <button type="submit" class="approve-btn">Approve</button>
+                        </form>
+                    </td>
+                </tr>
+            }
     </tbody>
 </table>
 
 <!-- Scripts and remaining HTML -->
-    <script>
-        // Handle click event on Approve button
-        $('.approve-btn').click(function () {
-            var transactionId = $(this).data('transaction-id');
-            console.log("message sent")
-            $.ajax({
-                url: '@Url.Action("ApproveOrder", "AdminController")',
-                type: 'POST',
-                data: { transactionId: transactionId },
-                success: function (result) {
-                    if (result.success) {
-                        // Optionally hide the row from the table
-                        $(this).closest('tr').remove();
-                    } else {
-                        alert('Failed to approve order.');
-                    }
-                },
-                error: function () {
-                    alert('Error approving order.');
-                }
-            });
-        });
-    </script>
+
 
