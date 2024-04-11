@@ -288,7 +288,7 @@ public class AdminController : Controller
         return View("Edit", model);
     }
 
-    
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> DeleteUser(short id)
     {
@@ -329,9 +329,9 @@ public class AdminController : Controller
             return StatusCode(500, "An error occurred while deleting the user. Please try again.");
         }
     }
-    
 
-public IActionResult ReviewOrders()
+    [Authorize(Roles = "Admin")]
+    public IActionResult ReviewOrders()
     {
         var orders = _repo.Orders.Where(o => o.fraud == true); // Gets all orders
         var customers = _repo.Customers; // Gets all customers
@@ -367,6 +367,7 @@ public IActionResult ReviewOrders()
         return View(model);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public IActionResult ApproveOrder(int id)
     {
@@ -388,7 +389,8 @@ public IActionResult ReviewOrders()
             return NotFound(); // Or return a View with a specific error message
         }
     }
-    
+
+    [Authorize(Roles = "Admin")]
     [HttpPost]
      public async Task<IActionResult> DeleteProduct(short id)
      {
