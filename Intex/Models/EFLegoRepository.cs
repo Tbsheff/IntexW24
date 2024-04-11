@@ -101,7 +101,8 @@ namespace Intex.Models
         {
             var product = _context.products.FirstOrDefault(x => x.product_id == id);
 
-            _context.Remove(product);
+             _context.Remove(product);
+             
         }
     }
 }
