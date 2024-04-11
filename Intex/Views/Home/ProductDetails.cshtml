@@ -142,8 +142,8 @@
                       Add to cart
                     </button> *@
 
-            <form method="post" asp-page="/Cart">
-              <input type="hidden" name="product_id" value="@ViewBag.Product.product_id" />
+            <form id="addToCartForm" method="post">
+              <input type="hidden" name="product_id" id="@ViewBag.Product.product_id" value="" />
               @* <input class="mtext-104 cl3 txt-center num-product"
                                                     type="number"
                                                     name="quantity"  <!-- This name must match the parameter in your OnPost method -->
@@ -419,6 +419,49 @@
 
 
 </section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#addToCartForm').on('submit', function (e) {
+            e.preventDefault(); // Prevent the default form submission
+            var formData = $(this).serialize(); // Serialize the form data for the AJAX request
+            $.ajax({
+                type: 'POST',
+                url: '/Cart', // The URL to the page handler method
+                data: formData,
+                success: function (response) {
+                    swal({
+                        title: "Added to Cart!",
+                        icon: "success",
+                        buttons: {
+                            cancel: "Continue Shopping",
+                            proceed: {
+                                text: "Go to Cart",
+                                value: "proceed",
+                            },
+                        },
+                    })
+                        .then((value) => {
+                            switch (value) {
+                                case "proceed":
+                                    window.location.href = '/Cart'; // or wherever your cart page is
+                                    break;
+                                default:
+                                    // Handle the case for Continue Shopping or closing the alert
+                                    break;
+                            }
+                        });;
+                },
+                error: function (xhr, status, error) {
+                    // If the request fails, handle errors here
+                    // For example, log the error or show an error message to the user
+                }
+            });
+        });
+    });
+</script>
 
 <!-- Related Products -->
     

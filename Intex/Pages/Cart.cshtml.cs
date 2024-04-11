@@ -31,6 +31,7 @@ namespace Intex.Pages
                 Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
                 Cart.AddItem(pro, 1);
                 HttpContext.Session.SetJson("cart", Cart);
+                UpdateCartItemCount();
             }
 
         }
@@ -95,7 +96,11 @@ namespace Intex.Pages
             return RedirectToPage("/Delivery");
         }
 
-
+        private void UpdateCartItemCount()
+        {
+            var itemCount = Cart.Lines.Sum(x => x.Quantity);
+            HttpContext.Session.SetInt32("CartItemCount", itemCount);
+        }
 
 
     }
