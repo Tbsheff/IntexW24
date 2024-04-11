@@ -5,6 +5,7 @@ using Intex.Components;
 using Intex.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.ML;
 
 
 public class AdminController : Controller
@@ -45,8 +46,7 @@ public class AdminController : Controller
         return View(usersWithCustomersAndRoles);
     }
     
-    [Route("Admin/EditUser/{id?}")]
-    public async Task<IActionResult> EditUser(short id)
+    public async Task<IActionResult> EditUser(short id = 30001)
     {
         var userViewModel =  _repo.Users
             .Join(
