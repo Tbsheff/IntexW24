@@ -378,7 +378,7 @@ public class AdminController : Controller
         {
             _logger.LogInformation("Think this works");
             order.fraud = false;
-            _repo.ApproveOrder(order);
+            _repo.UpdateOrderAsync(order);
             _repo.SaveAsync(); // Ensure to await if it's asynchronous
             return RedirectToAction("ReviewOrders"); // Redirect to the ReviewOrders action or any other appropriate action
         }

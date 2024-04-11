@@ -47,10 +47,12 @@ namespace Intex.Models
             _context.products.Add(product);
         }
 
-        public void ApproveOrder(Order order)
+        public async Task UpdateOrderAsync(Order order)
         {
             _context.orders.Update(order);
+            await _context.SaveChangesAsync();
         }
+
 
         public async Task<Customer> GetByIdAsync(short id)
         {

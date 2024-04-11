@@ -24,7 +24,7 @@
         void UpdateUser(User user);
         void UpdateProduct(Product product);
         void AddProduct(Product product);
-        void ApproveOrder(Order order);
+        Task UpdateOrderAsync(Order order);
         Task<User> GetUserByIdAsync(short id);
 
         Task<Customer> GetByIdAsync(short id);
