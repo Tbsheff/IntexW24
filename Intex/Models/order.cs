@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Intex.Models;
 
 public partial class Order
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // This line makes the transaction_ID auto-generated
     public int transaction_ID { get; set; }
 
     public int customer_ID { get; set; }

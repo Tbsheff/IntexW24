@@ -1,0 +1,50 @@
+﻿@page
+@model Intex.Pages.ReviewOrder
+
+@{
+    Layout = "_Layout";
+}
+<div class="filler" style="height: 84px;"></div>
+
+<h1>Review Your Order</h1>
+
+<h2>Cart</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var line in Model.CartLines)
+        {
+            <tr>
+                <td>@line.name.name</td>
+                <td>@line.Quantity</td>
+                <td>@line.name.price</td>
+                <td>@(line.Quantity * line.name.price)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2>Shipping Information</h2>
+<p>First Name: @ViewData["FirstName"]</p>
+<p>Last Name: @ViewData["LastName"]</p>
+<p>Address: @ViewData["Address"]</p>
+<p>City: @ViewData["City"]</p>
+<p>State: @ViewData["State"]</p>
+<p>Postal Code: @ViewData["PostalCode"]</p>
+
+<h2>Order Summary</h2>
+<p>Subtotal: $@ViewData["Subtotal"]</p>
+<p>Estimated Shipping: $@ViewData["EstimatedShipping"]</p>
+<p>Estimated Tax: $@ViewData["EstimatedTax"]</p>
+<p>Total: $@ViewData["Total"]</p>
+
+<form method="post">
+    <button type="submit" class="btn btn-primary">Confirm Order</button>
+</form>

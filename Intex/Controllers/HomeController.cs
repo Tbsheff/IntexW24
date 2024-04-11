@@ -202,6 +202,11 @@ public class HomeController : Controller
         return View(model);
     }
 
+    
+    public IActionResult Payment()
+    {
+        return View();
+    }
 
 
 }
