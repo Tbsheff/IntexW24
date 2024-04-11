@@ -4,6 +4,7 @@ using Intex.Models;
 using Intex.Components;
 using Microsoft.ML.OnnxRuntime;
 using Microsoft.ML.OnnxRuntime.Tensors;
+using Intex.Models.ViewModels;
 
 
 namespace Intex.Controllers;
@@ -179,9 +180,28 @@ public class HomeController : Controller
         return View();
     }
 
+
+    [HttpGet]
     public IActionResult Delivery()
     {
-        return View();
+        return View(new DeliveryViewModel());
     }
+
+
+    [HttpPost]
+    public IActionResult Delivery(DeliveryViewModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            // Assuming you have a service/repository to handle database operations
+            // Map the model to your entities and save them
+            return RedirectToAction("Index"); // or to a confirmation page
+        }
+
+        // If model state is not valid, return to the form with the model to show validation errors
+        return View(model);
+    }
+
+
 
 }

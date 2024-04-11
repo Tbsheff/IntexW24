@@ -6,6 +6,8 @@
 
 }
 
+@model Intex.Models.ViewModels.DeliveryViewModel
+
 
 
 
@@ -17,19 +19,22 @@
             <div class="col-md-7">
                 <h2>Shipping</h2>
                 <br />
-                <form asp-action="YourDeliveryAction" method="post">
-                    <!-- Use Bootstrap form groups and input classes -->
+                <form asp-action="Delivery" method="post">
+                        <!-- Use Bootstrap form groups and input classes -->
                     <div class="form-group">
-                        <label for="firstName">First Name*</label>
-                        <input type="text" class="form-control" id="firstName" name="firstName" required>
+                        <label asp-for="FirstName" class="form-label">First Name*</label>
+                        <input asp-for="FirstName" class="form-control" required />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label for="lastName">Last Name*</label>
-                        <input type="text" class="form-control" id="lastName" name="lastName" required>
+                        <label asp-for="LastName" class="form-label">Last Name*</label>
+                        <input asp-for="LastName" class="form-control" required />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label for="country">Country*</label>
-                        <input type="text" class="form-control" id="country" name="country" required>
+                        <label asp-for="Country" class="form-label">Country*</label>
+                        <input asp-for="Country" class="form-control" required />
+                        <span asp-validation-for="Country" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="address">Address*</label>
@@ -120,11 +125,11 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Edit</h4>
-                        <p class="card-text">Subtotal <span class="float-right">@Model.Subtotal.ToString("C")</span></p>
-                        <p class="card-text">Estimated Shipping <span class="float-right">@Model.EstimatedShipping.ToString("C")</span></p>
-                        <p class="card-text">Estimated Tax <span class="float-right">@Model.EstimatedTax.ToString("C")</span></p>
+                    <p class="card-text">Subtotal <span class="float-right">@(((decimal?)ViewData["Subtotal"])?.ToString("C") ?? "N/A")</span></p>
+                    <p class="card-text">Estimated Shipping <span class="float-right">@(((decimal?)ViewData["EstimatedShipping"])?.ToString("C") ?? "N/A")</span></p>
+                    <p class="card-text">Estimated Tax <span class="float-right">@(((decimal?)ViewData["EstimatedTax"])?.ToString("C") ?? "N/A")</span></p>
                         <hr>
-                        <h4 class="card-text">Total <span class="float-right">@Model.Total.ToString("C")</span></h4>
+                    <h4 class="card-text">Total <span class="float-right">@(((decimal?)ViewData["Total"])?.ToString("C") ?? "N/A")</span></h4>
                         <p class="card-text">Arrives by Wed, Apr 17</p>
                     </div>
                 </div>

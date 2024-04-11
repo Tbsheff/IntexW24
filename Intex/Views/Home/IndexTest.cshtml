@@ -4,6 +4,18 @@
 }
 
 @await Component.InvokeAsync("Slider")
+<div id="cookieConsentPopup" class="cookie-consent-popup">
+	<div class="cookie-consent-content">
+		<p>This website uses cookies to ensure you get the best experience on our website. <a href="/Home/Privacy">Learn More</a></p>
+		<button onclick="acceptCookies()">Got it!</button>
+	</div>
+</div>
+<script>
+	function acceptCookies() {
+		document.getElementById('cookieConsentPopup').style.display = 'none';
+		document.cookie = "cookieConsent=true; max-age=" + 60 * 60 * 24 * 30 + "; path=/"; // Expires in 30 days
+	}
+</script>
 
 <!-- Related Products -->
     
