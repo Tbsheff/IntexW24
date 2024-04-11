@@ -57,7 +57,8 @@ public class ProductsGridViewComponent: ViewComponent
             
             CurrentCategory = category,
             SelectedPrimaryColor = primaryColor,
-            SelectedSecondaryColor = secondaryColor
+            SelectedSecondaryColor = secondaryColor,
+            SelectedPageSize = pageSize
         };
 
         return View(viewModel);

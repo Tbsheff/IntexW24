@@ -96,7 +96,8 @@ app.Use(async (context, next) =>
     context.Response.Headers.Add("Content-Security-Policy", "default-src 'self'; " +
                                                             "style-src 'self' fonts.cdnfonts.com fonts.googleapis.com 'unsafe-inline';" +
                                                             "font-src 'self' fonts.cdnfonts.com fonts.googleapis.com fonts.gstatic.com cdn.linearicons.com; " +
-                                                            "script-src 'self' ajax.googleapis.com code.jquery.com 'unsafe-inline';" + // Added code.jquery.com
+                                                            "script-src 'self' ajax.googleapis.com code.jquery.com www.google.com www.gstatic.com 'unsafe-inline';" +
+                                                            "frame-src 'self' www.google.com; " + // Added www.google.com
                                                             "img-src 'self' m.media-amazon.com https://www.lego.com brickset.com https://www.brickeconomy.com images.brickset.com i.pinimg.com data:; " +
                                                             "connect-src *;");
     await next.Invoke();
@@ -112,7 +113,7 @@ app.UseEndpoints(endpoints =>
     
     endpoints.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Home}/{action=Index}/{pageNum?}/{category?}/{primaryColor?}/{secondaryColor?}");
+        pattern: "{controller=Home}/{action=Index}/{pageSize?}/{pageNum?}/{category?}/{primaryColor?}/{secondaryColor?}");
 
     endpoints.MapControllerRoute(
         name: "editUser",
