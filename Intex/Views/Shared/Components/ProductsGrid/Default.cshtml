@@ -65,6 +65,29 @@
 	<!-- Filter -->
 	<div class="dis-none panel-filter w-full p-t-10">
 		<div class="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
+					<div class="filter-col2 p-r-15 p-b-27">
+                        <div class="mtext-102 cl2 p-b-15">
+                            Items Per Page
+                        </div>
+                    
+                        <select id="pageSize" class="form-control">
+        	                
+        	                
+        	                @foreach (int size in ViewBag.PageSizes)
+        	                {
+        		                @if (Model.SelectedPageSize == size)
+        		                {
+        			                <option value="@size" selected="selected">@size</option>
+        
+        		                }
+        		                else
+        		                {
+        			                <option value="@size">@size</option>
+        		                }
+        	                }
+                        </select>
+                    </div>
+                
 			
 			<div class="filter-col2 p-r-15 p-b-27">
                 <div class="mtext-102 cl2 p-b-15">
@@ -260,11 +283,12 @@
         var category = $('#categoryFilter').val(); // Replace with the appropriate element ID or class for the category filter
         var primaryColor = $('#primaryColorFilter').val(); // Replace with the appropriate element ID or class for the primary color filter
         var secondaryColor = $('#secondaryColorFilter').val(); // Replace with the appropriate element ID or class for the secondary color filter
-
+		var pageSize = $('#pageSize').val(); // Replace with the appropriate element ID or class for the page size filter
         // Construct the URL with the selected filter values
         
-        var url = '@Url.Action("Product", "Home", new { pageNum = 1, category = "__category__", primaryColor = "__primaryColor__", secondaryColor = "__secondaryColor__" })';
-                url = url.replace("__category__", category)
+        var url = '@Url.Action("Product", "Home", new { pageNum = 1, pageSize = "__pageSize__", category = "__category__", primaryColor = "__primaryColor__", secondaryColor = "__secondaryColor__" })';
+                url = url.replace("__pageSize__", pageSize)
+                		 .replace("__category__", category)
                          .replace("__primaryColor__", primaryColor)
                          .replace("__secondaryColor__", secondaryColor);
         window.location.replace(url);
@@ -275,9 +299,10 @@
         $('#categoryFilter').val('All');
         $('#primaryColorFilter').val('All');
         $('#secondaryColorFilter').val('All');
+        var pageSize = $('#pageSize').val();
     
         // Construct the URL with default filter values
-        var url = '@Url.Action("Product", "Home", new { pageNum = 1, category = "All", primaryColor = "All", secondaryColor = "All" })';
+        var url = '@Url.Action("Product", "Home", new { pageNum = 1, pageSize =10,  category = "All", primaryColor = "All", secondaryColor = "All" })';
         window.location.replace(url);
     });
 

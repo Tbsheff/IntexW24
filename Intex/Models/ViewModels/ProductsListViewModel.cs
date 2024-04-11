@@ -8,4 +8,6 @@ public class ProductsListViewModel
     public string SelectedPrimaryColor { get; set; }
     public string SelectedSecondaryColor { get; set; }
     public string CurrentCategory { get; set; }
+    
+    public int SelectedPageSize { get; set; }
 }

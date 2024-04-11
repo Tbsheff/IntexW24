@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace Intex.Areas.Identity.Pages.Account
 {
@@ -22,6 +23,8 @@ namespace Intex.Areas.Identity.Pages.Account
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
         private readonly UserManager<IdentityUser> _userManager;
+        [BindProperty]
+        public string RecaptchaToken { get; set; }
 
         public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, UserManager<IdentityUser> userManager)
         {
@@ -110,7 +113,14 @@ namespace Intex.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             if (ModelState.IsValid)
+                
             {
+                var isCaptchaValid = await VerifyRecaptchaTokenAsync(RecaptchaToken);
+                if (!isCaptchaValid)
+                {
+                    ModelState.AddModelError(string.Empty, "reCAPTCHA validation failed");
+                    return Page();
+                }
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var user = await _userManager.FindByEmailAsync(Input.Email);
@@ -152,5 +162,38 @@ namespace Intex.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
+        
+        private async Task<bool> VerifyRecaptchaTokenAsync(string token)
+        {
+            var secretKey = "6LcAdLgpAAAAAKMewauNVV70k3chnadrLwVq-IwQ";
+            var client = new HttpClient();
+            var response = await client.GetStringAsync($"https://www.google.com/recaptcha/api/siteverify?secret={secretKey}&response={token}");
+            var reCaptchaResponse = JsonConvert.DeserializeObject<ReCaptchaResponse>(response);
+
+            return reCaptchaResponse.Success && reCaptchaResponse.Score >= 0.5;
+        }
+        
+        public class ReCaptchaResponse
+        {
+            [JsonProperty("success")]
+            public bool Success { get; set; }
+
+            [JsonProperty("score")]
+            public float Score { get; set; }
+
+            [JsonProperty("action")]
+            public string Action { get; set; }
+
+            [JsonProperty("challenge_ts")]
+            public DateTime ChallengeTimestamp { get; set; }
+
+            [JsonProperty("hostname")]
+            public string Hostname { get; set; }
+
+            [JsonProperty("error-codes")]
+            public List<string> ErrorCodes { get; set; }
+        }
+
+
     }
 }
