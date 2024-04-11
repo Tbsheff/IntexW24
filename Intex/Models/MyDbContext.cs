@@ -196,6 +196,7 @@ public partial class MyDbContext : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
+            entity.Property(o => o.transaction_ID).ValueGeneratedOnAdd();
             entity.HasKey(e => e.transaction_ID);
             entity.ToTable("order");
 

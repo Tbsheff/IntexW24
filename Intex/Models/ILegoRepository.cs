@@ -34,5 +34,6 @@
         Task RemoveUser(short id);
         Task RemoveAspUser(AspNetUser user);
         Task RemoveProduct(short id);
+        Task AddOrder(Order order);
     }
 }

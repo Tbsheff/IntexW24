@@ -46,6 +46,11 @@ namespace Intex.Models
         {
             _context.products.Add(product);
         }
+        
+        public async Task AddOrder(Order order)
+        {
+            _context.orders.Add(order);
+        }
 
         public async Task UpdateOrderAsync(Order order)
         {

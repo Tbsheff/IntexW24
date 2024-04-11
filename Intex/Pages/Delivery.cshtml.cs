@@ -43,28 +43,22 @@ namespace Intex.Pages
             ViewData["Total"] = Cart.CalculateTotal() + ShippingCost + Tax;
         }
         
-        public void OnPost([FromBody] List<Cart.CartLine> cartItems)
+        public void OnPost()
         {
-            CartItems = cartItems;
-            // Retrieve the cart from the session
-            Cart cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
-
-            // Check if the cart is empty
-            if (cart.Lines.Count == 0)
+            HttpContext.Session.SetJson("address", new Address
             {
-                // Optionally, add a TempData message to inform the user
-                TempData["Message"] = "Your cart is empty. Please add items to your cart before proceeding.";
+                FirstName = Request.Form["DeliveryInfo.FirstName"],
+                LastName = Request.Form["DeliveryInfo.LastName"],
+                Street = Request.Form["address"],
+                City = Request.Form["city"],
+                State = Request.Form["state"],
+                Zip = Request.Form["postalCode"],
+                Country = Request.Form["DeliveryInfo.Country"]
+            });
 
-                // Redirect back to the Cart page
-                Response.Redirect(Url.Page("Cart"));
-                return; // Exit the method to prevent further processing
-            }
-
-            // If the cart is not empty, proceed with serialization and redirection
-            var cartLineItemsJson = System.Text.Json.JsonSerializer.Serialize(cart.Lines);
-            HttpContext.Session.SetString("CartLineItems", cartLineItemsJson);
-            Response.Redirect(Url.Page("Delivery"));
+            Response.Redirect(Url.Page("Payment"));
         }
+
 
         
 
