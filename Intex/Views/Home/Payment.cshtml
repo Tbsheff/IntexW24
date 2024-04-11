@@ -1,0 +1,76 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Payment Page";
+}
+
+<br />
+<br />
+<div class="container mt-4">
+    <div class="row">
+        <!-- Payment Information Form -->
+        <div class="col-md-7">
+            <h2>Payment Information</h2>
+            <br />
+            <form action="@Url.Action("SubmitPayment", "Payment")" method="post" class="needs-validation" novalidate>
+                <!-- Card Information -->
+                <div class="form-group">
+                    <label for="cardNumber">Card Number*</label>
+                    <input type="text" class="form-control" id="cardNumber" name="cardNumber" required>
+                </div>
+                <div class="form-group">
+                    <label for="expDate">Expiration Date (MM/YY)*</label>
+                    <input type="text" class="form-control" id="expDate" name="expDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="cvv">CVV*</label>
+                    <input type="text" class="form-control" id="cvv" name="cvv" required>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-check" style="padding-top: 32px;">
+                        <input type="checkbox" class="form-check-input" id="sameAsShipping" name="sameAsShipping">
+                        <label class="form-check-label" for="sameAsShipping">Billing address same as shipping</label>
+                    </div>
+                </div>
+
+                <!-- Billing Address -->
+                <div class="form-group">
+                    <label for="firstName">First Name*</label>
+                    <input type="text" class="form-control" id="firstName" name="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name*</label>
+                    <input type="text" class="form-control" id="lastName" name="lastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" class="form-control" id="lastName" name="lastName" required>
+                </div>
+                <!-- ... other input fields ... -->
+
+                <button type="submit" class="btn btn-warning btn-block">Continue to Order Review</button>
+            </form>
+        </div>
+
+        <!-- Cart Summary -->
+        <div class="col-md-5">
+            <!-- Cart Summary content -->
+            <h3>In Your Bag</h3>
+            <br />
+            <div class="card">
+                <div class="card-body">
+                    <!-- Card content -->
+                    <h4 class="card-title">Edit</h4>
+                    <p class="card-text">Subtotal <span class="float-right">$0.00</span></p>
+                    <p class="card-text">Estimated Shipping <span class="float-right">$0.00</span></p>
+                    <p class="card-text">Estimated Tax <span class="float-right">$0.00</span></p>
+                    <hr>
+                    <h4 class="card-text">Total <span class="float-right">$0.00</span></h4>
+                    <p class="card-text">Arrives by Wed, Apr 17</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+<br />

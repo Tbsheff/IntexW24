@@ -1,12 +1,13 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@page
 @{
     Layout = "_Layout";
 
 }
 
-@model Intex.Models.ViewModels.DeliveryViewModel
+@model Pages.DeliveryModel
 
 
 
@@ -19,22 +20,22 @@
             <div class="col-md-7">
                 <h2>Shipping</h2>
                 <br />
-                <form asp-action="Delivery" method="post">
+                <form  method="post">
                         <!-- Use Bootstrap form groups and input classes -->
                     <div class="form-group">
-                        <label asp-for="FirstName" class="form-label">First Name*</label>
-                        <input asp-for="FirstName" class="form-control" required />
-                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                        <label asp-for="DeliveryInfo.FirstName" class="form-label">First Name*</label>
+                        <input asp-for="DeliveryInfo.FirstName" class="form-control" required />
+                        <span asp-validation-for="DeliveryInfo.FirstName" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="LastName" class="form-label">Last Name*</label>
-                        <input asp-for="LastName" class="form-control" required />
-                        <span asp-validation-for="LastName" class="text-danger"></span>
+                        <label asp-for="DeliveryInfo.LastName" class="form-label">Last Name*</label>
+                        <input asp-for="DeliveryInfo.LastName" class="form-control" required />
+                        <span asp-validation-for="DeliveryInfo.LastName" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Country" class="form-label">Country*</label>
-                        <input asp-for="Country" class="form-control" required />
-                        <span asp-validation-for="Country" class="text-danger"></span>
+                        <label asp-for="DeliveryInfo.Country" class="form-label">Country*</label>
+                        <input asp-for="DeliveryInfo.Country" class="form-control" required />
+                        <span asp-validation-for="DeliveryInfo.Country" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="address">Address*</label>
@@ -125,7 +126,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Edit</h4>
-                    <p class="card-text">Subtotal <span class="float-right">@(((decimal?)ViewData["Subtotal"])?.ToString("C") ?? "N/A")</span></p>
+                    <p class="card-text">Subtotal @Model.Subtotal<span class="float-right">@(((decimal?)ViewData["Subtotal"])?.ToString("C") ?? "N/A")</span></p>
                     <p class="card-text">Estimated Shipping <span class="float-right">@(((decimal?)ViewData["EstimatedShipping"])?.ToString("C") ?? "N/A")</span></p>
                     <p class="card-text">Estimated Tax <span class="float-right">@(((decimal?)ViewData["EstimatedTax"])?.ToString("C") ?? "N/A")</span></p>
                         <hr>
