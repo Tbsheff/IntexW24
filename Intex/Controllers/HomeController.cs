@@ -6,7 +6,7 @@ using Microsoft.ML.OnnxRuntime;
 using Microsoft.ML.OnnxRuntime.Tensors;
 using Intex.Models.ViewModels;
 using System.Linq;
-
+using System.Text.Json;
 
 namespace Intex.Controllers;
 
@@ -243,6 +243,17 @@ public class HomeController : Controller
     public IActionResult Payment()
     {
         return View();
+    }
+
+
+  
+   public bool IsReCaptchaValid(string captchaResponse)
+    {
+        string secret = "6LevL7gpAAAAAEacEYR48YIhvEcgiroys4W1-uzz";
+        var client = new HttpClient();
+        string result = client.GetStringAsync($"https://www.google.com/recaptcha/api/siteverify?secret={secret}&response={captchaResponse}").Result;
+        var obj = JsonSerializer.Deserialize<JsonElement>(result);
+        return obj.GetProperty("success").GetBoolean();
     }
 
 
