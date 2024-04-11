@@ -46,7 +46,7 @@ namespace Intex.Pages
 
 
 
-        public void OnPost(int product_id)
+        public void OnPost(int product_id, int quantity = 1)
         {
             if (product_id != null)
             {
@@ -55,7 +55,7 @@ namespace Intex.Pages
                 if (pro != null)
                 {
                     Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
-                    Cart.AddItem(pro, 1);
+                    Cart.AddItem(pro, quantity);
                     HttpContext.Session.SetJson("cart", Cart);
                 UpdateCartItemCount();
                 }

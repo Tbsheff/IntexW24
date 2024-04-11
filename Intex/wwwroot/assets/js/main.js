@@ -212,15 +212,50 @@
 
     /*==================================================================
     [ +/- num product ]*/
-    $('.btn-num-product-down').on('click', function(){
-        var numProduct = Number($(this).next().val());
-        if(numProduct > 0) $(this).next().val(numProduct - 1);
+
+// Event listener for the click event on the wrapNumProduct container
+// Event listener for the click event on the wrapNumProduct container
+    $('.wrap-num-product').on('click', function(event) {
+        // Check if the click happened on the button to increase quantity
+        if ($(event.target).hasClass('btn-num-product-up')) {
+            const input = $(event.target).parent().find('.num-product');
+            let newValue = parseInt(input.val()) + 1;
+            input.val(newValue);
+            input.attr('value', newValue); // Update the value attribute
+        }
+        // Check if the click happened on the button to decrease quantity
+        else if ($(event.target).hasClass('btn-num-product-down')) {
+            const input = $(event.target).parent().find('.num-product');
+            if (parseInt(input.val()) > 1) {
+                let newValue = parseInt(input.val()) - 1;
+                input.val(newValue);
+                input.attr('value', newValue); // Update the value attribute
+            }
+        }
     });
 
-    $('.btn-num-product-up').on('click', function(){
-        var numProduct = Number($(this).prev().val());
-        $(this).prev().val(numProduct + 1);
-    });
+
+
+    /*
+        $(document).ready(function () {
+            $('.btn-num-product-down').on('click', function(){
+                var input = $('#num-product');
+                var numProduct = Number(input.val());
+                if(numProduct > 0) {
+                    input.val(numProduct - 1);
+                    input.attr('value', numProduct - 1); // Update the value attribute
+                }
+            });
+    
+            $('.btn-num-product-up').on('click', function(){
+                var input = $('#num-product');
+                var numProduct = Number(input.val());
+                input.val(numProduct + 1);
+                input.attr('value', numProduct + 1); // Update the value attribute
+            });
+        });
+    */
+
 
     /*==================================================================
     [ Rating ]*/
