@@ -5,6 +5,7 @@ using Intex.Components;
 using Microsoft.ML.OnnxRuntime;
 using Microsoft.ML.OnnxRuntime.Tensors;
 using Intex.Models.ViewModels;
+using System.Linq;
 
 
 namespace Intex.Controllers;
@@ -102,8 +103,44 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        
         var recommendationIds = _repo.Ratings.OrderBy(x => x.rating1).Take(10).Select(r => r.product_ID).ToList();
+
+        if (User.Identity.IsAuthenticated)
+        {
+            string username = User.Identity.Name;
+            int userId = _repo.Users.Where(x => x.username == username).Select(x => x.user_id).FirstOrDefault();
+
+            if (userId != 0) // Assuming user_id is an integer type
+            {
+                int customerId = _repo.Customers.Where(x => x.customer_ID == userId).Select(x => x.customer_ID).FirstOrDefault();
+
+                if (customerId != 0) // Assuming customer_ID is an integer type
+                {
+                    var recommendations = _repo.Customer_Recommendations
+                        .Where(x => x.customer_id == customerId)
+                        .Select(r => new List<byte>
+                        {
+                            r.recommendation_1,
+                            r.recommendation_2,
+                            r.recommendation_3,
+                            r.recommendation_4,
+                            r.recommendation_5,
+                            r.recommendation_6,
+                            r.recommendation_7,
+                            r.recommendation_8,
+                            r.recommendation_9,
+                            r.recommendation_10
+                        })
+                        .FirstOrDefault();
+
+                    if (recommendations != null)
+                    {
+                        recommendationIds = recommendations;
+                    }
+                }
+            }
+        }
+
         var recommendedProducts = _repo.Products.Where(p => recommendationIds.Contains(p.product_id)).ToList();
         ViewBag.RecommendedProducts = recommendedProducts;
 
