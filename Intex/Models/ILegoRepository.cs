@@ -30,5 +30,9 @@
         Task<Customer> GetByIdAsync(short id);
         Task UpdateCustomerAsync(Customer customer);
         Task SaveAsync();
+
+        Task RemoveUser(short id);
+        Task RemoveAspUser(AspNetUser user);
+        Task RemoveProduct(short id);
     }
 }

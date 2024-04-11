@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Intex.Models;
 
 public partial class Order
 {
+    [Key]
     public int transaction_ID { get; set; }
 
     public int customer_ID { get; set; }
