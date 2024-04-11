@@ -2,9 +2,13 @@
 
     <!-- Related Products -->
     <section class="sec-relate-product bg0 p-t-45 p-b-105">
+    <head>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+
       <div class="container">
         <div class="p-b-45">
-          <h3 class="ltext-106 cl5 txt-center">Related Products</h3>
+          <h3 class="ltext-106 cl5 txt-center">Recommended Products</h3>
         </div>
 
         <!-- Slide2 -->
@@ -19,12 +23,13 @@
                           <div class="block2-pic hov-img0" style="height: 200px; width: 200px;">
                             <img src="@product.img_link" alt="IMG-PRODUCT" style="object-fit: scale-down; height: 100%;" />
           
-                            <a
-                              href="#"
-                              class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
-                            >
-                              Quick View
-                            </a>
+                                <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" data-product-id="@product.product_id"
+                                   data-product-name="@product.name"
+                                   data-product-price="@product.price"
+                                   data-product-image="@product.img_link"
+                                   data-product-description="@product.description">
+                                    Quick View
+                                </a>
                           </div>
           
                           <div class="block2-txt flex-w flex-t p-t-14">
@@ -63,5 +68,37 @@
           </div>
         </div>
       </div>
+
+
+
+        <script>
+            $(document).on('click', '.js-show-modal1', function (e) {
+                e.preventDefault();
+                var productId = $(this).data('product-id');
+                var productName = $(this).data('product-name');
+                var productPrice = $(this).data('product-price');
+                var productImage = $(this).data('product-image');
+                var productDescription = $(this).data('product-description');
+
+                console.log("This working")
+
+                $('#modalProductName').text(productName);
+                $('#modalProductPrice').text('$' + productPrice.toFixed(2));
+                $('#modalProductImage').attr('src', productImage);
+                $('#modalProductDescription').text(productDescription);
+                $('#modelProductImage2').attr('href', productImage);
+
+
+                $('.js-modal1').addClass('show-modal1');
+            });
+
+            $('.js-hide-modal1').on('click', function () {
+                $('.js-modal1').removeClass('show-modal1');
+            });
+        </script>
+
+
     </section>
+
+    
 
