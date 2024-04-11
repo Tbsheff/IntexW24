@@ -115,12 +115,7 @@ namespace Intex.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
                 
             {
-                var isCaptchaValid = await VerifyRecaptchaTokenAsync(RecaptchaToken);
-                if (!isCaptchaValid)
-                {
-                    ModelState.AddModelError(string.Empty, "reCAPTCHA validation failed");
-                    return Page();
-                }
+                
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var user = await _userManager.FindByEmailAsync(Input.Email);
@@ -163,37 +158,7 @@ namespace Intex.Areas.Identity.Pages.Account
             return Page();
         }
         
-        private async Task<bool> VerifyRecaptchaTokenAsync(string token)
-        {
-            var secretKey = "6LcAdLgpAAAAAKMewauNVV70k3chnadrLwVq-IwQ";
-            var client = new HttpClient();
-            var response = await client.GetStringAsync($"https://www.google.com/recaptcha/api/siteverify?secret={secretKey}&response={token}");
-            var reCaptchaResponse = JsonConvert.DeserializeObject<ReCaptchaResponse>(response);
-
-            return reCaptchaResponse.Success && reCaptchaResponse.Score >= 0.5;
-        }
-        
-        public class ReCaptchaResponse
-        {
-            [JsonProperty("success")]
-            public bool Success { get; set; }
-
-            [JsonProperty("score")]
-            public float Score { get; set; }
-
-            [JsonProperty("action")]
-            public string Action { get; set; }
-
-            [JsonProperty("challenge_ts")]
-            public DateTime ChallengeTimestamp { get; set; }
-
-            [JsonProperty("hostname")]
-            public string Hostname { get; set; }
-
-            [JsonProperty("error-codes")]
-            public List<string> ErrorCodes { get; set; }
-        }
-
+       
 
     }
 }

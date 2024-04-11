@@ -42,9 +42,6 @@
                     </div>
                 </div>
 
-                <input type="hidden" id="recaptchaToken" name="recaptchaToken" />
-                <button type="button" onclick="executeRecaptcha()">Test reCAPTCHA</button>
-
                 <button type="submit" onclick="LoginButton()">Sign in</button>
                 <div class="sign-up">
                     Don’t have an account? <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="sign-up-link">Sign Up Here</a>
@@ -83,27 +80,4 @@
         </div>
     </div>
 </main>
-
-
-<script>
-    grecaptcha.ready(function () {
-        grecaptcha.execute('6LcAdLgpAAAAAJ8Yfq1Rt8fl5Dh8iuSJ4ZQBb057', { action: 'login' }).then(function (token) {
-            document.getElementById('recaptchaToken').value = token;
-        });
-    });
-</script>
-
-<script>
-    function executeRecaptcha() {
-        grecaptcha.ready(function () {
-            grecaptcha.execute('6LcAdLgpAAAAAJ8Yfq1Rt8fl5Dh8iuSJ4ZQBb057', { action: 'login' }).then(function (token) {
-                document.getElementById('recaptchaToken').value = token;
-                console.log('reCAPTCHA token:', token);
-            });
-        });
-    }
-
-    // Execute reCAPTCHA on page load
-    executeRecaptcha();
-</script>
 
