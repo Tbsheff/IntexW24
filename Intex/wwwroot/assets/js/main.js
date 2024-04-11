@@ -280,6 +280,8 @@
         $('#modalProductPrice').text('$' + productPrice.toFixed(2));
         $('#modalProductImage').attr('src', productImage);
         $('#modalProductDescription').text(productDescription);
+        $('#modelProductId').val(productId);
+        
         
         $('.js-modal1').addClass('show-modal1');
     });

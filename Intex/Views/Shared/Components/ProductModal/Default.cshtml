@@ -66,7 +66,7 @@
 											</div>
 										</div>
 
-									<form id="addToCartForm" method="post">
+									<form id="addToCartForm" method="post" >
 										<input type="hidden" name="product_id" id="modelProductId" value="" />
 										@* <input class="mtext-104 cl3 txt-center num-product"type="number" name="quantity"  <!-- This name must match the parameter in your OnPost method --> value="1" min="1" <!-- You can set a minimum value here /> *@
 										<button type="submit" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 ">Add to Cart</button>
@@ -108,7 +108,8 @@
 	$(document).ready(function () {
 		$('#addToCartForm').on('submit', function (e) {
 			e.preventDefault(); // Prevent the default form submission
-			var formData = $(this).serialize(); // Serialize the form data for the AJAX request
+			var formData = $(this).serialize();
+			console.log(formData);// Serialize the form data for the AJAX request
 			$.ajax({
 				type: 'POST',
 				url: '/Cart', // The URL to the page handler method
@@ -134,7 +135,7 @@
 									// Handle the case for Continue Shopping or closing the alert
 									break;
 							}
-						});;
+						});
 				},
 				error: function (xhr, status, error) {
 					// If the request fails, handle errors here
