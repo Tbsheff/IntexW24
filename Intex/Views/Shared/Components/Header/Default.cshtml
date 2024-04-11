@@ -47,9 +47,7 @@
 
 					<!-- Icon header -->
 					<div class="wrap-icon-header flex-w flex-r-m">
-						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
-							<i class="zmdi zmdi-search"></i>
-						</div>
+						
 
 					<a asp-page="/Cart">
 						@if (cartItemCount > 0)
@@ -68,11 +66,22 @@
 
 						<ul class="row m-all-0">
 						@if (SignInManager.IsSignedIn(User))
-						
+							
                                                     {
-                                                        <li class="nav-item ">
-                                                            <a class="nav-link text-dark p-r-2" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
-                                                        </li>
+	                                                    @if(User.IsInRole("Admin"))
+	                                                    {
+		                                                    <li class="nav-item">
+			                                                    <a class="nav-link text-dark p-r-2" asp-controller="Role" asp-action="Index" title="Manage">Admin Dashboard
+			                                                    </a>
+		                                                    </li>
+	                                                    };
+	                                                    <li class="nav-item ">
+		                                                    
+		                                                    
+		                                                    <a class="nav-link text-dark p-r-2" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
+                                                                                                                                                                    			                                                    <i class="zmdi zmdi-account-circle"></i>
+                                                                                                                                                                    		                                                    </div></a>
+	                                                    </li>
                                                         <li class="nav-item ">
                                                             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                                                                 <button type="submit" class="nav-link btn btn-link text-dark p-l-2">Logout</button>
@@ -106,7 +115,7 @@
 			<!-- Icon header -->
 			<div class="wrap-icon-header flex-w flex-r-m m-r-15">
 				<div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 js-show-modal-search">
-					<i class="zmdi zmdi-search"></i>
+					<i class="zmdi zmdi-account-circle"></i>
 				</div>
 
 				<div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart" data-notify="2">

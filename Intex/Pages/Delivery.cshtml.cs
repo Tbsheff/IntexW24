@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Globalization;
 using Intex.Infrastructure;
 using Intex.Models;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace Intex.Pages
 {
+    [Authorize] 
     public class DeliveryModel : PageModel
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -29,8 +31,7 @@ namespace Intex.Pages
 
         public void OnGet()
         {
-            if (User.Identity.IsAuthenticated)
-            {
+            
                 Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
                 
                             ShippingCost = 15.00m; // Example shipping cost
@@ -43,11 +44,7 @@ namespace Intex.Pages
                             ViewData["EstimatedShipping"] = ShippingCost;
                             ViewData["EstimatedTax"] = Tax;
                             ViewData["Total"] = Cart.CalculateTotal() + ShippingCost + Tax;
-            }
-            else
-            {
-                RedirectToPage("~/Identity/Account/Login", new { area = "Identity" });
-            }
+            
 
         }
         
