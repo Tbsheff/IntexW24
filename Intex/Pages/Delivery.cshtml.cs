@@ -26,6 +26,17 @@ namespace Intex.Pages
             Total = Convert.ToDecimal(TempData["Total"] as string ?? "0", CultureInfo.InvariantCulture);
         }
 
+        // Property for list of countries.
+            public List<string> Countries { get; set; } = new List<string>
+        {
+            "United States",
+            "Canada",
+            "United Kingdom",
+            "Australia"
+            // Add other countries as needed.
+        };
+
+
 
     }
 }

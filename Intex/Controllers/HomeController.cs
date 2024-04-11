@@ -20,7 +20,7 @@ public class HomeController : Controller
         _repo = repo;
         try 
         {
-            _session = new InferenceSession("C:/Users/burke/source/repos/IntexW24/Intex/decision_tree_model.onnx");
+            _session = new InferenceSession(@"decision_tree_model.onnx");
             _logger.LogInformation("ONNX model loaded successfully.");
         }
         catch (Exception ex) 

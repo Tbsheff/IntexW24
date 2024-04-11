@@ -34,6 +34,16 @@
         {
             _context.users.Update(user);
         }
+        
+        public void UpdateProduct(Product product)
+        {
+            _context.products.Update(product);
+        }
+        
+        public void AddProduct(Product product)
+        {
+            _context.products.Add(product);
+        }
 
         public async Task<Customer> GetByIdAsync(short id)
         {
