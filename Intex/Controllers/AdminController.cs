@@ -301,8 +301,37 @@ public class AdminController : Controller
             {
                 return NotFound();
             }
+            
 
-    public IActionResult ReviewOrders()
+            // Get the associated customer entity
+            var customer = await _repo.GetByIdAsync(id);
+
+            // Remove the user from the AspNetUsers table
+            var aspUser = _repo.AspNetUsers.FirstOrDefault(x => x.UserName == user.username);
+            if (aspUser != null)
+            {
+                _repo.RemoveAspUser(aspUser);
+                await _repo.SaveAsync();
+            }
+
+            // Remove the user from the Users table and customers table
+            _repo.RemoveUser(id);
+            
+
+            // Save the changes to the database
+            await _repo.SaveAsync();
+
+            return RedirectToAction("Index");
+        }
+        catch (Exception ex)
+        {
+            // Log the exception or handle it accordingly
+            return StatusCode(500, "An error occurred while deleting the user. Please try again.");
+        }
+    }
+    
+
+public IActionResult ReviewOrders()
     {
         var orders = _repo.Orders.Where(o => o.fraud == true); // Gets all orders
         var customers = _repo.Customers; // Gets all customers
@@ -357,34 +386,6 @@ public class AdminController : Controller
             _logger.LogInformation("dang");
             // If order is not found, return a view or an error message
             return NotFound(); // Or return a View with a specific error message
-        }
-    }
-}
-
-            // Get the associated customer entity
-            var customer = await _repo.GetByIdAsync(id);
-
-            // Remove the user from the AspNetUsers table
-            var aspUser = _repo.AspNetUsers.FirstOrDefault(x => x.UserName == user.username);
-            if (aspUser != null)
-            {
-                _repo.RemoveAspUser(aspUser);
-                await _repo.SaveAsync();
-            }
-
-            // Remove the user from the Users table and customers table
-            _repo.RemoveUser(id);
-            
-
-            // Save the changes to the database
-            await _repo.SaveAsync();
-
-            return RedirectToAction("Index");
-        }
-        catch (Exception ex)
-        {
-            // Log the exception or handle it accordingly
-            return StatusCode(500, "An error occurred while deleting the user. Please try again.");
         }
     }
     
