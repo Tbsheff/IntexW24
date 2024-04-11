@@ -22,6 +22,7 @@
         IEnumerable<Transaction_Type> Transaction_Types { get; }
         IEnumerable<User> Users { get; }
         void UpdateUser(User user);
+        void ApproveOrder(Order order);
         Task<User> GetUserByIdAsync(short id);
 
         Task<Customer> GetByIdAsync(short id);
