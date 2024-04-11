@@ -1,4 +1,6 @@
-﻿namespace Intex.Models
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Intex.Models
 {
     public class EFLegoRepository : ILegoRepository
     {
@@ -62,6 +64,42 @@
         public async Task SaveAsync()
         {
             await _context.SaveChangesAsync();
+        }
+        
+        public async Task RemoveUser(short id)
+        {
+            // Find the user entity
+            var user = await _context.users.FindAsync(id);
+
+            if (user != null)
+            {
+                // Find the associated customer entity
+                var customer = await _context.customers.FirstOrDefaultAsync(c => c.customer_ID == id);
+
+                // Remove the user from the Users DbSet
+                _context.users.Remove(user);
+
+                // If a customer entity is found, remove it from the Customers DbSet
+                if (customer != null)
+                {
+                    _context.customers.Remove(customer);
+                }
+
+                // Save the changes to the database
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task RemoveAspUser(AspNetUser user)
+        {
+            _context.AspNetUsers.Remove(user);
+        }
+        
+        public async Task RemoveProduct(short id)
+        {
+            var product = _context.products.FirstOrDefault(x => x.product_id == id);
+
+            _context.Remove(product);
         }
     }
 }

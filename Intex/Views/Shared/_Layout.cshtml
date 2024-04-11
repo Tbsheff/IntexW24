@@ -36,6 +36,28 @@
 	<link rel="stylesheet" type="text/css" href="~/assets/css/util.css">
 	<link rel="stylesheet" type="text/css" href="~/assets/css/main.css">
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<style>
+		.cookie-consent-popup {
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			background: rgba(0, 0, 0, 0.8);
+			color: white;
+			text-align: center;
+			padding: 10px;
+			z-index: 1000;
+		}
+
+		.cookie-consent-content button {
+			background-color: #4CAF50; /* Green */
+			color: white;
+			border: none;
+			cursor: pointer;
+			padding: 10px 20px;
+			margin-top: 10px;
+		}
+	</style>
 
 </head>
 
@@ -129,5 +151,9 @@
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", required: false)
+	
+
+
+
 </body>
 </html>

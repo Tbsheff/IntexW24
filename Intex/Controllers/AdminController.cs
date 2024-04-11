@@ -6,6 +6,7 @@ using Intex.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.ML;
+using Microsoft.AspNetCore.Authorization;
 
 
 public class AdminController : Controller
@@ -20,7 +21,7 @@ public class AdminController : Controller
         _logger = logger;
         _repo = repo;
     }
-    
+    [Authorize(Roles = "Admin")]
     public IActionResult Index()
     {
         Genders = new List<SelectListItem>
@@ -70,6 +71,7 @@ public class AdminController : Controller
 
         return View(userViewModel);
     }
+    [Authorize(Roles = "Admin")]
 
     [HttpPost("Admin/EditUser/{id?}")]
     public async Task<IActionResult> EditUser(short id, UsersViewModel viewModel)
@@ -81,14 +83,25 @@ public class AdminController : Controller
             try
             {
                 var user = await _repo.GetUserByIdAsync(id);
+                var aspUser = _repo.AspNetUsers.FirstOrDefault(x => x.UserName == viewModel.User.username);
+                
                 if (user == null)
                 {
                     return NotFound();
                 }
 
-                user.username = viewModel.User.username;
+                if (user.username != viewModel.User.username)
+                {
+                    user.username = viewModel.User.username;
+                    aspUser.UserName = viewModel.User.username;
+                    aspUser.NormalizedUserName = viewModel.User.username.ToUpper();
+                    aspUser.Email = viewModel.User.username;
+                    aspUser.NormalizedUserName = viewModel.User.username.ToUpper();
+                    
+                    _repo.UpdateUser(user);
+                }
                 // Update other user properties as needed
-                _repo.UpdateUser(user);
+                
 
                 var customer = await _repo.GetByIdAsync(id);
                 if (customer != null)
@@ -127,8 +140,8 @@ public class AdminController : Controller
         return await _repo.GetUserByIdAsync(id) != null;
     }
 
-    
 
+    [Authorize(Roles = "Admin")]
     public IActionResult ManageItems()
     {
         var products = _repo.Products
@@ -145,7 +158,7 @@ public class AdminController : Controller
         return View(products);
     }
 
-
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     public IActionResult AddProduct()
     {
@@ -175,7 +188,7 @@ public class AdminController : Controller
         return View(model);
     }
 
-
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public IActionResult AddProduct(AddProductViewModel model)
     {
@@ -211,7 +224,7 @@ public class AdminController : Controller
         ViewBag.Categories = new SelectList(_repo.Categories, "CategoryId", "CategoryName");
         return View(model);
     }
-
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     public IActionResult EditProduct(int id)
     {
@@ -237,7 +250,7 @@ public class AdminController : Controller
 
         return View("Edit", model);
     }
-
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> EditProduct(EditProductViewModel model)
     {
@@ -274,6 +287,20 @@ public class AdminController : Controller
         }
         return View("Edit", model);
     }
+
+    
+    [HttpPost]
+    public async Task<IActionResult> DeleteUser(short id)
+    {
+        try
+        {
+            // Get the user entity from the repository
+            var user = await _repo.GetUserByIdAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
 
     public IActionResult ReviewOrders()
     {
@@ -333,4 +360,61 @@ public class AdminController : Controller
         }
     }
 }
+
+            // Get the associated customer entity
+            var customer = await _repo.GetByIdAsync(id);
+
+            // Remove the user from the AspNetUsers table
+            var aspUser = _repo.AspNetUsers.FirstOrDefault(x => x.UserName == user.username);
+            if (aspUser != null)
+            {
+                _repo.RemoveAspUser(aspUser);
+                await _repo.SaveAsync();
+            }
+
+            // Remove the user from the Users table and customers table
+            _repo.RemoveUser(id);
+            
+
+            // Save the changes to the database
+            await _repo.SaveAsync();
+
+            return RedirectToAction("Index");
+        }
+        catch (Exception ex)
+        {
+            // Log the exception or handle it accordingly
+            return StatusCode(500, "An error occurred while deleting the user. Please try again.");
+        }
+    }
+    
+    [HttpPost]
+     public async Task<IActionResult> DeleteProduct(short id)
+     {
+         try
+         {
+             
+             // Remove the user from the Users table and customers table
+             _repo.RemoveProduct(id);
+                 
+     
+             // Save the changes to the database
+             await _repo.SaveAsync();
+     
+             return RedirectToAction("ManageItems");
+         }
+         catch (Exception ex)
+         {
+             // Log the exception or handle it accordingly
+             return StatusCode(500, "An error occurred while deleting the product. Please try again.");
+         }
+     }
+     
+     }
+
+
+
+
+
+
 
