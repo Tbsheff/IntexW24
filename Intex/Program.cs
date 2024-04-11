@@ -14,18 +14,6 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 var clientId = builder.Configuration["Authentication:Google:ClientId"];
 var clientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
 
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(
-        policy =>
-        {
-            policy.AllowAnyOrigin()
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-        });
-});
-
-builder.Services.AddHttpClient();
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -74,7 +62,6 @@ else
 
 app.UseHttpsRedirection();
 
-app.UseCors();
 
 app.UseStaticFiles();
 
