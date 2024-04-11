@@ -54,16 +54,13 @@
                             <tr class="table_row">
                                 <td class="column-remove">
 
+
                                     <form method="post" asp-page-handler="RemoveItem">
                                         <input type="hidden" name="product_id" value="@line.name.product_id" />
                                         <button type="submit" class="btn-remove">
                                             <i class="fs-16 zmdi zmdi-close"></i>
                                         </button>
                                     </form>
-
-
-
-
 
 
                                 </td>
@@ -157,7 +154,7 @@
                         </div>
                     </div>
 
-                    <form asp-page-handler="Checkout" method="post">
+                    <form asp-page="/Delivery" asp-page-handler="Checkout" method="post">
                         <button type="submit" class="btn btn-primary">Proceed to Checkout</button>
                     </form>
                     @*                     <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
