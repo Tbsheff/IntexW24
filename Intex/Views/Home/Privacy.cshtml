@@ -37,61 +37,74 @@
         max-width: 800px;
         margin: auto;
       }
-
+/* 
       .footer {
         text-align: center;
         margin-top: 30px;
         font-size: 0.9em;
         color: #666;
-      }
-    </style>
+      } */
+
+ */
+    .content-wrapper {
+        padding-bottom: 100px; /* Adjust this value to the height of your footer */
+    }
+
+    .fixed-element {
+        position: -webkit-sticky; /* Safari */
+        position: sticky;
+        top: 0; /* Adjust if you want some space above the sticky element */
+        max-height: 80vh; /* 80% of the viewport height */
+        overflow-y: auto;
+    }
+
+</style>
 <div class="filler" style="height: 84px;"></div>
   <div style="display: flex; gap: 2rem; width: 90%; margin: auto;">
-    <div class=".fixed-element" style="flex: 1; position: fixed; width: 30%">
-      <h2>Table of Contents</h2>
-      <ul>
-        <li><a href="#section1">What Information Do We Collect?</a></li>
-        <li><a href="#section2">How Do We Process Your Information?</a></li>
-        <li>
-          <a href="#section3"
-            >What Legal Bases Do We Rely On to Process Your Personal
-            Information?</a
-          >
-        </li>
-        <li>
-          <a href="#section4"
-            >When and With Whom Do We Share Your Personal Information?</a
-          >
-        </li>
-        <li>
-          <a href="#section5"
-            >Do We Use Cookies and Other Tracking Technologies?</a
-          >
-        </li>
-        <li><a href="#section6">How Do We Handle Your Social Logins?</a></li>
-        <li><a href="#section7">How Long Do We Keep Your Information?</a></li>
-        <li><a href="#section8">How Do We Keep Your Information Safe?</a></li>
-        <li><a href="#section9">Do We Collect Information From Minors?</a></li>
-        <li><a href="#section10">What Are Your Privacy Rights?</a></li>
-        <li><a href="#section11">Controls for Do-Not-Track Features</a></li>
-        <li>
-          <a href="#section12"
-            >Do United States Residents Have Specific Privacy Rights?</a
-          >
-        </li>
-        <li><a href="#section13">Do We Make Updates to This Notice?</a></li>
-        <li>
-          <a href="#section14">How Can You Contact Us About This Notice?</a>
-        </li>
-        <li>
-          <a href="#section15"
-            >How Can You Review, Update, or Delete the Data We Collect From
-            You?</a
-          >
-        </li>
-      </ul>
+    
+    <div style="flex: 1" class="content-wrapper">
+        @* <div class=".fixed-element" style="flex: 1; position: fixed; width: 30%"> *@
+       @*  <div class=".fixed-element" style="flex: 1;  position: sticky; width: 80%"> *@
+        <div class="fixed-element">
+
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#section1">What Information Do We Collect?</a></li>
+                <li><a href="#section2">How Do We Process Your Information?</a></li>
+                <li>
+                    <a href="#section3">
+                        What Legal Bases Do We Rely On to Process Your Personal
+                        Information?
+                    </a>
+                </li>
+                <li>
+                    <a href="#section4">When and With Whom Do We Share Your Personal Information?</a>
+                </li>
+                <li>
+                    <a href="#section5">Do We Use Cookies and Other Tracking Technologies?</a>
+                </li>
+                <li><a href="#section6">How Do We Handle Your Social Logins?</a></li>
+                <li><a href="#section7">How Long Do We Keep Your Information?</a></li>
+                <li><a href="#section8">How Do We Keep Your Information Safe?</a></li>
+                <li><a href="#section9">Do We Collect Information From Minors?</a></li>
+                <li><a href="#section10">What Are Your Privacy Rights?</a></li>
+                <li><a href="#section11">Controls for Do-Not-Track Features</a></li>
+                <li>
+                    <a href="#section12">Do United States Residents Have Specific Privacy Rights?</a>
+                </li>
+                <li><a href="#section13">Do We Make Updates to This Notice?</a></li>
+                <li>
+                    <a href="#section14">How Can You Contact Us About This Notice?</a>
+                </li>
+                <li>
+                    <a href="#section15">
+                        How Can You Review, Update, or Delete the Data We Collect From
+                        You?
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div style="flex: 1"></div>
 
     <div class="container" style="flex: 2">
       <h1>Privacy Policy</h1>
@@ -946,23 +959,60 @@
   </div>
   
   <script>
-    document.addEventListener("scroll", function() {
-        var footer = document.querySelector(".footer");
-        var fixedElement = document.querySelector(".fixed-element");
+    // document.addEventListener("scroll", function() {
+    //     var footer = document.querySelector(".footer");
+    //     var fixedElement = document.querySelector(".fixed-element");
     
-        // Get the position of the footer relative to the top of the document
-        var footerPosition = footer.getBoundingClientRect().top - window.innerHeight;
+    //     // Get the position of the footer relative to the top of the document
+    //     var footerPosition = footer.getBoundingClientRect().top - window.innerHeight;
     
-        // Check if the fixed element has reached the footer
-        if (window.scrollY > footerPosition) {
-            fixedElement.classList.add("sticky-bottom");
-            // Adjust the bottom value based on your footer's height
-            fixedElement.style.bottom = (window.scrollY - footerPosition) + "px";
-        } else {
-            fixedElement.classList.remove("sticky-bottom");
-            fixedElement.style.bottom = "20px"; // Reset to initial bottom value
-        }
+    //     // Check if the fixed element has reached the footer
+    //     if (window.scrollY > footerPosition) {
+    //         fixedElement.classList.add("sticky-bottom");
+    //         // Adjust the bottom value based on your footer's height
+    //         fixedElement.style.bottom = (window.scrollY - footerPosition) + "px";
+    //     } else {
+    //         fixedElement.classList.remove("sticky-bottom");
+    //         fixedElement.style.bottom = "20px"; // Reset to initial bottom value
+    //     }
+    // });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var toc = document.querySelector('.fixed-element'); // The Table of Contents element
+        var footer = document.querySelector('.footer'); // The footer element
+
+        // Function to run when scrolling occurs
+        var onScroll = function () {
+            // Calculate the bottom position of the Table of Contents
+            var tocBottom = toc.getBoundingClientRect().bottom + window.scrollY;
+            // Calculate the top position of the footer
+            var footerTop = footer.getBoundingClientRect().top + window.scrollY;
+
+            // If the Table of Contents bottom is greater than footer top, we overlap
+            if (tocBottom > footerTop) {
+                toc.style.maxHeight = (window.innerHeight - toc.getBoundingClientRect().top - 20) + 'px'; // 20px above the footer
+            } else {
+                toc.style.maxHeight = '80vh'; // Reset max height
+            }
+        };
+
+        // Attach the function to the scroll event
+        window.addEventListener('scroll', onScroll);
+
+        // Initial check in case the page loads and the footer is already in view
+        onScroll();
     });
+
+    function adjustContentWrapperPadding() {
+        var footerHeight = document.querySelector('.footer').offsetHeight;
+        var contentWrapper = document.querySelector('.content-wrapper');
+        contentWrapper.style.paddingBottom = footerHeight + 'px';
+    }
+
+    // Run it on load and on window resize
+    window.addEventListener('load', adjustContentWrapperPadding);
+    window.addEventListener('resize', adjustContentWrapperPadding);
+
 
   </script>
 
