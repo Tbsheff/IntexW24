@@ -19,7 +19,7 @@
             <form id="account" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                 <div class="input-group">
-                    <input type="text" placeholder="Username" autocomplete="username" aria-required="true" required asp-for="Input.Email">
+                    <input type="email" placeholder="Email" autocomplete="email" aria-required="true" required asp-for="Input.Email">
                 </div>
                 <div class="input-group">
                     <input type="password" placeholder="Password" required asp-for="Input.Password" autocomplete="current-password">

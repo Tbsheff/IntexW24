@@ -88,9 +88,11 @@ display: none;
                         <td>@item.Customer.gender</td>
             
                         <td>
+                            <a asp-action="EditUser" asp-route-id="@item.User.user_id">
                             <button type="button" class="btn btn-primary edit-btn" id="edit-btn" data-user-id="@item.User.user_id">
                                 <i class="fa fa-edit"></i> Edit
                             </button>
+                            </a>
                         </td>
             
                         <td>

@@ -56,8 +56,6 @@ namespace Intex.Pages
         }
 
 
-
-
         public IActionResult OnPostUpdateCart(List<CartLine> updatedCart)
         {
             Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();

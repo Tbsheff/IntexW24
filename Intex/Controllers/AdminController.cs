@@ -45,60 +45,7 @@ public class AdminController : Controller
         ViewBag.Genders = Genders;
         return View(usersWithCustomersAndRoles);
     }
-
-    public IActionResult ReviewOrders()
-    {
-        var orders = _repo.Orders.Where(o => o.fraud == true); // Gets all orders
-        var customers = _repo.Customers; // Gets all customers
-        var entryModes = _repo.Entry_Modes; // Gets all entry modes
-        var transactionTypes = _repo.Transaction_Types; // Gets all transaction types
-        var banks = _repo.Banks; // Gets all banks
-        var cardTypes = _repo.Card_Types; // Gets all card types
-
-        var orderDetails = from o in orders
-                           join c in customers on o.customer_ID equals c.customer_ID
-                           join em in entryModes on o.entry_mode_id equals em.entry_mode_id
-                           join tt in transactionTypes on o.transaction_type_id equals tt.transaction_type_id
-                           join b in banks on o.bank_id equals b.bank_id
-                           join ct in cardTypes on o.card_type_id equals ct.card_type_id
-                           select new OrderDetailViewModel
-                           {
-                               TransactionId = o.transaction_ID,
-                               CustomerName = c.first_name + " " + c.last_name,
-                               Date = o.date,
-                               DayOfWeek = o.day_of_week,
-                               Hour = o.hour,
-                               EntryModeDescription = em.description,
-                               Amount = o.amount,
-                               TransactionTypeDescription = tt.description,
-                               CountryOfTransaction = o.country_of_transaction,
-                               ShippingAddress = o.shipping_address,
-                               BankName = b.name,
-                               CardTypeDescription = ct.description,
-                               Fraud = o.fraud
-                           };
-
-        var model = new OrdersViewModel { Orders = orderDetails.ToList() };
-        return View(model);
-    }
-
-    [HttpPost]
-    public IActionResult ApproveOrder(int transactionId)
-    {
-        _logger.LogInformation("hey");
-        var order = _repo.Orders.FirstOrDefault(o => o.transaction_ID == transactionId);
-        if (order != null)
-        {
-            order.fraud = false;
-            _repo.ApproveOrder(order);
-            _repo.SaveAsync(); // Save changes to the database
-            return Json(new { success = true });
-        }
-        return Json(new { success = false });
-    }
-
-
-
+    
     public async Task<IActionResult> EditUser(short id = 30001)
     {
         var userViewModel =  _repo.Users
@@ -124,16 +71,12 @@ public class AdminController : Controller
         return View(userViewModel);
     }
 
-    [HttpPost]
-    
+    [HttpPost("Admin/EditUser/{id?}")]
     public async Task<IActionResult> EditUser(short id, UsersViewModel viewModel)
-    {
-        if (id != viewModel.User.user_id)
-        {
-            return NotFound();
-        }
+    { 
+        id = viewModel.User.user_id;
 
-        if (ModelState.IsValid)
+        if (id > 0)
         {
             try
             {
@@ -150,14 +93,19 @@ public class AdminController : Controller
                 var customer = await _repo.GetByIdAsync(id);
                 if (customer != null)
                 {
+                    // update properties of customer object
                     customer.first_name = viewModel.Customer.first_name;
                     customer.last_name = viewModel.Customer.last_name;
-                    // Update other customer properties as needed
+                    customer.gender = viewModel.Customer.gender;
+                    customer.birth_date = viewModel.Customer.birth_date;
+                    customer.country_of_residence = viewModel.Customer.country_of_residence;
+                    // push changes to database
                     await _repo.UpdateCustomerAsync(customer);
                 }
-
+                // save changes to database
                 await _repo.SaveAsync();
             }
+            // catch errors
             catch (DbUpdateConcurrencyException)
             {
                 if (!await UserExists(id))
@@ -251,8 +199,8 @@ public class AdminController : Controller
             };
 
             // Add and save in the database
-            //_repo.AddProduct(product); // Ensure your repository's AddProduct method is expecting a Product entity
-            //_repo.SaveChanges(); // Save the changes
+            _repo.AddProduct(product); // Ensure your repository's AddProduct method is expecting a Product entity
+            _repo.SaveAsync(); // Save the changes
 
             // Redirect to the ManageItems view to see the list of products
             return RedirectToAction("ManageItems");
@@ -265,9 +213,9 @@ public class AdminController : Controller
     }
 
     [HttpGet]
-    public IActionResult EditProduct(int productId)
+    public IActionResult EditProduct(int id)
     {
-        var product = _repo.Products.FirstOrDefault(p => p.product_id == productId);
+        var product = _repo.Products.FirstOrDefault(p => p.product_id == id);
         if (product == null)
         {
             return NotFound();
@@ -291,7 +239,7 @@ public class AdminController : Controller
     }
 
     [HttpPost]
-    public IActionResult EditProduct(EditProductViewModel model)
+    public async Task<IActionResult> EditProduct(EditProductViewModel model)
     {
         if (ModelState.IsValid)
         {
@@ -311,12 +259,20 @@ public class AdminController : Controller
             product.description = model.Description;
             product.category_id = model.CategoryId;
 
-            //_repo.SaveChanges();
+            try
+            {
+                _repo.UpdateProduct(product);
+                await _repo.SaveAsync();
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it accordingly
+                return StatusCode(500, "An error occurred while saving the product. Please try again.");
+            }
 
             return RedirectToAction("ManageItems");
         }
         return View("Edit", model);
     }
-
-
 }
+
