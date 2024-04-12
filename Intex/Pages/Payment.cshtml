@@ -60,30 +60,29 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-check" style="padding-top: 32px;">
+                        <!-- Checkbox for toggling billing address fields -->
                         <input type="checkbox" class="form-check-input" id="sameAsShipping" name="sameAsShipping">
-                        <label class="form-check-label" for="sameAsShipping">Billing address same as shipping</label>
+                        <label class="form-check-label" for="sameAsShipping">Billing address isn't the same as shipping</label>
                     </div>
-                </div>
 
-                <!-- Billing Address -->
-                <div class="form-group">
-                    <label for="firstName">First Name*</label>
-                    <input type="text" class="form-control" id="firstName" name="firstName" required value="@ViewData["FirstName"]">
-                </div>
-                <div class="form-group">
-                    <label for="lastName">Last Name*</label>
-                    <input type="text" class="form-control" id="lastName" name="lastName" required value="@ViewData["LastName"]">
-                </div>
-                <div class="form-group">
-                    <label for="address">Address</label>
-                    <input type="text" class="form-control" id="address" name="address" required value="@ViewData["Address"]">
-                </div>
-                
-                <div class="form-row">
-                    <div class="col">
-                        <label for="city">City*</label>
-                        <input type="text" class="form-control" id="city" name="city" required value="@ViewData["City"]">
+                    <!-- Billing Address -->
+                    <div class="form-group">
+                        <label for="firstName">First Name*</label>
+                        <input type="text" class="form-control" id="billingFirstName" name="firstName" required value="@ViewData["FirstName"]">
                     </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name*</label>
+                        <input type="text" class="form-control" id="billingLastName" name="lastName" required value="@ViewData["lastName"]">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address*</label>
+                        <input type="text" class="form-control" id="billingAddress" name="address" required value="@ViewData["address"]">
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City*</label>
+                        <input type="text" class="form-control" id="billingCity" name="city" required value="@ViewData["city"]">
+                    </div>
+
                     
                     <div class="col">
                         <label for="state">State*</label>
@@ -176,3 +175,41 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const billingCheckbox = document.getElementById('sameAsShipping');
+        const firstName = document.getElementById('billingFirstName');
+        const lastName = document.getElementById('billingLastName');
+        const address = document.getElementById('billingAddress');
+        const city = document.getElementById('billingCity');
+        const state = document.getElementById('state'); // Make sure the ID matches with HTML
+        const postalCode = document.getElementById('postalCode'); // Make sure the ID matches with HTML
+
+        // Event listener for checkbox click
+        billingCheckbox.addEventListener('click', function () {
+            if (this.checked) {
+                // Clear fields when checkbox is checked
+                firstName.value = '';
+                lastName.value = '';
+                address.value = '';
+                city.value = '';
+                state.value = ''; // Clear the state dropdown
+                postalCode.value = ''; // Clear the postal code field
+            } else {
+                // Optionally repopulate fields when checkbox is unchecked
+                // You can populate these from server-side (Razor syntax) or another JavaScript variable or function
+                firstName.value = '@ViewData["FirstName"]';
+                lastName.value = '@ViewData["LastName"]';
+                address.value = '@ViewData["Address"]';
+                city.value = '@ViewData["City"]';
+                // For dropdowns, you need to set the correct option as selected based on some condition or value
+                // For now, resetting to default placeholder value
+                state.selectedIndex = 0; // Resets to the first item in the dropdown
+                postalCode.value = '@ViewData["PostalCode"]';
+            }
+        });
+    });
+</script>
+
