@@ -104,7 +104,7 @@ app.Use(async (context, next) =>
     context.Response.Headers.Add("Content-Security-Policy", "default-src 'self'; " +
                                                             "style-src 'self' intex-gtgzecb5avarh7gg.z01.azurefd.net fonts.cdnfonts.com fonts.googleapis.com 'unsafe-inline';" +
                                                             "font-src 'self' intex-gtgzecb5avarh7gg.z01.azurefd.net fonts.cdnfonts.com fonts.googleapis.com fonts.gstatic.com cdn.linearicons.com; " +
-                                                            "script-src 'self' intex-gtgzecb5avarh7gg.z01.azurefd.net ajax.googleapis.com https://www.chatbase.co code.jquery.com www.google.com www.gstatic.com 'unsafe-inline';" +
+                                                            "script-src 'self' intex-gtgzecb5avarh7gg.z01.azurefd.net ajax.googleapis.com https://www.chatbase.co code.jquery.com www.google.com www.gstatic.com https://js.monitor.azure.com/ 'unsafe-inline';" +
                                                             "frame-src 'self' intex-gtgzecb5avarh7gg.z01.azurefd.net www.google.com https://www.chatbase.co; " + // Added www.google.com
                                                             "img-src 'self' m.media-amazon.com https://www.lego.com intex-gtgzecb5avarh7gg.z01.azurefd.net brickset.com https://www.brickeconomy.com images.brickset.com i.pinimg.com data:; " +
                                                             "connect-src *;");
