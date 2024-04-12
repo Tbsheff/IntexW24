@@ -23,9 +23,29 @@ builder.Services.AddDbContext<MyDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+{
+    // Existing configuration: require confirmed account
+    options.SignIn.RequireConfirmedAccount = true;
+
+    // Additional configuration: stronger password policy
+    options.Password.RequireDigit = true; // Require at least one digit
+    options.Password.RequireLowercase = true; // Require at least one lowercase letter
+    options.Password.RequireUppercase = true; // Require at least one uppercase letter
+    options.Password.RequireNonAlphanumeric = true; // Require at least one non-alphanumeric character
+    options.Password.RequiredLength = 12; // Require at least 12 characters
+    options.Password.RequiredUniqueChars = 6; // Require at least 6 unique characters
+})
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+
+
+//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+//    .AddRoles<IdentityRole>()
+//    .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<ILegoRepository, EFLegoRepository>();
@@ -47,6 +67,9 @@ builder.Services.AddSession();
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
+
+
+
 
 
 var app = builder.Build();
@@ -76,7 +99,8 @@ app.Use(async (context, next) =>
     context.Response.Headers.Add("Content-Security-Policy", "default-src 'self'; " +
                                                             "style-src 'self' fonts.cdnfonts.com fonts.googleapis.com 'unsafe-inline';" +
                                                             "font-src 'self' fonts.cdnfonts.com fonts.googleapis.com fonts.gstatic.com cdn.linearicons.com; " +
-                                                            "script-src 'self' ajax.googleapis.com code.jquery.com 'unsafe-inline';" + // Added code.jquery.com
+                                                            "script-src 'self' ajax.googleapis.com code.jquery.com www.google.com www.gstatic.com 'unsafe-inline';" +
+                                                            "frame-src 'self' www.google.com; " + // Added www.google.com
                                                             "img-src 'self' m.media-amazon.com https://www.lego.com brickset.com https://www.brickeconomy.com images.brickset.com i.pinimg.com data:; " +
                                                             "connect-src *;");
     await next.Invoke();
@@ -92,7 +116,7 @@ app.UseEndpoints(endpoints =>
     
     endpoints.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Home}/{action=Index}/{pageNum?}/{category?}/{primaryColor?}/{secondaryColor?}");
+        pattern: "{controller=Home}/{action=Index}/{pageSize?}/{pageNum?}/{category?}/{primaryColor?}/{secondaryColor?}");
 
     endpoints.MapControllerRoute(
         name: "editUser",

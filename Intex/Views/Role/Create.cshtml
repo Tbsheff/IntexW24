@@ -2,15 +2,39 @@
 @{
     ViewData["Title"] = "CREATE ROLE";
 }
+ <div class="filler" style="height: 84px;"></div>
  
-<h1 class="bg-info text-white">Create a Role</h1>
-<a asp-action="Index" class="btn btn-secondary">Back</a>
-<div asp-validation-summary="All" class="text-danger"></div>
+ <main class="container dis-flex gap-md-5" style="min-height: 100vh">
+ <div>
+     <h2>Dashboard</h2>
+     <ul>
+         <li class="active"><i class="fa fa-file"></i><a asp-controller="Admin" asp-action="ReviewOrders">Review Orders</a></li>
+         <li><i class="fa fa-user"></i><a asp-controller="Admin" asp-action="Index">Manage Users</a></li>
+         <li><i class="fa fa-cube"></i><a asp-controller="Admin" asp-action="ManageItems">Manage Products</a></li>
+         <li class="dropdown">
+             <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 <i class="fa fa-users"></i> Manage User Roles
+             </a>
+             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                 <a class="dropdown-item" asp-controller="Role" asp-action="Index">Assign Roles</a>
+                 <a class="dropdown-item" asp-controller="Role" asp-action="Create">Create Role</a>
+                 <a class="dropdown-item" asp-controller="Role" asp-action="Update">Update Role</a>
+                 <!-- Add more role actions as needed -->
+             </div>
+         </li>
+     </ul>
+ </div>
+ <div>
+     <h1 class="bg-info text-white">Create a Role</h1>
+     <a asp-action="Index" class="btn btn-secondary">Back</a>
+     <div asp-validation-summary="All" class="text-danger"></div>
  
-<form asp-action="Create" method="post">
-    <div class="form-group">
-        <label for="name">Name:</label>
-        <input name="name" class="form-control" />
-    </div>
-    <button type="submit" class="btn btn-primary">Create</button>
-</form>
+     <form asp-action="Create" method="post">
+         <div class="form-group">
+             <label for="name">Name:</label>
+             <input name="name" class="form-control" />
+         </div>
+         <button type="submit" class="btn btn-primary">Create</button>
+     </form>
+ </div>
+ </main>

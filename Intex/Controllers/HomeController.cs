@@ -168,13 +168,16 @@ public class HomeController : Controller
         return View();
     }
     
-    public IActionResult Product(int pageNum = 1, string category = "All", int pageSize = 10, string primaryColor = "All", string secondaryColor = "All")
-    {
+    public IActionResult Product(int pageNum = 1,  string category = "All", int pageSize = 10, string primaryColor = "All", string secondaryColor = "All")
+    { 
+        List<int> pageSizes = new List<int>{  5,10, 20 };
        ViewBag.PageNum = pageNum;
        ViewBag.Category = category;
-       ViewBag.PageSize = 10;
+       ViewBag.PageSize = pageSize;
        ViewBag.PrimaryColor = primaryColor;
        ViewBag.SecondaryColor = secondaryColor;
+       ViewBag.pageSizes = pageSizes;
+       
         return View();
     }
 
