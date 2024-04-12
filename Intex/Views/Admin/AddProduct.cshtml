@@ -3,7 +3,13 @@
     ViewBag.Title = "Admin - Add Product";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<div class="filler" style="height: 84px;"></div>
+<div style="    margin: auto;
+                     max-width: 75%;
+                     background-color: #ecb75970;
+                     padding: 1rem;
+                     margin-bottom: 3rem;
+                     border-radius: 10px;">
 <h2>Add Product</h2>
 
 <form asp-action="AddProduct" method="post" enctype="multipart/form-data">
@@ -56,3 +62,4 @@
     <button type="button" class="btn btn-secondary cancel-edit" onclick="history.back();">Cancel</button>
 
 </form>
+</div>
