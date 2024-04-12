@@ -308,7 +308,7 @@ public class AdminController : Controller
             var customer = await _repo.GetByIdAsync(id);
 
             // Remove the user from the AspNetUsers table
-            var aspUser = _repo.AspNetUsers.FirstOrDefault(x => x.UserName == user.username);
+            var aspUser = _repo.AspNetUsers.FirstOrDefault(x => x.NormalizedUserName == user.username);
             if (aspUser != null)
             {
                 _repo.RemoveAspUser(aspUser);
