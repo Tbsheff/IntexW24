@@ -90,14 +90,8 @@
                             </tr>
                         }
                     </table>
-                    <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-                        <div class="flex-w flex-m m-r-20 m-tb-5">
-                            <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Coupon Code">
-
-                            <div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
-                                Apply coupon
-                            </div>
-                        </div>
+                    <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm" style="flex-flow: row-reverse;">
+                        
                         
                         <form asp-page="Cart" asp-page-handler="UpdateCart" id="updateCartForm">
                             <input type="hidden" name="UpdatedCart" id="updatedCartInput" />
@@ -164,22 +158,12 @@
                         </div>
                     }
                     <a asp-page="Delivery">
-                    <button id="checkoutButton" class="btn btn-primary">Proceed to Checkout</button>
+                        <div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10" style="max-width: 50%; margin: auto;">
+                            <button id="checkoutButton" >Proceed to Checkout</button>
+                        </div>
                     </a>
 
-                    @*<form method="post" asp-page="Delivery" >
-                        @for (int i = 0; i < Model.Cart.Lines.Count; i++)
-                            {
-                                <input type="hidden" name="CartItems[@i].ProductId" value="@Model.Cart.Lines[i].name.product_id" />
-                                <input type="hidden" name="CartItems[@i].Quantity" value="@Model.Cart.Lines[i].Quantity" />
-                                <input type="hidden" name="CartItems[@i].Price" value="@Model.Cart.Lines[i].name.price" />
-                                <!-- Add any other properties you need -->
-                            }
-                        <button type="submit" class="btn btn-primary">Proceed to Checkout</button>
-                    </form>*@
-                    @*                     <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
-                    Proceed to Checkout
-                    </button> *@
+                   
                 </div>
             </div>
         </div>
@@ -209,39 +193,6 @@
         });
     });
 </script>
-
-
-@*<script>
-    $(document).ready(function () {
-        $('#updateCart').on('click', function (e) {
-            e.preventDefault();
-console.log("clicked");
-
-
-            var updatedCart = [];
-                $('.num-product').each(function () {
-                    var productId = $(this).data('product-id');
-                    var quantity = parseInt($(this).val());
-                    updatedCart.push({ name: { product_id: productId }, Quantity: quantity });
-                });
-                console.log(updatedCart);
-    
-                $.ajax({
-                    url: '/Cart?handler=UpdateCart',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify(updatedCart),
-                    success: function (response) {
-                        if (response.success) {
-                            window.location.reload(); // Reload the page to reflect the updated cart
-                        }
-                    }
-                })
-                        
-        });
-        });
-
-</script>*@
 
 
 @*<script>
