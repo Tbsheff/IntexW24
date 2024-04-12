@@ -4,6 +4,7 @@ using Intex.Infrastructure;
 using Intex.Models;
 using static Intex.Models.Cart;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace Intex.Pages
 {
@@ -92,13 +93,12 @@ namespace Intex.Pages
         }
 
 
-        public IActionResult OnPostUpdateCart(List<CartLine> updatedCart)
+        public IActionResult OnPostUpdateCart(string UpdatedCart)
         {
             Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
-
-            foreach (var item in updatedCart)
+            List<CartLine> updatedCart = JsonConvert.DeserializeObject<List<CartLine>>(UpdatedCart);
+            foreach (CartLine item in updatedCart)
             {
-                // Assuming CartLine has a Product object called 'name' that contains the product_id
                 if (item.name != null && item.Quantity > 0)
                 {
                     Cart.UpdateItem(item.name.product_id, item.Quantity);
@@ -107,8 +107,9 @@ namespace Intex.Pages
 
             HttpContext.Session.SetJson("cart", Cart);
 
-            return new JsonResult(new { success = true });
+            return RedirectToPage("Cart");
         }
+
 
 
         public IActionResult OnPostCheckout()
