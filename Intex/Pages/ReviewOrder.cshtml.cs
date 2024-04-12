@@ -13,10 +13,14 @@ public class ReviewOrder : PageModel
 {
     private ILegoRepository _repo;
     private readonly InferenceSession _session;
-    public ReviewOrder(ILegoRepository temp)
+    private readonly IWebHostEnvironment _env;
+    public ReviewOrder(ILegoRepository temp, IWebHostEnvironment env)
     {
         _repo = temp;
-        _session = new InferenceSession(@"decision_tree_model.onnx");
+        
+        _env = env;
+        string modelPath = Path.Combine(_env.WebRootPath, "decision_tree_model.onnx");
+        _session = new InferenceSession(modelPath);
     }
     public Cart? Cart { get; set; }
     
