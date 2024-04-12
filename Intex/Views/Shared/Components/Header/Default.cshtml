@@ -154,6 +154,13 @@
 
         @if (SignInManager.IsSignedIn(User))
         {
+	        @if(User.IsInRole("Admin"))
+	        {
+		        <li >
+			        <a  asp-controller="Role" asp-action="Index" title="Manage">Dashboard
+			        </a>
+		        </li>
+	        };
             <li>
                 <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">My Account</a>
             </li>
