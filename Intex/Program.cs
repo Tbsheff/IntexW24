@@ -50,6 +50,12 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<ILegoRepository, EFLegoRepository>();
 
+builder.Services.AddHsts(options =>
+{
+    options.Preload = true;
+    options.IncludeSubDomains = true;
+    options.MaxAge = TimeSpan.FromDays(365); // Set the max age to 365 days, adjust as needed
+});
 
 builder.Services.AddAuthentication().AddGoogle(googleOptions =>
 {
