@@ -5,7 +5,7 @@ using SendGrid;
 using SendGrid.Helpers.Mail;
 
 namespace Intex.Services;
-
+//super cool email stuff from microsoft to establish email confirmation
 public class EmailSender : IEmailSender
 {
     private readonly ILogger _logger;

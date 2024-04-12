@@ -23,6 +23,7 @@ public class Payment : PageModel
     public List<Bank> Banks { get; set; }
     public List<Card_Type> Cards { get; set; }
     
+    //Get all the info for payment stuff
     public void OnGet()
     {
         Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
@@ -52,6 +53,7 @@ public class Payment : PageModel
         
     }
 
+    //Post stuff to cart
     public void OnPost()
     {
         HttpContext.Session.SetJson("address", new Address

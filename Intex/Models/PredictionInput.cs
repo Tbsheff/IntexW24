@@ -1,5 +1,6 @@
 ﻿namespace Intex.Models
 {
+    //This model is to organize the data that is going to be fed into our prediction model
     public class PredictionInput
     {
         public int CustomerID { get; set; }
