@@ -6,16 +6,25 @@
 }
 <div class="filler" style="height: 84px;"></div>
 
-<h1>Review Your Order</h1>
+<div style="border-radius: 12px;
+                display: flex;
+                flex-direction: column;
+                max-width: 75%;
+                margin: auto;
+                margin-bottom: 2rem;
+                background-color: antiquewhite;
+                padding: 1.5rem;">
+<h1 style="    margin-bottom: 1rem;
+               text-align: center;">Review Your Order</h1>
 
 <h2>Cart</h2>
 <table class="table">
     <thead>
         <tr>
-            <th>Product</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Total</th>
+            <th style="border-color: black;">Product</th>
+            <th style="border-color: black;">Quantity</th>
+            <th style="border-color: black;">Price</th>
+            <th style="border-color: black;">Total</th>
         </tr>
     </thead>
     <tbody>
@@ -31,20 +40,21 @@
     </tbody>
 </table>
 
-<h2>Shipping Information</h2>
-<p>First Name: @ViewData["FirstName"]</p>
-<p>Last Name: @ViewData["LastName"]</p>
-<p>Address: @ViewData["Address"]</p>
-<p>City: @ViewData["City"]</p>
-<p>State: @ViewData["State"]</p>
-<p>Postal Code: @ViewData["PostalCode"]</p>
+<h2 class="mb-4 mt-4">Shipping Information</h2>
+<p class="mt-2">First Name: @ViewData["FirstName"]</p>
+<p class="mt-2">Last Name: @ViewData["LastName"]</p>
+<p class="mt-2">Address: @ViewData["Address"]</p>
+<p class="mt-2">City: @ViewData["City"]</p>
+<p class="mt-2">State: @ViewData["State"]</p>
+<p class="mt-2">Postal Code: @ViewData["PostalCode"]</p>
 
-<h2>Order Summary</h2>
-<p>Subtotal: $@ViewData["Subtotal"]</p>
-<p>Estimated Shipping: $@ViewData["EstimatedShipping"]</p>
-<p>Estimated Tax: $@ViewData["EstimatedTax"]</p>
-<p>Total: $@ViewData["Total"]</p>
+<h2 class="mb-4 mt-4">Order Summary</h2>
+<p class="mt-2">Subtotal: $@ViewData["Subtotal"]</p>
+<p class="mt-2">Estimated Shipping: $@ViewData["EstimatedShipping"]</p>
+<p class="mt-2">Estimated Tax: $@ViewData["EstimatedTax"]</p>
+<p class="mt-2 mb-5">Total: $@ViewData["Total"]</p>
 
 <form method="post">
-    <button type="submit" class="btn btn-primary">Confirm Order</button>
+    <button type="submit" class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn1 p-lr-15 trans-04" style="margin: auto;">Confirm Order</button>
 </form>
+</div>

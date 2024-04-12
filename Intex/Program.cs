@@ -10,7 +10,7 @@ using Intex.Middleware;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
+var connectionString = builder.Configuration["DefaultConnection"] ??
                        throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 var clientId = builder.Configuration["Authentication:Google:ClientId"];
 var clientSecret = builder.Configuration["Authentication:Google:ClientSecret"];

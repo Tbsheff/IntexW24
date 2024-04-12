@@ -15,15 +15,19 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly ILegoRepository _repo;
     private readonly InferenceSession _session;
+    private IWebHostEnvironment _env;
 
     // Constructor that initializes necessary services and the ONNX model session
-    public HomeController(ILogger<HomeController> logger, ILegoRepository repo)
+    public HomeController(ILogger<HomeController> logger, ILegoRepository repo, IWebHostEnvironment env)
     {
         _logger = logger;
         _repo = repo;
+        _env = env;
+        string modelPath = Path.Combine(_env.ContentRootPath, "decision_tree_model.onnx");
         try 
         {
-            _session = new InferenceSession(@"decision_tree_model.onnx");
+            
+            _session = new InferenceSession(modelPath);
             _logger.LogInformation("ONNX model loaded successfully.");
         }
         catch (Exception ex) 
