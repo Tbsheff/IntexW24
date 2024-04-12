@@ -16,6 +16,7 @@ public class HomeController : Controller
     private readonly ILegoRepository _repo;
     private readonly InferenceSession _session;
 
+    // Constructor that initializes necessary services and the ONNX model session
     public HomeController(ILogger<HomeController> logger, ILegoRepository repo)
     {
         _logger = logger;
@@ -31,12 +32,14 @@ public class HomeController : Controller
         }
     }
 
+    // Display the initial test model form
     [HttpGet]
     public IActionResult TestModel()
     {
         return View();
     }
 
+    // Process predictions based on model inputs received via POST
     [HttpPost]
     public IActionResult Predict(int customer_ID, int time, int amount, int age, int day_of_week_Mon,
        int day_of_week_Sat, int day_of_week_Sun, int day_of_week_Thu,
@@ -100,21 +103,24 @@ public class HomeController : Controller
         return View("TestModel");
     }
 
-
+    // Default landing page showing a product recommendation list based on user authentication and preferences
     public IActionResult Index()
     {
+        // Business logic to retrieve recommended product IDs
         var recommendationIds = _repo.Ratings.OrderBy(x => x.rating1).Take(10).Select(r => r.product_ID).ToList();
 
+
+        // Authenticated users receive personalized recommendations
         if (User.Identity.IsAuthenticated)
         {
             string username = User.Identity.Name;
             int userId = _repo.Users.Where(x => x.username == username).Select(x => x.user_id).FirstOrDefault();
 
-            if (userId != 0) // Assuming user_id is an integer type
+            if (userId != 0) 
             {
                 int customerId = _repo.Customers.Where(x => x.customer_ID == userId).Select(x => x.customer_ID).FirstOrDefault();
 
-                if (customerId != 0) // Assuming customer_ID is an integer type
+                if (customerId != 0)
                 {
                     var recommendations = _repo.Customer_Recommendations
                         .Where(x => x.customer_id == customerId)
@@ -147,27 +153,32 @@ public class HomeController : Controller
         return View("IndexTest");
     }
 
+    // Returns the Privacy policy view
     public IActionResult Privacy()
     {
         return View();
     }
 
+    // Returns an error page, often used to display error messages and diagnostics
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
-    
+
+    // Returns the login page view
     public IActionResult Login()
     {
         return View();
     }
 
+    // Returns the about page view
     public IActionResult About()
     {
         return View();
     }
-    
+
+    // Returns the products list based on filters applied via query parameters
     public IActionResult Product(int pageNum = 1,  string category = "All", int pageSize = 10, string primaryColor = "All", string secondaryColor = "All")
     { 
         List<int> pageSizes = new List<int>{  5,10, 20 };
@@ -181,6 +192,7 @@ public class HomeController : Controller
         return View();
     }
 
+    // Displays product details based on the product ID and shows recommended products
     public IActionResult ProductDetails(int id = 1)
     {
         ViewBag.Product = _repo.Products.FirstOrDefault(p => p.product_id == id);
@@ -220,20 +232,20 @@ public class HomeController : Controller
         return View();
     }
 
-
+    // Returns the delivery information view with a form
     [HttpGet]
     public IActionResult Delivery()
     {
         return View(new DeliveryViewModel());
     }
 
-
+    // Processes the submitted delivery form, saves information if valid or returns errors
     [HttpPost]
     public IActionResult Delivery(DeliveryViewModel model)
     {
         if (ModelState.IsValid)
         {
-            // Assuming you have a service/repository to handle database operations
+
             // Map the model to your entities and save them
             return RedirectToAction("Index"); // or to a confirmation page
         }
@@ -242,15 +254,15 @@ public class HomeController : Controller
         return View(model);
     }
 
-    
+    // Returns the payment information view
     public IActionResult Payment()
     {
         return View();
     }
 
 
-  
-   public bool IsReCaptchaValid(string captchaResponse)
+    // Validates the reCAPTCHA response to prevent bots from submitting forms
+    public bool IsReCaptchaValid(string captchaResponse)
     {
         string secret = "6LevL7gpAAAAAEacEYR48YIhvEcgiroys4W1-uzz";
         var client = new HttpClient();

@@ -5,25 +5,33 @@ using Intex.Models;
 
 namespace Intex.Controllers
 {
+    // Controller responsible for managing roles within the application.
     public class RoleController : Controller
     {
+        // Role manager for handling role operations.
         private RoleManager<IdentityRole> roleManager;
+        // User manager for handling user operations.
         private UserManager<IdentityUser> userManager;
+        // Constructor injecting role and user managers.
         public RoleController(RoleManager<IdentityRole> roleMgr, UserManager<IdentityUser> userMrg)
         {
             roleManager = roleMgr;
             userManager = userMrg;
         }
 
+        // Returns the index view displaying all roles.
         public ViewResult Index() => View(roleManager.Roles);
 
+        // Helper method to add errors from the IdentityResult to the ModelState.
         private void Errors(IdentityResult result)
         {
             foreach (IdentityError error in result.Errors)
                 ModelState.AddModelError("", error.Description);
         }
+        // Displays the create role view.
         public IActionResult Create() => View();
 
+        // Handles creation of a role based on the provided name.
         [HttpPost]
         public async Task<IActionResult> Create([Required] string name)
         {
@@ -37,8 +45,10 @@ namespace Intex.Controllers
             }
             return View(name);
         }
-        
+
+        // Handles the deletion of a role by its ID.
         [HttpPost]
+        // Returns the update view for a role including its current members and non-members.
         public async Task<IActionResult> Delete(string id)
         {
             IdentityRole role = await roleManager.FindByIdAsync(id);
@@ -54,7 +64,8 @@ namespace Intex.Controllers
                 ModelState.AddModelError("", "No role found");
             return View("Index", roleManager.Roles);
         }
-        
+
+        // Handles updates to role memberships, adding or removing users from roles.
         public async Task<IActionResult> Update(string id)
         {
             IdentityRole role = await roleManager.FindByIdAsync(id);

@@ -42,4 +42,8 @@
         <PackageReference Include="SendGrid" Version="9.29.3" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Include="wwwroot\decision_tree_model.onnx" />
+    </ItemGroup>
+
 </Project>
