@@ -308,8 +308,12 @@
         var productPrice = $(this).data('product-price');
         var productImage = $(this).data('product-image');
         var productDescription = $(this).data('product-description');
+        console.log(productDescription);
+        if (productDescription.length > 200) {
+            productDescription = productDescription.substring(0, 200) + '...';
+        }
         
-        console.log("This working")
+        console.log(productDescription);
 
         $('#modalProductName').text(productName);
         $('#modalProductPrice').text('$' + productPrice.toFixed(2));
