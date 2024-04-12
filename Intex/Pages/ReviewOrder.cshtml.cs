@@ -19,6 +19,7 @@ public class ReviewOrder : PageModel
         _repo = temp;
         
         _env = env;
+        //Load onnx model
         string modelPath = Path.Combine(_env.WebRootPath, "decision_tree_model.onnx");
         _session = new InferenceSession(modelPath);
     }
@@ -69,6 +70,7 @@ public class ReviewOrder : PageModel
 
         var userId = _repo.Users.Where(x => x.username == User.Identity.Name).FirstOrDefault();
 
+        //update order stuff
         Order order = new Order
         {
             customer_ID = userId.user_id, // Set the customer ID accordingly
@@ -92,8 +94,10 @@ public class ReviewOrder : PageModel
         HttpContext.Session.SetJson("cart", new Cart());
         HttpContext.Session.SetJson("address", new Address());
 
+        //load in the customer data, for ease of referencing
         Customer customer = _repo.Customers.Where(x => x.customer_ID == order.customer_ID).FirstOrDefault();
 
+        //we put the data into a model so that it would be easier to organize
         PredictionInput input = new PredictionInput
         {
             CustomerID = order.customer_ID,
@@ -131,6 +135,7 @@ public class ReviewOrder : PageModel
             CountryOfResidenceUnitedKingdom = (customer.country_of_residence == "United Kingdom" ? 1 : 0),
             CountryOfResidenceUSA = (customer.country_of_residence == "USA" ? 1 : 0)
         };
+        //call function to run prediction
 
         int fraudulent = Predict(input.CustomerID, input.Time, input.Amount, input.Age, input.DayOfWeekMon,
             input.DayOfWeekSat, input.DayOfWeekSun, input.DayOfWeekThu, input.DayOfWeekTue, input.DayOfWeekWed,
@@ -141,7 +146,7 @@ public class ReviewOrder : PageModel
             input.BankLloyds, input.BankMetro, input.BankMonzo, input.BankRBS, input.TypeOfCardVisa, input.GenderM,
             input.CountryOfResidenceIndia, input.CountryOfResidenceRussia, input.CountryOfResidenceUSA,
             input.CountryOfResidenceUnitedKingdom);
-
+        //determine which page to show, depending on if the order is potentially fraudulent
         if (fraudulent == 0)
         { 
             return RedirectToPage("/OrderConfirmation"); 
@@ -152,6 +157,8 @@ public class ReviewOrder : PageModel
         }
     }
 
+    //function to run model prediciton (taken from videos on LS)
+    //I changed it to return an int so that we can process to figure out which page to display
     public int Predict(int customer_ID, int time, int amount, int age, int day_of_week_Mon,
        int day_of_week_Sat, int day_of_week_Sun, int day_of_week_Thu,
        int day_of_week_Tue, int day_of_week_Wed, int entry_mode_PIN,

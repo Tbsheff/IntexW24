@@ -22,30 +22,10 @@ namespace Intex.Pages
 
         }
         
-        /*public void OnPost()
-        {
-            // Retrieve the cart from the session
-            Cart cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
-
-            // Check if the cart is empty
-            if (cart.Lines.Count == 0)
-            {
-                // Optionally, add a TempData message to inform the user
-                TempData["Message"] = "Your cart is empty. Please add items to your cart before proceeding.";
-
-                // Redirect back to the Cart page
-                Response.Redirect(Url.Page("Cart"));
-                return; // Exit the method to prevent further processing
-            }
-
-            // If the cart is not empty, proceed with serialization and redirection
-            var cartLineItemsJson = System.Text.Json.JsonSerializer.Serialize(cart.Lines);
-            HttpContext.Session.SetString("CartLineItems", cartLineItemsJson);
-            Response.Redirect(Url.Page("Delivery"));
-        }*/
+        
 
 
-
+        //Post method to update the cart 
 
         public void OnPost(int product_id, int quantity = 1)
         {
@@ -71,7 +51,7 @@ namespace Intex.Pages
             
 
         }
-
+        //Remove item from session cart
 
         public IActionResult OnPostRemoveItem(int product_id)
         {
@@ -132,6 +112,7 @@ namespace Intex.Pages
             return RedirectToPage("/Delivery");
         }
 
+        //Update cart session
         private void UpdateCartItemCount()
         {
             var itemCount = Cart.Lines.Sum(x => x.Quantity);
