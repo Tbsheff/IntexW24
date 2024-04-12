@@ -18,6 +18,8 @@ namespace Intex.Pages
             _httpContextAccessor = httpContextAccessor;
         }
 
+        //Create model to have everything we need for delivery
+
         [BindProperty]
         public DeliveryViewModel DeliveryInfo { get; set; }
         public decimal Subtotal { get; set; }
@@ -29,6 +31,7 @@ namespace Intex.Pages
         
         public Cart Cart { get; set; } = new Cart();
 
+        //Pass info 
         public void OnGet()
         {
             
@@ -48,6 +51,7 @@ namespace Intex.Pages
 
         }
         
+        //Update session address
         public void OnPost()
         {
             HttpContext.Session.SetJson("address", new Address
