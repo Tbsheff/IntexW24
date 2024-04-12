@@ -21,20 +21,23 @@ public class AdminController : Controller
         _logger = logger;
         _repo = repo;
     }
+    // Ensures only users with Admin role can access this action
     [Authorize(Roles = "Admin")]
     public IActionResult Index()
     {
+        // Initializes gender options for forms where they might be needed
         Genders = new List<SelectListItem>
         {
             new SelectListItem("Male", "M"),
             new SelectListItem("Female", "F"),
         };
-        
+
+        // Fetches users, joins with customers, and returns a view with the user list
         var usersWithCustomersAndRoles = _repo.Users
             .Join(
                 _repo.Customers,
-                user => user.user_id, // Assuming 'user_id' is your join key in 'User'
-                customer => customer.customer_ID, // Assuming 'UserId' is your join key in 'Customer'
+                user => user.user_id,
+                customer => customer.customer_ID, 
                 (user, customer) => new UsersViewModel
                 {
                     User = user,
@@ -46,10 +49,12 @@ public class AdminController : Controller
         ViewBag.Genders = Genders;
         return View(usersWithCustomersAndRoles);
     }
-    
+
+    // GET request for editing a user with the specified id
     [HttpGet("Admin/EditUser/{id?}")]
     public async Task<IActionResult> EditUser(short id )
     {
+        // Fetches user details from the repository based on user id
         var userViewModel =  _repo.Users
             .Join(
                 _repo.Customers,
@@ -72,6 +77,7 @@ public class AdminController : Controller
 
         return View(userViewModel);
     }
+    // POST request to update user details
     [Authorize(Roles = "Admin")]
 
     [HttpPost("Admin/EditUser/{id?}")]
@@ -136,12 +142,13 @@ public class AdminController : Controller
         return View(viewModel);
     }
 
+    // Checks if a user exists by ID
     private async Task<bool> UserExists(short id)
     {
         return await _repo.GetUserByIdAsync(id) != null;
     }
 
-
+    // Displays all products managed by an admin
     [Authorize(Roles = "Admin")]
     public IActionResult ManageItems()
     {
@@ -159,6 +166,7 @@ public class AdminController : Controller
         return View(products);
     }
 
+    // Returns a form for adding a new product
     [Authorize(Roles = "Admin")]
     [HttpGet]
     public IActionResult AddProduct()
@@ -251,18 +259,24 @@ public class AdminController : Controller
 
         return View("Edit", model);
     }
+
+    // This method handles the HTTP POST request to edit a product. It requires administrative privileges.
     [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> EditProduct(EditProductViewModel model)
     {
+        // Check if the form data is valid according to the data annotations in the ViewModel
         if (ModelState.IsValid)
         {
+            // Retrieve the product from the database using the product ID
             var product = _repo.Products.FirstOrDefault(p => p.product_id == model.ProductId);
+            // If no product is found, return a NotFound response
             if (product == null)
             {
                 return NotFound();
             }
 
+            // Update the product's properties with the values from the form
             product.name = model.Name;
             product.year = model.Year;
             product.num_parts = model.NumParts;
@@ -275,6 +289,7 @@ public class AdminController : Controller
 
             try
             {
+                // Attempt to update the product in the database
                 _repo.UpdateProduct(product);
                 await _repo.SaveAsync();
             }
@@ -283,9 +298,10 @@ public class AdminController : Controller
                 // Log the exception or handle it accordingly
                 return StatusCode(500, "An error occurred while saving the product. Please try again.");
             }
-
+            // If successful, redirect to the Manage Items page
             return RedirectToAction("ManageItems");
         }
+        // If the model state is not valid, reload the Edit view with the current model to show validation errors
         return View("Edit", model);
     }
 
@@ -331,9 +347,11 @@ public class AdminController : Controller
         }
     }
 
+    // Review orders suspected of fraud.
     [Authorize(Roles = "Admin")]
     public IActionResult ReviewOrders(int pageIndex = 1, int pageSize = 10)
     {
+        // Retrieve orders flagged as fraudulent and paginate results based on the provided pageIndex and pageSize.
         var orders = _repo.Orders.Where(o => o.fraud == true).ToList().Skip((pageIndex - 1) * pageSize)
             .Take(pageSize); // Gets all orders
         var customers = _repo.Customers; // Gets all customers
@@ -342,6 +360,7 @@ public class AdminController : Controller
         var banks = _repo.Banks; // Gets all banks
         var cardTypes = _repo.Card_Types; // Gets all card types
 
+        // Join orders with other entities to create a detailed view model for each order.
         var orderDetails = (from o in orders
                 join c in customers on o.customer_ID equals c.customer_ID
                 join em in entryModes on o.entry_mode_id equals em.entry_mode_id
@@ -368,23 +387,25 @@ public class AdminController : Controller
             .Take(pageSize)
             .ToList();
 
-
+        // Pass the detailed orders to the view model.
         var model = new OrdersViewModel { Orders = orderDetails.ToList() };
         return View(model);
     }
 
+    // This method handles the approval of an order by setting the fraud flag to false.
     [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> ApproveOrder(int id)
     {
         _logger.LogInformation("Received request to approve order with transaction ID: {TransactionId}", id);
 
+        // Retrieve the order by ID.
         var order = _repo.Orders.FirstOrDefault(o => o.transaction_ID == id);
         if (order != null)
         {
             _logger.LogInformation("Think this works");
-            order.fraud = false;
-            _repo.UpdateOrderAsync(order);
+            order.fraud = false; // Update the fraud status to false.
+            _repo.UpdateOrderAsync(order); // Update the order in the database.
             _repo.SaveAsync(); // Ensure to await if it's asynchronous
             return RedirectToAction("ReviewOrders"); // Redirect to the ReviewOrders action or any other appropriate action
         }
@@ -396,6 +417,7 @@ public class AdminController : Controller
         }
     }
 
+    // This method handles the deletion of a product.
     [Authorize(Roles = "Admin")]
     [HttpPost]
      public async Task<IActionResult> DeleteProduct(short id)
