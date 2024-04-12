@@ -1,7 +1,8 @@
-    using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Intex.Data;
-
+using Intex.Services;
 using Intex.Models;
 using Intex.Middleware;
 
@@ -44,6 +45,8 @@ builder.Services.AddRazorPages()
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 
 
 var app = builder.Build();
