@@ -142,7 +142,7 @@ public class ReviewOrder : PageModel
             input.CountryOfResidenceIndia, input.CountryOfResidenceRussia, input.CountryOfResidenceUSA,
             input.CountryOfResidenceUnitedKingdom);
 
-        if (fraudulent == 1)
+        if (fraudulent == 0)
         { 
             return RedirectToPage("/OrderConfirmation"); 
         }

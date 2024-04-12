@@ -6,16 +6,21 @@
 
 <style>
     .page-container{
-    max-width: 70%;
+    max-width: 90%;
     margin: auto;
+    min-height: calc(100vh - 84px);
     }
     
     .section-title{
         background-color:#e9b863;
     }
     
-    main{
-    min-height: 100vh;}
+    .admin-dashboard{
+    
+        display: flex;
+        gap: 2rem;
+        justify-content: space-between;
+        }
     
     .sidebar-menu{
         display: flex;
@@ -29,12 +34,16 @@
         
     }
     
+    .content{
+    margin: auto;
+    }
+    
 </style>
 
 <div class="filler" style="height: 84px;"></div>
 <div class="page-container">
     <main class="admin-dashboard">
-        <aside class="sidebar">
+        <div class="">
             <h2>Dashboard</h2>
             <ul class="sidebar-menu">
                 <li class="active"><i class="fa fa-file"></i><a asp-controller="Admin" asp-action="ReviewOrders">Review Orders</a></li>
@@ -50,13 +59,13 @@
                     </div>
                 </li>
             </ul>
-        </aside>
+        </div>
 
 
         <section class="content">
             <div style="display: inline-flex;width: 100%;
                                                  justify-content: space-between; " class="mb-4">
-                <button id="toggleSidebar" class="btn btn-primary">Toggle Sidebar</button>
+               
                 <a asp-action="Create" class="btn btn-secondary">Create a Role</a>
             </div>
             <h1 class="section-title text-white text-center">All Roles</h1>

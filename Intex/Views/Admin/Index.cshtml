@@ -46,7 +46,17 @@ display: none;
     text-decoration: none;
     cursor: pointer;
 }
-        
+        .sidebar-menu{
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .sidebar-menu li, .sidebar-menu{
+                display: inline-flex;
+                gap: 1rem;
+                
+            }
 
     </style>
 
@@ -54,7 +64,7 @@ display: none;
 <main class="container dis-flex gap-md-5">
     <div>
         <h2>Dashboard</h2>
-        <ul>
+        <ul class="sidebar-menu">
             <li class="active"><i class="fa fa-file"></i><a asp-controller="Admin" asp-action="ReviewOrders">Review Orders</a></li>
             <li><i class="fa fa-user"></i><a asp-controller="Admin" asp-action="Index">Manage Users</a></li>
             <li><i class="fa fa-cube"></i><a asp-controller="Admin" asp-action="ManageItems">Manage Products</a></li>
@@ -88,7 +98,7 @@ display: none;
                 <tr>
                     <th scope="col">First & Last Name</th>
                     <th scope="col">Username</th>
-                    <th scope="col">Role</th>
+                    
                     <th scope="col">Birthdate</th>
                     <th scope="col">Gender</th>
                     <th scope="col">Edit</th>
@@ -100,7 +110,7 @@ display: none;
                 {
                     <tr id="@item.User.user_id">  <td>@item.Customer.first_name @item.Customer.last_name</td>
                         <td>@item.User.username</td>
-                        <td>ROLE</td>
+                        
                         <td>@item.Customer.birth_date.ToString("MM/dd/yyyy")</td>
                         <td>@item.Customer.gender</td>
             

@@ -5,7 +5,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="filler" style="height: 84px;"></div>
-<h2>Edit Product</h2>
+
+<div style="    margin: auto;
+                     max-width: 75%;
+                     background-color: #ecb75970;
+                     padding: 1rem;
+                     margin-bottom: 3rem;
+                     border-radius: 10px;">
+<h2 style="margin-bottom: 1rem;
+                   text-align: center;">Edit Product</h2>
 
 <form asp-action="EditProduct" method="post" style="max-width: 75%; margin: auto">
 
@@ -55,8 +63,14 @@
         <label asp-for="CategoryId">Category ID</label>
         <input asp-for="CategoryId" type="number" class="form-control" />
     </div>
-
+<div style="    display: inline-flex;
+                         gap: 3rem;
+                         width: 100%;
+                         justify-content: flex-start;
+                         flex-direction: row-reverse;">
     <button type="submit" class="btn btn-success">Save Changes</button>
-    <button type="button" class="btn btn-secondary cancel-edit" onclick="history.back();">Cancel</button>
+<button type="button" class="btn btn-secondary cancel-edit" onclick="history.back();">Cancel</button>
+</div>
 
 </form>
+</div>

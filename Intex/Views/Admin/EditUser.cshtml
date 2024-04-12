@@ -5,8 +5,14 @@
 }
 
 <div class="filler" style="height: 84px;"></div>
-
-<h1>Edit User</h1>
+<div style="    margin: auto;
+                max-width: 75%;
+                background-color: #ecb75970;
+                padding: 1rem;
+                margin-bottom: 3rem;
+                border-radius: 10px;">
+<h1 style="margin-bottom: 1rem;
+               text-align: center;">Edit User</h1>
 
 <form asp-action="EditUser" method="post" asp-controller="Admin">
     <input type="hidden" asp-for="User.user_id" />
@@ -45,12 +51,18 @@
         <input asp-for="Customer.age" class="form-control" type="number"/>
         <span asp-validation-for="Customer.age" class="text-danger"></span>
     </div>
-    <div class="form-group">
+    <div style="    display: inline-flex;
+                    gap: 3rem;
+                    width: 100%;
+                    justify-content: flex-start;
+                    flex-direction: row-reverse;">
+    <div class="form-group" style="margin: 0;">
         <input type="submit" value="Save" class="btn btn-primary" />
     </div>
     <button type="button" class="btn btn-secondary cancel-edit" onclick="history.back();">Cancel</button>
+    </div>
 </form>
-
+</div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

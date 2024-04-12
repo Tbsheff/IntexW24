@@ -831,14 +831,14 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
   width: 20%;
   max-width: calc(100% - 30px);
   height: 100vh;
-  top: 0;
+  top: 84px;
   left: -20%;
   background-color: #fff;
   padding: 1rem;
   
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
-  -moz-transition: all 0.34;  
+  -moz-transition: all 0.34s;  
   transition: all 0.4s;
 
   box-shadow: 0 3px 6px 0px rgba(0, 0, 0, 0.18);
@@ -1786,6 +1786,8 @@ button.mfp-close {
   border: 1px solid #e6e6e6;
   border-radius: 3px;
   overflow: hidden;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .btn-num-product-up,
