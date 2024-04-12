@@ -71,18 +71,18 @@
 	                                                    @if(User.IsInRole("Admin"))
 	                                                    {
 		                                                    <li class="nav-item">
-			                                                    <a class="nav-link text-dark p-r-2" asp-controller="Role" asp-action="Index" title="Manage">Admin Dashboard
+			                                                    <a class="nav-link text-dark p-r-2" asp-controller="Role" asp-action="Index" title="Manage">Dashboard
 			                                                    </a>
 		                                                    </li>
 	                                                    };
 	                                                    <li class="nav-item ">
 		                                                    
 		                                                    
-		                                                    <a class="nav-link text-dark p-r-2" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">My Account</a>
+		                                                    <a class="nav-link text-dark p-r-2" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Account</a>
 	                                                    </li>
                                                         <li class="nav-item ">
                                                             <form class="nav-link text-dark p-r-2" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                                                                <button type="submit" class="nav-link btn btn-link text-dark p-l-2">Logout</button>
+                                                                <button type="submit" class="nav-link btn btn-link text-dark" style="padding: 0; margin: 0;">Logout</button>
                                                             </form>
                                                         </li>
                                                     }

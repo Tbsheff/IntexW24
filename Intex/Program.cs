@@ -16,7 +16,6 @@ var clientId = builder.Configuration["Authentication:Google:ClientId"];
 var clientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
 
 
-
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDbContext<MyDbContext>(options =>

@@ -3,50 +3,107 @@
 @{
     ViewData["Title"] = "Admin - Roles Dashboard";
 }
-<div class="filler" style="height: 84px;"></div>
 
-<main class="container dis-flex gap-md-5" style="min-height: 100vh">
-<div>
-    <h2>Dashboard</h2>
-    <ul>
-        <li class="active"><i class="fa fa-file"></i><a asp-controller="Admin" asp-action="ReviewOrders">Review Orders</a></li>
-        <li><i class="fa fa-user"></i><a asp-controller="Admin" asp-action="Index">Manage Users</a></li>
-        <li><i class="fa fa-cube"></i><a asp-controller="Admin" asp-action="ManageItems">Manage Products</a></li>
-        <li class="dropdown">
-            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-users"></i> Manage User Roles
-            </a>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" asp-controller="Role" asp-action="Index">Assign Roles</a>
-                <a class="dropdown-item" asp-controller="Role" asp-action="Create">Create Role</a>
-                
-            </div>
-        </li>
-    </ul>
-</div>
-
-<div>
-<h1 class="bg-info text-white">All Roles</h1>
-<a asp-action="Create" class="btn btn-secondary">Create a Role</a>
- 
-<table class="table table-sm table-bordered table-bordered">
-    <tr><th>ID</th><th>Name</th><th>Users</th><th>Add Users to Role</th><th>Delete</th></tr>
-    @foreach (var role in Model)
-    {
-        <tr>
-            <td>@role.Id</td>
-            <td>@role.Name</td>
-            <td i-role="@role.Id"></td>
-            <td><a class="btn btn-sm btn-primary" asp-action="Update" asp-route-id="@role.Id">Add Users</a></td>
-            <td>
-                <form asp-action="Delete" asp-route-id="@role.Id" method="post">
-                    <button type="submit" class="btn btn-sm btn-danger">
-                        Delete
-                    </button>
-                </form>
-            </td>
-        </tr>
+<style>
+    .page-container{
+    max-width: 70%;
+    margin: auto;
     }
-</table>
+    
+    .section-title{
+        background-color:#e9b863;
+    }
+    
+    main{
+    min-height: 100vh;}
+    
+    .sidebar-menu{
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .sidebar-menu li, .sidebar-menu{
+        display: inline-flex;
+        gap: 1rem;
+        
+    }
+    
+</style>
+
+<div class="filler" style="height: 84px;"></div>
+<div class="page-container">
+    <main class="admin-dashboard">
+        <aside class="sidebar">
+            <h2>Dashboard</h2>
+            <ul class="sidebar-menu">
+                <li class="active"><i class="fa fa-file"></i><a asp-controller="Admin" asp-action="ReviewOrders">Review Orders</a></li>
+                <li><i class="fa fa-user"></i><a asp-controller="Admin" asp-action="Index">Manage Users</a></li>
+                <li><i class="fa fa-cube"></i><a asp-controller="Admin" asp-action="ManageItems">Manage Products</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-users"></i> Manage User Roles
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" asp-controller="Role" asp-action="Index">Assign Roles</a>
+                        <a class="dropdown-item" asp-controller="Role" asp-action="Create">Create Role</a>
+                    </div>
+                </li>
+            </ul>
+        </aside>
+
+
+        <section class="content">
+            <div style="display: inline-flex;width: 100%;
+                                                 justify-content: space-between; " class="mb-4">
+                <button id="toggleSidebar" class="btn btn-primary">Toggle Sidebar</button>
+                <a asp-action="Create" class="btn btn-secondary">Create a Role</a>
+            </div>
+            <h1 class="section-title text-white text-center">All Roles</h1>
+
+            <table class="table table-sm table-bordered">
+                <thead>
+                <tr>
+
+                    <th>Name</th>
+                    <th>Users</th>
+                    <th>Add Users to Role</th>
+                    <th>Delete</th>
+                </tr>
+
+                </thead>
+                <tbody>
+                @foreach (var role in Model)
+                {
+                    <tr>
+
+                        <td>@role.Name</td>
+                        <td i-role="@role.Id"></td>
+                        <td><a class="btn btn-sm btn-primary" asp-action="Update" asp-route-id="@role.Id">Add Users</a></td>
+                        <td>
+                            <form asp-action="Delete" asp-route-id="@role.Id" method="post">
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </section>
+    </main>
 </div>
-</main>
+
+<script>
+    $(document).ready(function() {
+        $('#toggleSidebar').click(function() {
+            var sidebar = $('.sidebar');
+            if (sidebar.css('left') === '0px') {
+                // If the sidebar is visible, hide it by setting the right property to a negative value
+                sidebar.css('left', '-20%'); // Adjust the value to match the width of your sidebar
+            } else {
+                // If the sidebar is hidden, show it by setting the right property to 0
+                sidebar.css('left', '0');
+            }
+        });
+    });
+</script>
