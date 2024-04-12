@@ -90,7 +90,7 @@
                         <td i-role="@role.Id"></td>
                         <td><a class="btn btn-sm btn-primary" asp-action="Update" asp-route-id="@role.Id">Add Users</a></td>
                         <td>
-                            <form asp-action="Delete" asp-route-id="@role.Id" method="post">
+                            <form asp-action="Delete" asp-route-id="@role.Id" method="post" onsubmit="confirmDelete()">
                                 <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                             </form>
                         </td>
@@ -115,4 +115,9 @@
             }
         });
     });
+</script>
+<script>
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete this product?");
+    }
 </script>
