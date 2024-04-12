@@ -12,6 +12,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 
+
+//Here we added a bunch of fancy stuff to have email confirmation.
+//We pretty much just took all of this code directly from Microsoft's website.
+
+
 namespace Intex.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
