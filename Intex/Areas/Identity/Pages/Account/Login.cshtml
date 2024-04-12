@@ -2,12 +2,21 @@
 @model LoginModel
 
 @{
+    ViewBag.Title = "Log in";
     ViewData["Title"] = "Log in";
     Layout = null;
 }
 <link rel="stylesheet" type="text/css" href="~/css/Login-Styles.css"/>
 
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="icon" type="image/png" href="~/assets/images/icons/favicon.png" /> 
+    <link rel="stylesheet" type="text/css" href="~/css/Login-Styles.css" />
+</head>
 <main>
     
     <div class="login-header">
