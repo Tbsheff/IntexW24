@@ -13,89 +13,93 @@
     <title>@ViewData["Title"]</title>
     <link rel="icon" type="image/png" href="~/assets/images/icons/favicon.png" />
     <link rel="stylesheet" type="text/css" href="~/css/Register-Styles.css"/>
-
+<link rel="stylesheet" type="text/css" href="~/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   </head>
-  <body>
-    <div id="svg_wrap"></div>
+<body>
 
-  <h1 id="section-title">Online Application</h1>
+<div id="svg_wrap"></div>
+<a asp-action="Index" asp-controller="Home" id="backHome"><div class="button" ><i class="fa fa-arrow-left" style="padding-right: 5px;"></i>Exit</div></a>
+<h1 id="section-title">Online Application</h1>
+<div class="form-container">
     <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                    <div>
-                        <p>
-                            <button type="submit" name="provider" value="Google" class="gsi-material-button" title="Log in using your Google account">
-                                <div class="gsi-material-button-state"></div>
-                                <div class="gsi-material-button-content-wrapper">
-                                    <div class="gsi-material-button-icon">
-                                        <!-- Google SVG icon here -->
-                                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block;">
-                                            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
-                                            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
-                                            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
-                                            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
-                                            <path fill="none" d="M0 0h48v48H0z"></path>
-                                        </svg>
-                                    </div>
-                                    <span class="gsi-material-button-contents">Sign in with Google</span>
-                                    <span style="display: none;">Sign in with Google</span>
-                                </div>
-                            </button>
-                        </p>
+        <div>
+            <p class="google-container">
+                <button type="submit" name="provider" value="Google" class="gsi-material-button" title="Log in using your Google account">
+                    <div class="gsi-material-button-state"></div>
+                    <div class="gsi-material-button-content-wrapper">
+                        <div class="gsi-material-button-icon">
+                            <!-- Google SVG icon here -->
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block;">
+                                <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
+                                <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
+                                <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
+                                <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
+                                <path fill="none" d="M0 0h48v48H0z"></path>
+                            </svg>
+                        </div>
+                        <span class="gsi-material-button-contents">Sign in with Google</span>
+                        <span style="display: none;">Sign in with Google</span>
                     </div>
-                </form>
-  <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-  <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-    <section>
-      <p class="text-center">Create an Account</p>
-      <input type="text" placeholder="First Name" asp-for="Input.FirstName"/>
-      <input type="text" placeholder="Last Name" asp-for="Input.LastName"/>
+                </button>
+            </p>
+        </div>
+    </form>
+    <p class="text-center" id="or">Or</p>
+    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+    <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+        <section>
+            <h3 class="text-center">Create an Account</h3>
+            <input type="text" placeholder="First Name" asp-for="Input.FirstName"/>
+            <input type="text" placeholder="Last Name" asp-for="Input.LastName"/>
 
-      <p class="text-center">Or</p>
 
-            
-    </section>
 
-    <section>
-      <p>Personal Information</p>
-      <label for="Birthdate" asp-for="Input.Dob">Birthdate</label>
-      <input type="date" id="Birthdate" asp-for="Input.Dob" />
-      <label for="Gender" asp-for="Input.Gender">Gender</label>
-      <select id="Gender" asp-for="Input.Gender" asp-items="Model.Genders">
-        <option>Select your Gender</option>
-      </select>
-      <label for="country" asp-for="Input.Country">Country</label>
-      ><span style="color: red !important; display: inline; float: none"
-       >*</span
-      >
 
-      <select id="country" asp-items="Model.Countries" asp-for="Input.Country" class="form-control">
-        <option value="">Select a Country</option>
-      </select>
-    </section>
+        </section>
 
-    <section>
-      <p>How You'll Sign In</p>
-      
-      <input type="email" asp-for="Input.Email" placeholder="Email address" />
-    </section>
+        <section>
+            <h3 class="text-center">Personal Information</h3>
+            <label for="Birthdate" asp-for="Input.Dob">Birthdate</label>
+            <input type="date" id="Birthdate" asp-for="Input.Dob"/>
+            <label for="Gender" asp-for="Input.Gender">Gender</label>
+            <select id="Gender" asp-for="Input.Gender" asp-items="Model.Genders">
+                <option>Select your Gender</option>
+            </select>
+            <label for="country" asp-for="Input.Country">Country</label>
+            <span style="color: red !important; display: inline; float: none">*</span
+            >
 
-    <section>
-      <p>Choose a Password</p>
+            <select id="country" asp-items="Model.Countries" asp-for="Input.Country" class="form-control">
+                <option value="">Select a Country</option>
+            </select>
+        </section>
 
-      <input type="password" asp-for="Input.Password" autocomplete="new-password" aria-required="true" placeholder="Password" />
-      <input type="password" asp-for="Input.ConfirmPassword"  autocomplete="new-password" aria-required="true" placeholder="Confirm Password" />
-    </section>
+        <section>
+            <h3 class="text-center">How You'll Sign In</h3>
 
-    <div class="button" id="prev">&larr; Previous</div>
-    <div class="button" id="next">Next &rarr;</div>
-    <input class="button" id="submit" type="submit" placeholder="Create Account">
-  </form>
-  
+            <input type="email" asp-for="Input.Email" placeholder="Email address"/>
+        </section>
 
-  <script>
+        <section>
+            <h3 class="text-center">Choose a Password</h3>
+
+            <input type="password" asp-for="Input.Password" autocomplete="new-password" aria-required="true" placeholder="Password"/>
+            <input type="password" asp-for="Input.ConfirmPassword" autocomplete="new-password" aria-required="true" placeholder="Confirm Password"/>
+        </section>
+        <div>
+            <div class="button" id="prev">&larr; Previous</div>
+            <div class="button" id="next">Next &rarr;</div>
+            <div class="button" id="submit" type="submit">Create Account</div>
+        </div>
+    </form>
+</div>
+
+
+<script>
       $(document).ready(function () {
         var base_color = "rgb(230,230,230)";
-        var active_color = "rgb(237, 40, 70)";
+        var active_color = "#ecb759";
 
         var child = 1;
         var length = $("section").length - 1;
@@ -162,10 +166,14 @@
         $("circle:nth-of-type(1)").css("fill", active_color);
 
         $(".button").click(function () {
+            var currentSection = $("section:nth-of-type(" + child + ")");
           $("#svg_form_time rect").css("fill", active_color);
           $("#svg_form_time circle").css("fill", active_color);
           var id = $(this).attr("id");
           if (id == "next") {
+               if (!validateSection(currentSection)) {
+                              return; // Stop if the current section is not valid
+                          }
             //$("#section-title").text(titles[child]);
 
             $("#prev").removeClass("disabled");
@@ -206,70 +214,35 @@
             .nextAll("section")
             .css("transform", "translateX(100px)");
           $("section").not(currentSection).hide();
-        });
-      });
-    </script>
-  </body>
-</html>
-
-
-@*
-<div class="row">
-    <div class="col-md-4">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
-            <hr />
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.Email">Email</label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.Password">Password</label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.ConfirmPassword">Confirm Password</label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
-        </form>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to register.</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
+          
+          if (child > 1) {
+              $(".google-container").hide();
+              $("#or").hide();
+            } else {
+              $(".google-container").show();
+                $("#or").show();
             }
-        </section>
-    </div>
-</div>
-*@
+          
+              
+          
+        });
+        
+      });
+      function validateSection(section) {
+                                var isValid = true;
+                                section.find('.required').each(function() {
+                                    if ($(this).val() === '') {
+                                        isValid = false;
+                                        $(this).addClass('error');
+                                    } else {
+                                        $(this).removeClass('error');
+                                    }
+                                });
+                                return isValid;
+                            }
+    </script>
+</body>
+</html>
 
 @*@section Scripts {
     <partial name="_ValidationScriptsPartial" />
