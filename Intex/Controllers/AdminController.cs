@@ -349,11 +349,10 @@ public class AdminController : Controller
 
     // Review orders suspected of fraud.
     [Authorize(Roles = "Admin")]
-    public IActionResult ReviewOrders(int pageIndex = 1, int pageSize = 10)
+    public IActionResult ReviewOrders()
     {
         // Retrieve orders flagged as fraudulent and paginate results based on the provided pageIndex and pageSize.
-        var orders = _repo.Orders.Where(o => o.fraud == true).ToList().Skip((pageIndex - 1) * pageSize)
-            .Take(pageSize); // Gets all orders
+        var orders = _repo.Orders.Where(o => o.fraud == true).ToList(); // Gets all orders
         var customers = _repo.Customers; // Gets all customers
         var entryModes = _repo.Entry_Modes; // Gets all entry modes
         var transactionTypes = _repo.Transaction_Types; // Gets all transaction types
@@ -383,8 +382,6 @@ public class AdminController : Controller
                     CardTypeDescription = ct.description,
                     Fraud = o.fraud
                 })
-            .Skip((pageIndex - 1) * pageSize)
-            .Take(pageSize)
             .ToList();
 
         // Pass the detailed orders to the view model.
