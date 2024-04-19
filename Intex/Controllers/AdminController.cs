@@ -382,6 +382,8 @@ public class AdminController : Controller
                     CardTypeDescription = ct.description,
                     Fraud = o.fraud
                 })
+            .OrderByDescending(x => x.TransactionId)
+            .Take(10)
             .ToList();
 
         // Pass the detailed orders to the view model.
