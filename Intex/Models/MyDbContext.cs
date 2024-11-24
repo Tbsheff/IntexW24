@@ -63,7 +63,7 @@ public partial class MyDbContext : DbContext
         if (!optionsBuilder.IsConfigured)
         {
             var connectionString = _configuration.GetConnectionString("DefaultConnection");
-            optionsBuilder.UseSqlServer(connectionString);
+            optionsBuilder.UseSqlite("Data Source=app.db");
         }
     }
 

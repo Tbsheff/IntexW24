@@ -17,9 +17,9 @@ var clientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlite("Data Source=app.db"));
 builder.Services.AddDbContext<MyDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlite("Data Source=app.db"));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 
